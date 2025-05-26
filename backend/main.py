@@ -99,3 +99,30 @@ def forecast_costs(days: Optional[int] = 7):
         )
     
     return forecast
+
+class RecommendationRequest(BaseModel):
+    service: Optional[str] = None
+    max_budget: Optional[float] = None
+
+# recommendations to reduce cose. Change this later to actual function
+@app.post("/api/recommendations")
+def get_recommendations(request : RecommendationRequest):
+    tips = []
+    # General tip 
+    tips.append("Enable AWS bBudgets to track overspending in real time")
+
+    # Service specific recommendations
+    if request.service:
+        if request.service.lower() == "amazon ec2":
+            tips.append("Consider using Spot Instances or scheduling EC2 shutdowns.")
+        if request.service.lower() == "amazon s3":
+            tips.append("Move infrequently accessed S3 objects to Glacier storage.")
+        if request.service.lower() == "amazon rds":
+            tips.append("Switch to reserved RDS instances for long-term savings.")
+    
+    # Budget aware tips 
+    if request.max_budget and request.max_budget < 50:
+        tips.append("Your budget is low and may run out some. consider removing idle resources or moving to serverless.")
+
+    return {"recommendations": tips}
+        
