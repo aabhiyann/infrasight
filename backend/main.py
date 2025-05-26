@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 import json
 from pathlib import Path
 import random
@@ -52,7 +52,11 @@ class CostFilter(BaseModel):
     end_date: Optional[date] = None
 
 @app.post("/api/filter")
-def filter_costs(filter: CostFilter):
+def filter_costs(
+    filter: CostFilter,
+    limit: Optional[int] = Query(None, gt=0),
+    sort_by: Optional[str] = Query(None, regex="^(amount|date)$")
+):
     try:
         raw_data = load_cost_data()
     except FileNotFoundError:
@@ -89,6 +93,16 @@ def filter_costs(filter: CostFilter):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error filtering cost data: {str(e)}")
+    
+    # Sorting
+    if sort_by == "amount":
+        filtered_data.sort(key=lambda x: x["amount"], reverse=True)
+    elif sort_by == "date":
+        filtered_data.sort(key=lambda x: x["date"])  # ISO format sorts fine
+
+    # Limit filtering
+    if limit:
+        filtered_data = filtered_data[:limit]
 
     return {"filtered_results": filtered_data}
 
@@ -146,3 +160,24 @@ def get_recommendations(request: RecommendationRequest):
 
     return {"recommendations": tips}
         
+
+@app.get("/api/services")
+def get_unique_services():
+    try:
+        raw_data = load_cost_data()
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Mock cost data file not found.")
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Cost data is not valid JSON.")
+    
+    services = set()
+
+    try:
+        for day in raw_data["ResultsByTime"]:
+            for group in day["Groups"]:
+                service = group["Keys"][0]
+                services.add(service)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error extracting services: {str(e)}")
+
+    return {"services": sorted(list(services))}
