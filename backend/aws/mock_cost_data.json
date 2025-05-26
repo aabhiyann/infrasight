@@ -1,0 +1,30 @@
+{
+  "ResultsByTime": [
+    {
+      "TimePeriod": {
+        "Start": "2024-05-20",
+        "End": "2024-05-21"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.23",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.75",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
