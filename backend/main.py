@@ -77,3 +77,25 @@ def filter_costs(filter: CostFilter):
     return filtered_data
 
 import random
+from typing import Optional
+
+# modify this later to forecast from any start_date, not just today 
+@app.get("/api/forecast")
+def forecast_costs(days: Optional[int] = 7):
+    # Funciton to return a mock list of predicted AWS costs for the next few days
+    forecast = []
+    base_date = date.today()
+    base_cost = 2.0 # base staring cost
+
+    for i in range(days):
+        day = base_date + timedelta(days = i)
+        #  adding some mock fake trend/recommendations
+        cost = round(base_cost + random.uniform(-0.3, 0.5), 2)
+        forecast.append(
+            {
+                "date": day.isoformat(),
+                "predicted_cost": cost
+            }
+        )
+    
+    return forecast
