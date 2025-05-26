@@ -23,6 +23,600 @@
               "Unit": "USD"
             }
           }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.50",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.10",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.20",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.15",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-21",
+        "End": "2024-05-22"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.50",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.80",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.60",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.12",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.22",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.18",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-22",
+        "End": "2024-05-23"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.10",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.70",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.55",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.09",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.19",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.16",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-23",
+        "End": "2024-05-24"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.35",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.90",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.65",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.11",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.23",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.19",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-24",
+        "End": "2024-05-25"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.40",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.95",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.70",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.13",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.25",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.20",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-25",
+        "End": "2024-05-26"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.55",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.00",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.75",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.14",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.27",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.22",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-26",
+        "End": "2024-05-27"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.60",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.05",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.80",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.15",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.28",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.23",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-27",
+        "End": "2024-05-28"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.65",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.10",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.85",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.16",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.30",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.25",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-28",
+        "End": "2024-05-29"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.70",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.15",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.90",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.17",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.32",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.27",
+              "Unit": "USD"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "TimePeriod": {
+        "Start": "2024-05-29",
+        "End": "2024-05-30"
+      },
+      "Groups": [
+        {
+          "Keys": ["Amazon EC2"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.75",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon S3"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "1.20",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon RDS"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.95",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["AWS Lambda"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.18",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon DynamoDB"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.34",
+              "Unit": "USD"
+            }
+          }
+        },
+        {
+          "Keys": ["Amazon CloudFront"],
+          "Metrics": {
+            "UnblendedCost": {
+              "Amount": "0.29",
+              "Unit": "USD"
+            }
+          }
         }
       ]
     }

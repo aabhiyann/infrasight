@@ -77,7 +77,7 @@ def filter_costs(filter: CostFilter):
     return filtered_data
 
 import random
-from typing import Optional
+
 
 # modify this later to forecast from any start_date, not just today 
 @app.get("/api/forecast")
@@ -109,7 +109,7 @@ class RecommendationRequest(BaseModel):
 def get_recommendations(request : RecommendationRequest):
     tips = []
     # General tip 
-    tips.append("Enable AWS bBudgets to track overspending in real time")
+    tips.append("Enable AWS Budgets to track overspending in real time")
 
     # Service specific recommendations
     if request.service:
