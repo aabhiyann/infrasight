@@ -30,33 +30,50 @@ def get_formatted_cost_data():
 
 # Filter logic
 from pydantic import BaseModel
-from datetime import datetime
+from typing import Optional
+from datetime import date, timedelta
 
 # Define expected response body
 class CostFilter(BaseModel):
-    service: str
-    min_amount: float
+    service: Optional[str] = None
+    min_amount: Optional[float] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
 
 @app.post("/api/filter")
 def filter_costs(filter: CostFilter):
-    # Load the mock JSON file
     file_path = Path(__file__).parent / "aws" / "mock_cost_data.json"
     with open(file_path, "r") as f:
         raw_data = json.load(f)
 
-    # Extract and filter the data
     filtered_data = []
 
     for day in raw_data["ResultsByTime"]:
-        date = day["TimePeriod"]["Start"]
+        date_str = day["TimePeriod"]["Start"]
+        day_date = date.fromisoformat(date_str)
+
+        # If user gave a date range, apply it
+        if filter.start_date and day_date < filter.start_date:
+            continue
+        if filter.end_date and day_date > filter.end_date:
+            continue
+
         for group in day["Groups"]:
             service = group["Keys"][0]
             amount = float(group["Metrics"]["UnblendedCost"]["Amount"])
-            if service == filter.service and amount >= filter.min_amount:
-                filtered_data.append({
-                    "date": date,
-                    "service": service,
-                    "amount": round(amount, 2)
-                })
+
+            # Apply filters only if they're provided
+            if filter.service and service != filter.service:
+                continue
+            if filter.min_amount and amount < filter.min_amount:
+                continue
+
+            filtered_data.append({
+                "date": date_str,
+                "service": service,
+                "amount": round(amount, 2)
+            })
 
     return filtered_data
+
+import random
