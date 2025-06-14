@@ -173,7 +173,7 @@ def get_unique_services():
     services = set()
 
     try:
-        for say in raw_data["ResultsByTime"]:
+        for day in raw_data["ResultsByTime"]:
             for group in day["Groups"]:
                 service = group["Keys"][0]
                 services.add(service)
