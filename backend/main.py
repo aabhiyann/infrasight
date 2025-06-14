@@ -211,3 +211,49 @@ def get_service_summary():
     # Rounding amounts to display 
     rounded_summary = {k: round(v, 2) for k, v in summary.items()}
     return {"summary": rounded_summary}
+
+
+# route for top service
+class DateRange(BaseModel):
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+
+@app.post("/api/top-service")
+def get_top_service(date_range: DateRange):
+    try:
+        raw_data = load_cost_data()
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Mock cost data file not found.")
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Cost Data is not valid JSON.")
+    
+    totals = {}
+
+    try:
+        for day in raw_data["ResultsByTime"]:
+            date_str = day["TimePeriod"]["Start"]
+            day_date = date.fromisoformat(date_str)
+
+            # Date filtering logic
+            if date_range.start_date and day_date < date_range.start_date:
+                continue
+            if date_range.end_date and day_date > date_range.end_date:
+                continue
+
+            for group in day["Groups"]:
+                service = group["Keys"][0]
+                amount = float(group["Metrics"]["UnblendedCost"]["Amount"])
+
+                if service not in totals:
+                    totals[service] = 0
+                totals[service] += amount
+    
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error calculating top service: {str(e)}")
+    
+    if not totals:
+        return {"message": "No data found in given range"}
+    
+    top_service = max(totals.items(), key=lambda x: x[1])
+    return {"top-service": top_service[0], "total-amount": round(top_service[1], 2)}
+    
