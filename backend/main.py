@@ -14,7 +14,7 @@ def load_cost_data():
     with open(file_path, "r") as f:
         return json.load(f)
 
-
+# Cost function
 @app.get("/api/cost")
 def get_formatted_cost_data():
     try:
@@ -181,3 +181,33 @@ def get_unique_services():
         raise HTTPException(status_code=400, detail=f"Error extracting services: {str(e)}")
 
     return {"services": sorted(list(services))}
+
+# route to get summary
+@app.get('/api/summary')
+def get_service_summary():
+    try:
+        raw_data = load_cost_data()
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Mock cost data not found")
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Cost data is not valid JSON.")
+    
+    summary = {}
+
+    try:
+        for day in raw_data["ResultsByTime"]:
+            for group in day["Groups"]:
+                service = group["Keys"][0]
+                amount = float(group["Metrics"]["UnblendedCost"]["Amount"])
+
+                # Add to the running total for each service
+                if service not in summary:
+                    summary[service] = 0
+                summary[service] += amount
+    
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error generating summary: {str(e)}")
+    
+    # Rounding amounts to display 
+    rounded_summary = {k: round(v, 2) for k, v in summary.items()}
+    return {"summary": rounded_summary}
