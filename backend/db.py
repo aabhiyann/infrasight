@@ -1,7 +1,10 @@
 from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.pool import NullPool
+from sqlalchemy import text
 from dotenv import load_dotenv
 import os
 
