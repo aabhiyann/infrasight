@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 
-class LogCeate(BaseModel):
+class LogCreate(BaseModel):
     date: date
     service: str
     amount: float
