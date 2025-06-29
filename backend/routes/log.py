@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSesion
-from sqlalchemy.ext import SQLAlechemyError
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import SQLAlchemyError 
 
 from db import get_session
 from models import CostLog
@@ -10,7 +10,7 @@ router = APIRouter()
 
 # entry: uysed to validate; not for db
 @router.post("/log")
-async def create_log(entry: LogCreate, session: AsyncSesion = Depends(get_session)):
+async def create_log(entry: LogCreate, session: AsyncSession = Depends(get_session)):
     new_log = CostLog(
         date = entry.date,
         service = entry.service,
