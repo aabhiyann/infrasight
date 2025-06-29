@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+# Table structure definitions
 class CostLog(Base):
     __tablename__ = "cost_logs"
 
@@ -11,4 +12,3 @@ class CostLog(Base):
     service = Column(String, nullable=False)
     amount = Column(Float, nullable=False)
 
-    

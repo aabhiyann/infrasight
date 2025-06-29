@@ -5,9 +5,12 @@ import random
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date, timedelta
-
+from routes import log
 
 app = FastAPI()
+
+app.include_router(log.router, prefix="/api")
+
 
 def load_cost_data():
     file_path = Path(__file__).parent / "aws" / "mock_cost_data.json"

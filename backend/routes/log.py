@@ -8,6 +8,7 @@ from schemas import LogCreate
 
 router = APIRouter()
 
+# entry: uysed to validate; not for db
 @router.post("/log")
 async def create_log(entry: LogCreate, session: AsyncSesion = Depends(get_session)):
     new_log = CostLog(
