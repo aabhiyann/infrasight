@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 def load_cost_data():
-    file_path = Path(__file__).parent / "aws" / "mock_cost_data.json"
+    file_path = Path(__file__).parent.parent / "aws" / "mock_cost_data.json"
     with open(file_path, "r") as f:
         return json.load(f)
 
