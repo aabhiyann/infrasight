@@ -4,13 +4,14 @@ from sqlalchemy.pool import NullPool
 from dotenv import load_dotenv
 import os
 
+from models import Base
 
 # Loading environment variables
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Creating Async Engine
+# Creating Async Engine (Connection engine)
 engine = create_async_engine(DATABASE_URL, echo=True, poolclass=NullPool)
 
 # Creating Async Session Factory
