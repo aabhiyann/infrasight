@@ -7,7 +7,7 @@ from pydantic import BaseModel
 router = APIRouter()
 
 # modify this later to forecast from any start_date, not just today 
-@router.get("/api/forecast")
+@router.get("/forecast")
 def forecast_costs(days: Optional[int] = 7):
     try:
         days = int(days)
@@ -35,7 +35,7 @@ class RecommendationRequest(BaseModel):
     max_budget: Optional[float] = None
 
 # recommendations to reduce cose. Change this later to actual function
-@router.post("/api/recommendations")
+@router.post("/recommendations")
 def get_recommendations(request: RecommendationRequest):
     try:
         tips = []

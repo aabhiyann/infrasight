@@ -1,9 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query
-import json
-import random
-from pydantic import BaseModel
-from typing import Optional
-from datetime import date, timedelta
+from fastapi import FastAPI
 from routes import log, insights, mock_data
 
 

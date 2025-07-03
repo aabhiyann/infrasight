@@ -25,7 +25,7 @@ async def get_mock_data():
     }
 
 
-@router.get("/api/cost")
+@router.get("/cost")
 def get_formatted_cost_data():
     try:
         raw_data = load_cost_data()
@@ -61,7 +61,7 @@ class CostFilter(BaseModel):
     start_date: Optional[date] = None
     end_date: Optional[date] = None
 
-@router.post("/api/filter")
+@router.post("/filter")
 def filter_costs(
     filter: CostFilter,
     limit: Optional[int] = Query(None, gt=0),
@@ -118,7 +118,7 @@ def filter_costs(
 
 
 
-@router.get("/api/services")
+@router.get("/services")
 def get_unique_services():
     try:
         raw_data = load_cost_data()
@@ -140,7 +140,7 @@ def get_unique_services():
     return {"services": sorted(list(services))}
 
 # route to get summary
-@router.get('/api/summary')
+@router.get('/summary')
 def get_service_summary():
     try:
         raw_data = load_cost_data()
@@ -175,7 +175,7 @@ class DateRange(BaseModel):
     start_date: Optional[date] = None
     end_date: Optional[date] = None
 
-@router.post("/api/top-service")
+@router.post("/top-service")
 def get_top_service(date_range: DateRange):
     try:
         raw_data = load_cost_data()
