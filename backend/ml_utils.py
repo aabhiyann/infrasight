@@ -25,7 +25,7 @@ def preprocess_cost_data(raw_data: Dict) -> pd.DataFrame:
     pivot_df = df.pivot(index="date", columns="service", values="amount").fillna(0)
     return pivot_df
 
-# Step 2: Perform clustering
+# Perform clustering
 def cluster_costs(raw_data: Dict, n_clusters: int = 3) -> Dict:
     pivot_df = preprocess_cost_data(raw_data)
 
