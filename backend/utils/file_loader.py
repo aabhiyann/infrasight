@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 def load_mock_cost_data() -> dict:
-    file_path = Path(__file__).parents[1]/ "routes" / "mock_data" / "aws" / "mock_cost_data.json"
+    file_path = Path(__file__).parents[1]/ "aws" / "mock_cost_data.json"
 
     try:
         with open(file_path, "r") as f:
