@@ -4,14 +4,10 @@ from pathlib import Path
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
+from utils.file_loader import load_mock_cost_data
 
 router = APIRouter()
 
-
-def load_cost_data():
-    file_path = Path(__file__).parent.parent / "aws" / "mock_cost_data.json"
-    with open(file_path, "r") as f:
-        return json.load(f)
 
 # Cost function
 # 1. get the cost data
@@ -28,7 +24,7 @@ async def get_mock_data():
 @router.get("/cost")
 def get_formatted_cost_data():
     try:
-        raw_data = load_cost_data()
+        raw_data = load_mock_cost_data()
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Mock cost data file not found.")
     except json.JSONDecodeError:
@@ -68,7 +64,7 @@ def filter_costs(
     sort_by: Optional[str] = Query(None, regex="^(amount|date)$")
 ):
     try:
-        raw_data = load_cost_data()
+        raw_data = load_mock_cost_data()
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Mock cost data file not found.")
     except json.JSONDecodeError:
@@ -121,7 +117,7 @@ def filter_costs(
 @router.get("/services")
 def get_unique_services():
     try:
-        raw_data = load_cost_data()
+        raw_data = load_mock_cost_data()
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Mock cost data file not found.")
     except json.JSONDecodeError:
@@ -143,7 +139,7 @@ def get_unique_services():
 @router.get('/summary')
 def get_service_summary():
     try:
-        raw_data = load_cost_data()
+        raw_data = load_mock_cost_data()
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Mock cost data not found")
     except json.JSONDecodeError:
@@ -178,7 +174,7 @@ class DateRange(BaseModel):
 @router.post("/top-service")
 def get_top_service(date_range: DateRange):
     try:
-        raw_data = load_cost_data()
+        raw_data = load_mock_cost_data()
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Mock cost data file not found.")
     except json.JSONDecodeError:
