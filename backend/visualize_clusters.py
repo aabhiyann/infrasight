@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import numpy as np
 from sklearn.decomposition import PCA
 from utils.file_loader import load_mock_cost_data
 from ml_utils import cluster_costs
@@ -10,7 +12,7 @@ def plot_clusters():
     result = cluster_costs(raw_data)
     vectors = result['service_vectors'] # Dict[service][date] = amount
 
-    # step 2: comvert to dataframe
+    # step 2: convert to dataframe
     df = pd.DataFrame(vectors)
 
     # step 3: apply PCA to reduce from n-dimensions to 2D
@@ -23,18 +25,41 @@ def plot_clusters():
         for svc in services:
             labels[svc] = cluster
 
-    colors = {"Cluster 0": "red", "Cluster 1": "blue", "Cluster 2": "green", "Cluster 3": "yellow", "Cluster 4": "purple"}
+    # Dynamically generate colors for any number of clusters
+    num_clusters = len(result["clusters"])
+    if num_clusters <= 10:
+        # Use a qualitative colormap for small number of clusters
+        colors = plt.cm.Set3(np.linspace(0, 1, num_clusters))
+    else:
+        # Use a continuous colormap for large number of clusters
+        colors = plt.cm.viridis(np.linspace(0, 1, num_clusters))
+    
+    # Create color mapping
+    cluster_colors = {}
+    for i, cluster_name in enumerate(result["clusters"].keys()):
+        cluster_colors[cluster_name] = colors[i]
+
+    # Plot each service
     for i, svc in enumerate(df.index):
         cluster = labels.get(svc, "Unknown")
-        plt.scatter(reduced[i, 0], reduced[i, 1], color=colors.get(cluster, "gray"), label=cluster)
+        color = cluster_colors.get(cluster, "gray")
+        plt.scatter(reduced[i, 0], reduced[i, 1], color=color, label=cluster)
         plt.text(reduced[i, 0], reduced[i, 1], svc, fontsize=8)
 
-    plt.title("AWS Service Clusters (via KMeans + PCA)")
+    plt.title(f"AWS Service Clusters (via KMeans + PCA) - {num_clusters} Clusters")
     plt.xlabel("Component 1")
     plt.ylabel("Component 2")
-    handles = [plt.Line2D([0], [0], marker='o', color='w', label=c, markerfacecolor=clr, markersize=10)
-               for c, clr in colors.items()]
-    plt.legend(handles=handles)
+    
+    # Create legend with unique cluster names
+    unique_clusters = list(set(labels.values()))
+    handles = []
+    for cluster in unique_clusters:
+        if cluster in cluster_colors:
+            handles.append(plt.Line2D([0], [0], marker='o', color='w', 
+                                     label=cluster, markerfacecolor=cluster_colors[cluster], 
+                                     markersize=10))
+    
+    plt.legend(handles=handles, loc='best', bbox_to_anchor=(1.05, 1))
     plt.grid(True)
     plt.tight_layout()
     plt.show()
