@@ -64,7 +64,7 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
         std = values.std()
 
         # Avoid division by zero (eg. if all values are the same)
-        if std = 0 :
+        if std == 0 :
             continue
 
         z_scores = (values - mean) / std
