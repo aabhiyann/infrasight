@@ -59,4 +59,14 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
     anomalies = {}
 
     for service in pivot_df.columns:
+        values = pivot_df[service]
+        mean = values.mean()
+        std = values.std()
+
+        # Avoid division by zero (eg. if all values are the same)
+        if std = 0 :
+            continue
+
+        z_scores = (values - mean) / std
+
         
