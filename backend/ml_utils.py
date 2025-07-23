@@ -44,3 +44,19 @@ def cluster_costs(raw_data: Dict, n_clusters: int = 3) -> Dict:
         "clusters": cluster_map,
         "service_vectors": pivot_df.T.to_dict()
     }
+
+# Detecting anomalies using z-score
+def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List[Dict]]:
+    """
+    For each AWS service, detect days with anomalous cost behavior.
+    Flags both high and low anomalies using z-score method.
+
+    Returns:
+        A dictionary: service_name -> list of anomaly records (date, amount, z-score)
+    """
+    pivot_df = preprocess_cost_data(raw_data) # rows = dates, columns = services
+
+    anomalies = {}
+
+    for service in pivot_df.columns:
+        
