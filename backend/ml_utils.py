@@ -69,4 +69,16 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
 
         z_scores = (values - mean) / std
 
-        
+        # Find anomalies where |z| > threshold
+        for date, z in z_scores.items():
+            if abs(z) >= z_threshold:
+                anomalies.setdefault(service, []).append({
+                    "date": date,
+                    "amount": float(pivot_df.loc[date, service]),
+                    "z_score": round(float(z), 2)
+                })
+
+    return anomalies
+
+
+
