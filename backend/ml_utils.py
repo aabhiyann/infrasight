@@ -47,6 +47,7 @@ def cluster_costs(raw_data: Dict, n_clusters: int = 3) -> Dict:
 
 # Detecting anomalies using z-score
 def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List[Dict]]:
+    # TODO: Add a check to ensure the raw_data is not empty
     """
     For each AWS service, detect days with anomalous cost behavior.
     Flags both high and low anomalies using z-score method.
@@ -68,6 +69,15 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
             continue
 
         z_scores = (values - mean) / std
+
+        # Print the z-scores for each service (todo: remove this later{just for checking})
+        print("\n📊 Sample Z-Scores Table:\n")
+        for service, service_scores in z_scores.items():
+            print(f"🔹 {service}")
+            for date, z in service_scores.items():
+                print(f"   🗓️ {date}: z-score = {z:.2f}")
+            print()  # blank line between services
+
 
         # Find anomalies where |z| > threshold
         for date, z in z_scores.items():
