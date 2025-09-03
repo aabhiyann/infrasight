@@ -71,12 +71,11 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
         z_scores = (values - mean) / std
 
         # Print the z-scores for each service (todo: remove this later{just for checking})
-        print("\n📊 Sample Z-Scores Table:\n")
-        for service, service_scores in z_scores.items():
-            print(f"🔹 {service}")
-            for date, z in service_scores.items():
-                print(f"   🗓️ {date}: z-score = {z:.2f}")
-            print()  # blank line between services
+        # print("\nSample Z-Scores Table:\n")
+        # print(f"\nZ-Scores for {service}:")
+        # for date, z in z_scores.items():
+        #    print(f"{date}: z-score = {z:.2f}")
+        # print()  
 
 
         # Find anomalies where |z| > threshold

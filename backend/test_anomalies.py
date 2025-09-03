@@ -1,15 +1,18 @@
 from utils.file_loader import load_mock_cost_data
 from ml_utils import detect_anomalies
 
-# Load mock data
+# Step 1: Load AWS cost data
 data = load_mock_cost_data()
 
-# Run anomaly detection
+# Step 2: Run anomaly detection
 anomalies = detect_anomalies(data, z_threshold=2.0)
 
-# Print results
+# Step 3: Print the results
 print("\n🚨 Detected Anomalies:")
-for service, records in anomalies.items():
-    print(f"\n🔍 {service}")
-    for record in records:
-        print(f"  🗓️ {record['date']} | 💰 ${record['amount']} | z-score: {record['z_score']}")
+if not anomalies:
+    print("✅ No anomalies found in the dataset!")
+else:
+    for service, records in anomalies.items():
+        print(f"\n🔍 {service}")
+        for record in records:
+            print(f"  🗓️ {record['date']} | 💰 ${record['amount']} | z-score: {record['z_score']}")
