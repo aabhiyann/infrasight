@@ -54,4 +54,5 @@ def plot_anomalies(z_threshold: float = 2.0):
     plt.show()
 
 if __name__ == "__main__":
-    plot_anomalies(z_threshold=2.0)
+    plot_anomalies(z_threshold=1.4
+                   )
