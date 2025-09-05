@@ -1,7 +1,9 @@
 import pandas as pd
 from sklearn.cluster import KMeans
-from datetime import datetime
+from sklearn.linear_model import LinearRegression
 from typing import List, Dict
+from sklearn.linear_model import LinearRegression
+
 
 # Format raw cost data into a Pandas DataFrame
 def preprocess_cost_data(raw_data: Dict) -> pd.DataFrame:
@@ -88,6 +90,59 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
                 })
 
     return anomalies
+
+
+def forecast_costs(data: List[Dict], n_days: int = 7) -> List[Dict[str, float]]:
+    """
+    Forecast AWS cost for the next n_days using linear regression.
+    
+    Args:
+        data: List of cost records (from mock file or real source)
+        n_days: How many future days to forecast (default = 7)
+        
+    Returns:
+        List of predicted daily costs, each with:
+        - date: str (YYYY-MM-DD)
+        - predicted_cost: float
+    """
+    
+    # Convert raw data to DataFrame
+    df = pd.DataFrame(data)
+    
+    # Convert date string to datetime object
+    df['date'] = pd.to_datetime(df['date'])
+
+    #Group by date and sum costs (in case multiple services per day)
+    daily_totals = df.groupby('date')['amount'].sum().reset_index()
+
+    # Create a "day number" column (0, 1, 2, ...)
+    daily_totals['day_number'] = (daily_totals['date'] - daily_totals['date'].min()).dt.days
+
+    # Prepare X and y for regression
+    X = daily_totals[['day_number']]  # 2D input for sklearn
+    y = daily_totals['amount']        # Target: cost
+
+    # Train linear regression model
+    model = LinearRegression()
+    model.fit(X, y)
+
+    # Forecast next n_days
+    last_day = daily_totals['day_number'].max()
+    future_days = list(range(last_day + 1, last_day + 1 + n_days))
+
+    predictions = model.predict([[day] for day in future_days])
+
+    # Build result list with future dates
+    last_date = daily_totals['date'].max()
+    results = []
+    for i, pred in enumerate(predictions):
+        forecast_date = last_date + timedelta(days=i+1)
+        results.append({
+            "date": forecast_date.strftime("%Y-%m-%d"),
+            "predicted_cost": round(pred, 2)
+        })
+
+    return results
 
 
 
