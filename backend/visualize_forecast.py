@@ -4,7 +4,7 @@ import matplotlib.dates as mdates
 from datetime import datetime
 
 # === CONFIG ===
-API_URL = "http://localhost:8000/api/forecast"  # Adjust if needed
+API_URL = "http://localhost:8000/api/forecast"  # Main forecasting endpoint
 
 N_DAYS = 7
 SERVICE = None  # Or set to a specific service like "AmazonEC2"
