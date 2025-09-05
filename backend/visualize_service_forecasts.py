@@ -12,17 +12,17 @@ N_DAYS = 7
 SERVICE = None  # Set to specific service name or None for all services
 
 # === FETCH AVAILABLE SERVICES ===
-print("🔍 Fetching available services...")
+print("Fetching available services...")
 services_response = requests.get(SERVICES_URL)
 if services_response.status_code != 200:
-    print(f"❌ Error fetching services: {services_response.status_code}")
+    print(f"Error fetching services: {services_response.status_code}")
     exit()
 
 available_services = services_response.json()["services"]
-print(f"📋 Available services: {available_services}")
+print(f"Available services: {available_services}")
 
 # === FETCH FORECAST DATA ===
-print(f"📊 Fetching forecast data for {N_DAYS} days...")
+print(f"Fetching forecast data for {N_DAYS} days...")
 params = {"n_days": N_DAYS}
 if SERVICE:
     params["service"] = SERVICE
@@ -30,7 +30,7 @@ if SERVICE:
 response = requests.get(API_URL, params=params)
 
 if response.status_code != 200:
-    print(f"❌ Error fetching forecast: {response.status_code}")
+    print(f"Error fetching forecast: {response.status_code}")
     print(response.json())
     exit()
 
@@ -41,7 +41,7 @@ service_forecasts = data.get("service_forecasts", {})
 total_forecast = data.get("total_forecast", [])
 summary = data.get("summary", {})
 
-print(f"✅ Forecast data received:")
+print(f"Forecast data received:")
 print(f"   - Services forecasted: {summary.get('services_forecasted', 0)}")
 print(f"   - Total forecast cost: ${summary.get('total_forecast_cost', 0):.2f}")
 print(f"   - Average daily cost: ${summary.get('average_daily_cost', 0):.2f}")
@@ -78,15 +78,15 @@ if SERVICE:
         
         plt.tight_layout()
         plt.savefig(f"forecast_{SERVICE.lower().replace(' ', '_')}.png", dpi=300, bbox_inches='tight')
-        print(f"✅ {SERVICE} forecast plot saved as forecast_{SERVICE.lower().replace(' ', '_')}.png")
+        print(f"{SERVICE} forecast plot saved as forecast_{SERVICE.lower().replace(' ', '_')}.png")
         
     else:
-        print(f"❌ Service '{SERVICE}' not found in forecast data")
+        print(f"Service '{SERVICE}' not found in forecast data")
         
 else:
     # Multi-service visualization
     if not service_forecasts:
-        print("❌ No service forecast data available")
+        print("No service forecast data available")
         exit()
     
     # Create subplots for each service
@@ -141,7 +141,7 @@ else:
     plt.suptitle(f"AWS Service Cost Forecasts (Next {N_DAYS} Days)", fontsize=16, fontweight='bold')
     plt.tight_layout()
     plt.savefig("service_forecasts.png", dpi=300, bbox_inches='tight')
-    print("✅ Multi-service forecast plot saved as service_forecasts.png")
+    print("Multi-service forecast plot saved as service_forecasts.png")
     
     # Also create a total forecast plot
     if total_forecast:
@@ -171,6 +171,6 @@ else:
         
         plt.tight_layout()
         plt.savefig("total_forecast.png", dpi=300, bbox_inches='tight')
-        print("✅ Total forecast plot saved as total_forecast.png")
+        print("Total forecast plot saved as total_forecast.png")
 
-print("\n🎉 Visualization complete!")
+print("\nVisualization complete!")

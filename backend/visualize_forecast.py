@@ -17,7 +17,7 @@ if SERVICE:
 response = requests.get(API_URL, params=params)
 
 if response.status_code != 200:
-    print(f"❌ Error fetching forecast: {response.status_code}")
+    print(f"Error fetching forecast: {response.status_code}")
     print(response.json())
     exit()
 
@@ -49,4 +49,4 @@ plt.gcf().autofmt_xdate()
 # === SAVE ===
 plt.tight_layout()
 plt.savefig("forecast_plot.png")
-print("✅ Forecast plot saved as forecast_plot.png")
+print("Forecast plot saved as forecast_plot.png")
