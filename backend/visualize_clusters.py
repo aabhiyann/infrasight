@@ -52,9 +52,8 @@ def plot_clusters():
         cluster = labels.get(svc, "Unknown")
         color = cluster_colors.get(cluster, "gray")
         marker = markers[hash(cluster) % len(markers)]
-        # Reduce marker size for high cluster counts
         if num_clusters > 30:
-            size = total_cost[svc] * 15  # Smaller for less overlap
+            size = total_cost[svc] * 15
         else:
             size = total_cost[svc] * 50
 
@@ -94,8 +93,6 @@ def plot_clusters():
     else:
         print("[Info] Legend skipped due to high cluster count.")
     plt.tight_layout()
-    
-    # Save the plot
     plt.savefig("cluster_plot.png", dpi=300)
     plt.show()
 
