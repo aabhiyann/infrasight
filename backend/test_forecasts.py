@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from utils.file_loader import load_mock_cost_data
-from ml_utils import forecast_costs_advanced, forecast_costs, preprocess_cost_data
+from ml_utils import forecast_costs, preprocess_cost_data
 
 def test_forecasting():
     """Test the new forecasting functionality."""
@@ -44,7 +44,7 @@ def test_forecasting():
     print("🔮 Advanced Forecasting (7 days)")
     print("-" * 30)
     
-    advanced_result = forecast_costs_advanced(data, n_days=7)
+    advanced_result = forecast_costs(data, n_days=7)
     
     print(f"📈 Summary:")
     summary = advanced_result['summary']
@@ -77,21 +77,13 @@ def test_forecasting():
     
     print()
     
-    # Compare with legacy method
-    print("🔄 Comparing with Legacy Method:")
+    # Show total forecast
+    print("💰 Total Forecast Summary:")
     print("-" * 30)
     
-    legacy_result = forecast_costs(data, n_days=7)
-    legacy_total = sum(pred['predicted_cost'] for pred in legacy_result)
-    advanced_total = sum(pred['predicted_cost'] for pred in advanced_result['total_forecast'])
-    
-    print(f"   Legacy total: ${legacy_total:.2f}")
-    print(f"   Advanced total: ${advanced_total:.2f}")
-    print(f"   Difference: ${advanced_total - legacy_total:.2f}")
-    
-    if legacy_total > 0:
-        percentage_diff = ((advanced_total - legacy_total) / legacy_total) * 100
-        print(f"   Percentage difference: {percentage_diff:.1f}%")
+    total_cost = sum(pred['predicted_cost'] for pred in advanced_result['total_forecast'])
+    print(f"   Total forecast cost: ${total_cost:.2f}")
+    print(f"   Average daily cost: ${total_cost/7:.2f}")
     
     print()
     print("✅ Forecasting test completed!")

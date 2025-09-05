@@ -96,9 +96,9 @@ def detect_anomalies(raw_data: Dict, z_threshold: float = 2.0) -> Dict[str, List
     return anomalies
 
 
-def forecast_costs_advanced(data: List[Dict], n_days: int = 7) -> Dict[str, List[Dict]]:
+def forecast_costs(data: List[Dict], n_days: int = 7) -> Dict[str, List[Dict]]:
     """
-    Advanced AWS cost forecasting with service-level predictions and confidence intervals.
+    AWS cost forecasting with service-level predictions and confidence intervals.
     
     Args:
         data: List of cost records (from mock file or real source)
@@ -235,22 +235,6 @@ def forecast_costs_advanced(data: List[Dict], n_days: int = 7) -> Dict[str, List
         "summary": summary
     }
 
-def forecast_costs(data: List[Dict], n_days: int = 7) -> List[Dict[str, float]]:
-    """
-    Legacy function - kept for backward compatibility.
-    Use forecast_costs_advanced() for better predictions.
-    """
-    advanced_result = forecast_costs_advanced(data, n_days)
-    
-    # Convert to legacy format
-    legacy_results = []
-    for pred in advanced_result['total_forecast']:
-        legacy_results.append({
-            "date": pred['date'],
-            "predicted_cost": pred['predicted_cost']
-        })
-    
-    return legacy_results
 
 
 

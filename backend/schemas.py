@@ -16,7 +16,7 @@ class LogResponse(BaseModel):
 
 # This tells Pydantic to read from SQLAlchemy objects
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # Anomaly detection response schemas
 class AnomalyPoint(BaseModel):

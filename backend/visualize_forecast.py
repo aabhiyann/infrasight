@@ -5,6 +5,7 @@ from datetime import datetime
 
 # === CONFIG ===
 API_URL = "http://localhost:8000/api/forecast"  # Adjust if needed
+
 N_DAYS = 7
 SERVICE = None  # Or set to a specific service like "AmazonEC2"
 
@@ -21,6 +22,8 @@ if response.status_code != 200:
     exit()
 
 data = response.json()
+print("DEBUG: Full API Response:")
+print(data)
 
 forecast = data["total_forecast"]
 
