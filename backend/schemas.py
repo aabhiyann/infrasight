@@ -45,3 +45,24 @@ class ThresholdSummary(BaseModel):
 class AnomalySummaryResponse(BaseModel):
     threshold_summary: Dict[str, ThresholdSummary]
     status: str
+
+# Forecasting response schemas
+class ForecastPoint(BaseModel):
+    date: str
+    predicted_cost: float
+    confidence_lower: float
+    confidence_upper: float
+    confidence_interval: float
+
+class ForecastSummary(BaseModel):
+    total_forecast_cost: float
+    average_daily_cost: float
+    forecast_period_days: int
+    services_forecasted: int
+    services: List[str]
+
+class ForecastResponse(BaseModel):
+    service_forecasts: Dict[str, List[ForecastPoint]]
+    total_forecast: List[ForecastPoint]
+    summary: ForecastSummary
+    status: str
