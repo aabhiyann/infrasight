@@ -235,7 +235,6 @@ def forecast_costs_advanced(data: List[Dict], n_days: int = 7) -> Dict[str, List
         "summary": summary
     }
 
-
 def forecast_costs(data: List[Dict], n_days: int = 7) -> List[Dict[str, float]]:
     """
     Legacy function - kept for backward compatibility.
