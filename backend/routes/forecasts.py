@@ -75,7 +75,7 @@ async def get_cost_forecast(n_days: int = 7, service: Optional[str] = None):
 
 
 @router.get("/forecast/services")
-async def get_available_services() -> Dict[str, Any]:
+async def get_available_services() -> Dict[str, List[str]]:
     """
     Get list of available services for forecasting.
     """
