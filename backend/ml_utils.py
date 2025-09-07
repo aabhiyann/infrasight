@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple
 from datetime import timedelta
 import warnings
 warnings.filterwarnings('ignore')
-from .file_loader import load_cost_data
+from utils.file_loader import load_cost_data
 
 
 # Format raw cost data into a Pandas DataFrame
@@ -266,7 +266,7 @@ def generate_recommendations(max_budget: float = None, n_clusters: int = 3) -> d
         if is_anomalous:
             reasons.append("cost spike detected")
         if max_budget and service_total > max_budget:
-            reasons.append(f"exceeds budget (${max_budget})")
+            reasons.append(f"cost exceeds budget, which is: (${max_budget})")
         if not reasons:
             reasons.append("within normal usage")
 
