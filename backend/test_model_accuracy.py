@@ -8,14 +8,13 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from utils.file_loader import load_mock_cost_data
-from ml_utils import forecast_costs_advanced
 import pandas as pd
 import numpy as np
 
 def test_model_accuracy():
     """Test how accurate our linear regression model is."""
     
-    print("🔍 Testing Linear Regression Accuracy")
+    print("-- Testing Linear Regression Accuracy --")
     print("=" * 50)
     
     # Load data
@@ -37,24 +36,24 @@ def test_model_accuracy():
     df = pd.DataFrame(data)
     df['date'] = pd.to_datetime(df['date'])
     
-    print(f"📊 Data Summary:")
-    print(f"   Total records: {len(data)}")
-    print(f"   Date range: {df['date'].min()} to {df['date'].max()}")
-    print(f"   Services: {', '.join(df['service'].unique())}")
+    print(f"-- Data Summary: --")
+    print(f"Total records: {len(data)}")
+    print(f"Date range: {df['date'].min()} to {df['date'].max()}")
+    print(f"Services: {', '.join(df['service'].unique())}")
     print()
     
     # Test accuracy for each service
     services = df['service'].unique()
     
     for service in services:
-        print(f"🎯 Testing {service}:")
+        print(f"Testing {service}:")
         
         service_data = df[df['service'] == service].copy()
         service_data = service_data.groupby('date')['amount'].sum().reset_index()
         service_data = service_data.sort_values('date')
         
         if len(service_data) < 4:
-            print(f"   ⚠️  Not enough data (need at least 4 days)")
+            print(f" Not enough data (need at least 4 days)")
             continue
         
         # Use first 80% for training, last 20% for testing
@@ -94,19 +93,19 @@ def test_model_accuracy():
         avg_actual = y_test.mean()
         percentage_error = (mae / avg_actual) * 100 if avg_actual > 0 else 0
         
-        print(f"   📈 Mean Absolute Error: ${mae:.3f}")
-        print(f"   📊 Root Mean Square Error: ${rmse:.3f}")
-        print(f"   📋 Percentage Error: {percentage_error:.1f}%")
+        print(f"   Mean Absolute Error: ${mae:.3f}")
+        print(f"   Root Mean Square Error: ${rmse:.3f}")
+        print(f"   Percentage Error: {percentage_error:.1f}%")
         
         # Determine if accuracy is good enough
         if percentage_error < 10:
-            print(f"   ✅ Excellent accuracy (< 10% error)")
+            print(f"   Excellent accuracy (< 10% error)")
         elif percentage_error < 20:
-            print(f"   ✅ Good accuracy (< 20% error)")
+            print(f"   Good accuracy (< 20% error)")
         elif percentage_error < 30:
-            print(f"   ⚠️  Acceptable accuracy (< 30% error)")
+            print(f"   Acceptable accuracy (< 30% error)")
         else:
-            print(f"   ❌ Poor accuracy (> 30% error) - consider upgrading model")
+            print(f"   Poor accuracy (> 30% error) - consider upgrading model")
         
         print()
     
