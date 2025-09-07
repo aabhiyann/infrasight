@@ -7,6 +7,7 @@ from typing import List, Dict, Tuple
 from datetime import timedelta
 import warnings
 warnings.filterwarnings('ignore')
+from .file_loader import load_cost_data
 
 
 # Format raw cost data into a Pandas DataFrame
@@ -239,3 +240,53 @@ def forecast_costs(data: List[Dict], n_days: int = 7) -> Dict[str, List[Dict]]:
 
 
 
+
+
+def generate_recommendations(max_budget: float = None, n_clusters: int = 3) -> dict:
+    raw_data = load_cost_data()
+    df = pd.DataFrame(raw_data)
+
+    # --- STEP 1: Pivot Data (rows = date, columns = service, values = cost) ---
+    pivot = df.pivot(index="date", columns="service", values="amount").fillna(0)
+
+    # --- STEP 2: Compute total cost per service ---
+    total_costs = pivot.sum().sort_values(ascending=False)
+
+    # --- STEP 3: Anomaly Detection ---
+    z_scores = (total_costs - total_costs.mean()) / total_costs.std()
+    anomalies = z_scores[z_scores > 1.4].index.tolist()
+
+    # --- STEP 4: Clustering ---
+    service_features = pivot.T  # rows = service, cols = days
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+    cluster_labels = kmeans.fit_predict(service_features)
+
+    # --- STEP 5: Build recommendations ---
+    recommendations = []
+    for i, service in enumerate(service_features.index):
+        service_total = total_costs[service]
+        is_anomalous = service in anomalies
+        cluster = int(cluster_labels[i])
+
+        reasons = []
+        if is_anomalous:
+            reasons.append("cost spike detected")
+        if max_budget and service_total > max_budget:
+            reasons.append(f"exceeds budget (${max_budget})")
+        if not reasons:
+            reasons.append("within normal usage")
+
+        recommendations.append({
+            "service": service,
+            "total_cost": round(service_total, 2),
+            "cluster": cluster,
+            "anomaly": is_anomalous,
+            "status": "⚠️ Action Recommended" if is_anomalous or (max_budget and service_total > max_budget) else "✅ OK",
+            "insights": reasons
+        })
+
+    return {
+        "recommendations": sorted(recommendations, key=lambda r: -r["total_cost"]),
+        "total_services": len(recommendations),
+        "status": "success"
+    }
