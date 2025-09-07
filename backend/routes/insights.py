@@ -6,29 +6,6 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
-# modify this later to forecast from any start_date, not just today 
-@router.get("/forecast")
-def forecast_costs(days: Optional[int] = 7):
-    try:
-        days = int(days)
-        if days <= 0 or days > 60:
-            raise ValueError("days must be between 1 and 60")
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-    forecast = []
-    base_date = date.today()
-    base_cost = 2.0
-
-    for i in range(days):
-        day = base_date + timedelta(days=i)
-        cost = round(base_cost + random.uniform(-0.3, 0.5), 2)
-        forecast.append({
-            "date": day.isoformat(),
-            "predicted_cost": cost
-        })
-
-    return {"forecast": forecast}
 
 class RecommendationRequest(BaseModel):
     service: Optional[str] = None
