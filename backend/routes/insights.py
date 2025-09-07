@@ -11,9 +11,9 @@ class RecommendationRequest(BaseModel):
     service: Optional[str] = None
     max_budget: Optional[float] = None
 
-# recommendations to reduce cose. Change this later to actual function
-@router.post("/recommendations")
-def get_recommendations(request: RecommendationRequest):
+# recommendations to reduce cost (basic/static). Kept under a different path to avoid conflict
+@router.post("/recommendations/basic")
+def get_basic_recommendations(request: RecommendationRequest):
     try:
         tips = []
         tips.append("Enable AWS Budgets to track overspending in real time.")

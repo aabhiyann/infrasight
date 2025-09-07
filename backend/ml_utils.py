@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple
 from datetime import timedelta
 import warnings
 warnings.filterwarnings('ignore')
-from utils.file_loader import load_cost_data
+from utils.file_loader import load_mock_cost_data
 
 
 # Format raw cost data into a Pandas DataFrame
@@ -237,10 +237,19 @@ def forecast_costs(data: List[Dict], n_days: int = 7) -> Dict[str, List[Dict]]:
     }
 
 def generate_recommendations(max_budget: float = None, n_clusters: int = 3) -> dict:
-    raw_data = load_cost_data()
-    df = pd.DataFrame(raw_data)
+    # Load AWS-style mock data and flatten to a tabular format
+    raw_data = load_mock_cost_data()
+    records = []
+    for day in raw_data.get("ResultsByTime", []):
+        date_str = day["TimePeriod"]["Start"]
+        for group in day.get("Groups", []):
+            service = group["Keys"][0]
+            amount = float(group["Metrics"]["UnblendedCost"]["Amount"])
+            records.append({"date": date_str, "service": service, "amount": amount})
 
-    # Pivot Data (rows = date, columns = service, values = cost) 
+    df = pd.DataFrame(records)
+
+    # Pivot Data (rows = date, columns = service, values = cost)
     pivot = df.pivot(index="date", columns="service", values="amount").fillna(0)
 
     # Compute total cost per service

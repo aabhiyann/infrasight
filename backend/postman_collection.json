@@ -1,0 +1,114 @@
+{
+  "info": {
+    "name": "InfraSight API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /api/mock-data",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/mock-data" }
+    },
+    {
+      "name": "GET /api/cost",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/cost" }
+    },
+    {
+      "name": "POST /api/filter",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/filter",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service\": null,\n  \"min_amount\": 10,\n  \"start_date\": null,\n  \"end_date\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "GET /api/forecast",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/forecast?n_days=7" }
+    },
+    {
+      "name": "GET /api/forecast/services",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/forecast/services" }
+    },
+    {
+      "name": "GET /api/forecast/compare",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/forecast/compare?n_days=7"
+      }
+    },
+    {
+      "name": "POST /api/recommendations",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/recommendations?max_budget=100"
+      }
+    },
+    {
+      "name": "POST /api/recommendations/basic",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/recommendations/basic",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service\": \"Amazon EC2\",\n  \"max_budget\": 100\n}"
+        }
+      }
+    },
+    {
+      "name": "GET /api/services",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/services" }
+    },
+    {
+      "name": "GET /api/summary",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/summary" }
+    },
+    {
+      "name": "POST /api/top-service",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/top-service",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start_date\": null,\n  \"end_date\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "POST /api/log",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/log",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2024-01-01\",\n  \"service\": \"Amazon EC2\",\n  \"amount\": 12.34\n}"
+        }
+      }
+    },
+    {
+      "name": "GET /api/logs",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/logs" }
+    },
+    {
+      "name": "GET /api/clusters",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/clusters" }
+    },
+    {
+      "name": "GET /api/anomalies",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/anomalies?z_threshold=1.5"
+      }
+    },
+    {
+      "name": "GET /api/anomalies/summary",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/anomalies/summary" }
+    }
+  ],
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:8000" }]
+}

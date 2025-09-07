@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from typing import Optional
-from ..ml_utils import generate_recommendations
+from ml_utils import generate_recommendations
 
 router = APIRouter()
 
