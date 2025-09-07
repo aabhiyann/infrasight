@@ -26,4 +26,4 @@ jobs:
       - name: Run tests
         run: |
           source venv/bin/activate
-          pytest -q backend/test_endpoints.py || pytest -q
+          pytest -q test_endpoints.py || pytest -q
