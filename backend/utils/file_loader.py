@@ -14,7 +14,7 @@ def load_mock_cost_data() -> dict:
 
 
 def load_mock_cost_data_flat() -> pd.DataFrame:
-    """Returns flattened AWS cost data as a DataFrame with date, service, amount columns."""
+    # Returns flattened AWS cost data as a DataFrame with date, service, amount columns.
     raw_data = load_mock_cost_data()
     records = []
 
