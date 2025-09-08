@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+import pandas as pd
+from fastapi import HTTPException
 
 def load_mock_cost_data() -> dict:
     file_path = Path(__file__).parents[1]/ "aws" / "mock_cost_data.json"

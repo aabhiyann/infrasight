@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations
+from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations, ml_data
 
 
 app = FastAPI()
@@ -11,6 +11,7 @@ app.include_router(clusters.router, prefix="/api")
 app.include_router(anomalies.router, prefix="/api")
 app.include_router(forecasts.router, prefix="/api")
 app.include_router(recommendations.router, prefix="/api")
+app.include_router(ml_data.router, prefix="/api")
 
 
 
