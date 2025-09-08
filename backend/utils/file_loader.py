@@ -16,21 +16,40 @@ def load_mock_cost_data() -> dict:
 
 
 def load_mock_cost_data_flat() -> pd.DataFrame:
-    # Returns flattened AWS cost data as a DataFrame with date, service, amount columns.
+    """
+    Returns flattened AWS cost data as a DataFrame with date, service, amount columns.
+    
+    Performs data cleaning:
+    - Flattens nested AWS cost structure
+    - Converts dates to datetime
+    - Removes zero/negative amounts
+    - Sorts by date
+    """
     raw_data = load_mock_cost_data()
     records = []
 
     for day in raw_data.get("ResultsByTime", []):
-        date = day["TimePeriod"]["Start"]
-        for group in day["Groups"]:
+        date_str = day["TimePeriod"]["Start"]
+        for group in day.get("Groups", []):
             service = group["Keys"][0]
             amount = float(group["Metrics"]["UnblendedCost"]["Amount"])
-            records.append({
-                "date": date,
-                "service": service,
-                "amount": amount
-            })
+            
+            # Skip zero or negative amounts (data cleaning)
+            if amount > 0:
+                records.append({
+                    "date": date_str,
+                    "service": service,
+                    "amount": amount
+                })
+
+    if not records:
+        # Return empty DataFrame with correct structure
+        return pd.DataFrame(columns=["date", "service", "amount"])
 
     df = pd.DataFrame(records)
     df['date'] = pd.to_datetime(df['date'])
+    
+    # Sort by date for consistent ordering
+    df = df.sort_values('date').reset_index(drop=True)
+    
     return df
