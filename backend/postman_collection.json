@@ -108,6 +108,17 @@
     {
       "name": "GET /api/anomalies/summary",
       "request": { "method": "GET", "url": "{{baseUrl}}/api/anomalies/summary" }
+    },
+    {
+      "name": "GET /api/ml/cleaned-costs",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/ml/cleaned-costs" }
+    },
+    {
+      "name": "GET /api/ml/cleaned-costs (filtered)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/ml/cleaned-costs?service=Amazon EC2&start_date=2024-01-01&end_date=2024-01-31&min_amount=10&sort_by=amount&sort_order=desc&limit=50"
+      }
     }
   ],
   "variable": [{ "key": "baseUrl", "value": "http://localhost:8000" }]
