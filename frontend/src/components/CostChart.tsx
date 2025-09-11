@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LineChart,
   Line,
@@ -14,7 +13,7 @@ interface Props {
   data: CostRecord[];
 }
 
-const CostChart: React.FC<Props> = ({ data }) => {
+const CostChart = ({ data }: Props) => {
   // Transform raw data into total cost per day
   const dailyTotals = data.reduce((acc: Record<string, number>, entry) => {
     acc[entry.date] = (acc[entry.date] || 0) + entry.amount;

@@ -1,11 +1,10 @@
-import React from "react";
 import type { CostRecord } from "../api/costApi";
 
 interface Props {
   data: CostRecord[];
 }
 
-const HeatmapServiceTrends: React.FC<Props> = ({ data }) => {
+const HeatmapServiceTrends = ({ data }: Props) => {
   // Step 1: Get unique dates and services
   const dates = Array.from(new Set(data.map((item) => item.date))).sort();
   const services = Array.from(new Set(data.map((item) => item.service))).sort();
