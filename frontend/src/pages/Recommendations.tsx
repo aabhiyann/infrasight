@@ -6,6 +6,8 @@ import {
 import { fetchAvailableServices } from "../api/forecastApi";
 import ServiceSelector from "../components/ServiceSelector";
 import RecommendationTable from "../components/RecommendationTable";
+import Skeleton from "../components/Skeleton";
+import EmptyState from "../components/EmptyState";
 
 const Recommendations = () => {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -71,7 +73,16 @@ const Recommendations = () => {
 
       {/* Results */}
       {loading ? (
-        <p>Loading recommendations...</p>
+        <div className="card">
+          <Skeleton height={220} />
+        </div>
+      ) : recommendations.length === 0 ? (
+        <div className="card">
+          <EmptyState
+            title="No recommendations"
+            message="Adjust filters or try another service."
+          />
+        </div>
       ) : (
         <div className="card">
           <RecommendationTable recommendations={recommendations} />

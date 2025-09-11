@@ -46,6 +46,13 @@ const DashboardLayout = () => {
           <span className="sr-only">Menu</span>
         </button>
         <Outlet />
+        <footer className="app-footer">
+          <span>InfraSight</span>
+          <span style={{ marginLeft: 8, marginRight: 8 }}>•</span>
+          <span>Version: {import.meta.env.VITE_APP_VERSION || "0.1.0"}</span>
+          <span style={{ marginLeft: 8, marginRight: 8 }}>•</span>
+          <span>Env: {import.meta.env.MODE}</span>
+        </footer>
       </main>
     </div>
   );

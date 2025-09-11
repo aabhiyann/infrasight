@@ -171,11 +171,22 @@ h4 {
   background: var(--color-bg);
 }
 
+.table--sticky thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 .table th,
 .table td {
   padding: 10px 12px;
   border: 1px solid var(--color-border);
   text-align: left;
+}
+
+.table--compact th,
+.table--compact td {
+  padding: 6px 8px;
 }
 
 .table tbody tr:hover {
@@ -266,6 +277,29 @@ h4 {
 .empty-icon {
   font-size: 2rem;
   opacity: 0.7;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-bottom: 0.25rem;
+}
+.breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.app-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.85rem;
 }
 
 .chart-container {
