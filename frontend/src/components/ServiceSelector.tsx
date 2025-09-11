@@ -6,11 +6,10 @@ interface Props {
 
 const ServiceSelector = ({ services, selectedService, onChange }: Props) => {
   return (
-    <div style={{ marginBottom: "1rem" }}>
-      <label htmlFor="service-select" style={{ marginRight: "1rem" }}>
-        Select Service:
-      </label>
+    <div className="toolbar">
+      <label htmlFor="service-select">Select Service:</label>
       <select
+        className="select"
         id="service-select"
         value={selectedService}
         onChange={(e) => onChange(e.target.value)}

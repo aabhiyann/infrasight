@@ -68,78 +68,22 @@ const AnomalyChart = ({
       {/* Summary Table */}
       <div style={{ marginTop: "2rem" }}>
         <h4>Anomaly Details</h4>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table className="table">
           <thead>
-            <tr style={{ backgroundColor: "var(--color-bg)" }}>
-              <th
-                style={{
-                  padding: "8px",
-                  border: "1px solid var(--color-border)",
-                }}
-              >
-                Date
-              </th>
-              <th
-                style={{
-                  padding: "8px",
-                  border: "1px solid var(--color-border)",
-                }}
-              >
-                Service
-              </th>
-              <th
-                style={{
-                  padding: "8px",
-                  border: "1px solid var(--color-border)",
-                }}
-              >
-                Amount
-              </th>
-              <th
-                style={{
-                  padding: "8px",
-                  border: "1px solid var(--color-border)",
-                }}
-              >
-                Z-Score
-              </th>
+            <tr>
+              <th>Date</th>
+              <th>Service</th>
+              <th>Amount</th>
+              <th>Z-Score</th>
             </tr>
           </thead>
           <tbody>
             {data.map((anomaly, index) => (
               <tr key={index}>
-                <td
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  {anomaly.date}
-                </td>
-                <td
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  {anomaly.service}
-                </td>
-                <td
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  ${anomaly.amount.toFixed(2)}
-                </td>
-                <td
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  {anomaly.z_score.toFixed(2)}
-                </td>
+                <td>{anomaly.date}</td>
+                <td>{anomaly.service}</td>
+                <td>${anomaly.amount.toFixed(2)}</td>
+                <td>{anomaly.z_score.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>

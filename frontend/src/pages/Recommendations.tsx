@@ -53,6 +53,7 @@ const Recommendations = () => {
         <label>
           Max Budget:{" "}
           <input
+            className="input"
             type="number"
             placeholder="Optional"
             value={budget}
@@ -62,7 +63,9 @@ const Recommendations = () => {
           />
         </label>
 
-        <button onClick={loadRecommendations}>Apply Filters</button>
+        <button className="btn" onClick={loadRecommendations}>
+          Apply Filters
+        </button>
       </div>
 
       {/* Results */}
@@ -72,62 +75,20 @@ const Recommendations = () => {
         <p>No recommendations found.</p>
       ) : (
         <div className="card">
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table className="table">
             <thead>
-              <tr style={{ backgroundColor: "var(--color-bg)" }}>
-                <th
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  Service
-                </th>
-                <th
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  Reason
-                </th>
-                <th
-                  style={{
-                    padding: "8px",
-                    border: "1px solid var(--color-border)",
-                  }}
-                >
-                  Suggestion
-                </th>
+              <tr>
+                <th>Service</th>
+                <th>Reason</th>
+                <th>Suggestion</th>
               </tr>
             </thead>
             <tbody>
               {recommendations.map((r, i) => (
                 <tr key={i}>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    {r.service}
-                  </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    {r.reason}
-                  </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    {r.suggestion}
-                  </td>
+                  <td>{r.service}</td>
+                  <td>{r.reason}</td>
+                  <td>{r.suggestion}</td>
                 </tr>
               ))}
             </tbody>
