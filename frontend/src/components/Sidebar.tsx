@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isOpen?: boolean;
+}
+
+const Sidebar = ({ isOpen = true }: SidebarProps) => {
   return (
     <div
       style={{
@@ -15,6 +19,9 @@ const Sidebar = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        transform: isOpen ? "translateX(0)" : "translateX(-100%)",
+        transition: "transform 0.3s ease",
+        zIndex: 1000,
       }}
     >
       <div>

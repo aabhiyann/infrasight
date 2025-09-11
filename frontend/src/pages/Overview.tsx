@@ -4,6 +4,7 @@ import CostChart from "../components/CostChart";
 import BarChartTopServices from "../components/BarChartTopServices";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
+import OverviewSummary from "../components/OverviewSummary";
 
 function Overview() {
   const [data, setData] = useState<CostRecord[]>([]);
@@ -21,6 +22,7 @@ function Overview() {
   return (
     <div className="container">
       <h2>AWS Cost Overview</h2>
+      <OverviewSummary costData={data} />
       {loading ? (
         <p>Loading...</p>
       ) : (
