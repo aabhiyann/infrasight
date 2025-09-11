@@ -1,25 +1,68 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchRecommendations,
   type Recommendation,
-} from "../api/recommendations";
+} from "../api/recommendationApi";
+import { fetchAvailableServices } from "../api/forecastApi";
+import ServiceSelector from "../components/ServiceSelector";
 
-export default function Recommendations() {
+const Recommendations = () => {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [services, setServices] = useState<string[]>([]);
+  const [selectedService, setSelectedService] = useState<string>("");
+  const [budget, setBudget] = useState<number | "">("");
+
   useEffect(() => {
-    async function loadData() {
-      const result = await fetchRecommendations();
-      setRecommendations(result);
-      setLoading(false);
-    }
-    loadData();
+    fetchAvailableServices().then(setServices);
   }, []);
+
+  useEffect(() => {
+    loadRecommendations();
+  }, []);
+
+  async function loadRecommendations() {
+    setLoading(true);
+    const filters = {
+      ...(selectedService && { service: selectedService }),
+      ...(budget !== "" && { max_budget: Number(budget) }),
+    };
+    const result = await fetchRecommendations(filters);
+    setRecommendations(result);
+    setLoading(false);
+  }
 
   return (
     <div className="container">
-      <h2>Cost-Saving Recommendations</h2>
+      <h2>AI Recommendations</h2>
+
+      {/* Filters */}
+      <div style={{ marginBottom: "1rem" }}>
+        <ServiceSelector
+          services={services}
+          selectedService={selectedService}
+          onChange={setSelectedService}
+        />
+
+        <label style={{ marginLeft: "1rem" }}>
+          Max Budget:{" "}
+          <input
+            type="number"
+            placeholder="Optional"
+            value={budget}
+            onChange={(e) =>
+              setBudget(e.target.value === "" ? "" : Number(e.target.value))
+            }
+          />
+        </label>
+
+        <button onClick={loadRecommendations} style={{ marginLeft: "1rem" }}>
+          Apply Filters
+        </button>
+      </div>
+
+      {/* Results */}
       {loading ? (
         <p>Loading recommendations...</p>
       ) : recommendations.length === 0 ? (
@@ -40,16 +83,16 @@ export default function Recommendations() {
             </tr>
           </thead>
           <tbody>
-            {recommendations.map((rec, index) => (
-              <tr key={index}>
+            {recommendations.map((r, i) => (
+              <tr key={i}>
                 <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  {rec.service}
+                  {r.service}
                 </td>
                 <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  {rec.reason}
+                  {r.reason}
                 </td>
                 <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  {rec.recommendation}
+                  {r.suggestion}
                 </td>
               </tr>
             ))}
@@ -58,4 +101,6 @@ export default function Recommendations() {
       )}
     </div>
   );
-}
+};
+
+export default Recommendations;
