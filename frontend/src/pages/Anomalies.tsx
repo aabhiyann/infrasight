@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
+import Breadcrumb from "../components/Breadcrumb";
+import Skeleton from "../components/Skeleton";
+import EmptyState from "../components/EmptyState";
 
 const Anomalies = () => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
@@ -35,6 +38,7 @@ const Anomalies = () => {
 
   return (
     <div className="container stack-lg">
+      <Breadcrumb items={[{ label: "Detected Anomalies" }]} />
       <div className="page-header">
         <h2 className="page-title">Detected Anomalies</h2>
         <p className="page-subtitle">
@@ -71,11 +75,33 @@ const Anomalies = () => {
         </div>
       </div>
       {loading ? (
-        <p>Loading anomalies...</p>
+        <div className="card">
+          <Skeleton height={300} />
+        </div>
       ) : error ? (
-        <p style={{ color: "#b00020" }}>{error}</p>
+        <div className="card">
+          <EmptyState
+            title="Error loading anomalies"
+            message={error}
+            icon="alert"
+            onRetry={() => {
+              setError(null);
+              setLoading(true);
+              // Trigger reload
+              const current = zThreshold;
+              setZThreshold(0);
+              setTimeout(() => setZThreshold(current), 100);
+            }}
+          />
+        </div>
       ) : filtered.length === 0 ? (
-        <p>No anomalies found.</p>
+        <div className="card">
+          <EmptyState
+            title="No anomalies found"
+            message="Try adjusting the Z-threshold or service filter."
+            icon="alert"
+          />
+        </div>
       ) : (
         <div className="card">
           <AnomalyScatterPlot anomalies={filtered} />

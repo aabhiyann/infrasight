@@ -6,6 +6,8 @@ import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
 import TopServicesBarChart from "../components/TopServicesBarChart";
 import OverviewSummary from "../components/OverviewSummary";
+import Breadcrumb from "../components/Breadcrumb";
+import Skeleton from "../components/Skeleton";
 
 function Overview() {
   const [data, setData] = useState<CostRecord[]>([]);
@@ -22,6 +24,7 @@ function Overview() {
 
   return (
     <div className="container stack-lg">
+      <Breadcrumb items={[{ label: "AWS Cost Overview" }]} />
       <div className="page-header">
         <h2 className="page-title">AWS Cost Overview</h2>
         <p className="page-subtitle">
@@ -30,7 +33,9 @@ function Overview() {
       </div>
       <OverviewSummary costData={data} />
       {loading ? (
-        <p>Loading...</p>
+        <div className="card">
+          <Skeleton height={200} />
+        </div>
       ) : (
         <>
           <ChartCard title="Cost Over Time">
