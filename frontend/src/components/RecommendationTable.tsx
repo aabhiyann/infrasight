@@ -8,12 +8,6 @@ interface Props {
   recommendations: Recommendation[];
 }
 
-const cellStyle: React.CSSProperties = {
-  border: "1px solid #dee2e6",
-  padding: "0.75rem",
-  textAlign: "left",
-};
-
 const RecommendationTable = ({ recommendations }: Props) => {
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -23,25 +17,22 @@ const RecommendationTable = ({ recommendations }: Props) => {
       ) : (
         <div style={{ overflowX: "auto" }}>
           <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              marginTop: "1rem",
-            }}
+            className="table table--sticky table--compact"
+            style={{ marginTop: "1rem" }}
           >
             <thead>
-              <tr style={{ backgroundColor: "#e9ecef" }}>
-                <th style={cellStyle}>Service</th>
-                <th style={cellStyle}>Reason</th>
-                <th style={cellStyle}>Suggestion</th>
+              <tr>
+                <th>Service</th>
+                <th>Reason</th>
+                <th>Suggestion</th>
               </tr>
             </thead>
             <tbody>
               {recommendations.map((rec, idx) => (
                 <tr key={idx}>
-                  <td style={cellStyle}>{rec.service}</td>
-                  <td style={cellStyle}>{rec.reason}</td>
-                  <td style={cellStyle}>{rec.suggestion}</td>
+                  <td>{rec.service}</td>
+                  <td>{rec.reason}</td>
+                  <td>{rec.suggestion}</td>
                 </tr>
               ))}
             </tbody>
