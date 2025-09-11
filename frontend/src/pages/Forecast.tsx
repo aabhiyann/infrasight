@@ -1,6 +1,7 @@
 import ChartCard from "../components/ChartCard";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
+import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useState } from "react";
 import {
   fetchForecastData,
@@ -54,6 +55,7 @@ const Forecast = () => {
 
   return (
     <div className="container stack-lg">
+      <Breadcrumb items={[{ label: "Cost Forecasts" }]} />
       <div className="page-header">
         <h2 className="page-title">Cost Forecasts</h2>
         <p className="page-subtitle">
@@ -77,6 +79,14 @@ const Forecast = () => {
           <EmptyState
             title="No forecast data"
             message="Try adjusting filters or check back later."
+            icon="refresh"
+            onRetry={() => {
+              setLoading(true);
+              // Trigger reload by changing selectedService briefly
+              const current = selectedService;
+              setSelectedService("");
+              setTimeout(() => setSelectedService(current), 100);
+            }}
           />
         </div>
       ) : (

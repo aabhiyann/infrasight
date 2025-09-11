@@ -9,12 +9,12 @@ interface ChartCardProps {
   children: ReactNode;
 }
 
-const ChartCard = ({ 
-  title, 
-  subtitle, 
+const ChartCard = ({
+  title,
+  subtitle,
   badge,
   badgeVariant = "default",
-  children 
+  children,
 }: ChartCardProps) => {
   return (
     <div className="card">
@@ -23,16 +23,14 @@ const ChartCard = ({
           <div>
             <h3 style={{ margin: 0 }}>{title}</h3>
             {subtitle ? (
-              <p style={{ margin: "0.25rem 0 0 0", color: "var(--color-muted)" }}>
+              <p
+                style={{ margin: "0.25rem 0 0 0", color: "var(--color-muted)" }}
+              >
                 {subtitle}
               </p>
             ) : null}
           </div>
-          {badge && (
-            <Badge variant={badgeVariant}>
-              {badge}
-            </Badge>
-          )}
+          {badge && <Badge variant={badgeVariant}>{badge}</Badge>}
         </div>
       ) : null}
       {children}

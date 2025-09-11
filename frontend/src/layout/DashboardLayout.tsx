@@ -35,17 +35,27 @@ const DashboardLayout = () => {
           transition: "margin-left 0.3s ease",
         }}
       >
-        <button
-          aria-label="Toggle sidebar"
-          aria-expanded={isOpen}
-          onClick={() => setIsOpen((v) => !v)}
-          className={`hamburger ${isOpen ? "is-open" : ""}`}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            marginBottom: "1rem",
+          }}
         >
-          <span className="hamburger-line" />
-          <span className="hamburger-line" />
-          <span className="hamburger-line" />
-          <span className="sr-only">Menu</span>
-        </button>
+          <button
+            aria-label="Toggle sidebar"
+            aria-expanded={isOpen}
+            onClick={() => setIsOpen((v) => !v)}
+            className={`hamburger ${isOpen ? "is-open" : ""}`}
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="sr-only">Menu</span>
+          </button>
+          <ThemeToggle />
+        </div>
         <Outlet />
         <footer className="app-footer">
           <span>InfraSight</span>

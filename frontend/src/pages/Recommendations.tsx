@@ -8,6 +8,7 @@ import ServiceSelector from "../components/ServiceSelector";
 import RecommendationTable from "../components/RecommendationTable";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
+import Breadcrumb from "../components/Breadcrumb";
 
 const Recommendations = () => {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -38,6 +39,7 @@ const Recommendations = () => {
 
   return (
     <div className="container stack-lg">
+      <Breadcrumb items={[{ label: "AI Recommendations" }]} />
       <div className="page-header">
         <h2 className="page-title">AI Recommendations</h2>
         <p className="page-subtitle">
@@ -81,6 +83,8 @@ const Recommendations = () => {
           <EmptyState
             title="No recommendations"
             message="Adjust filters or try another service."
+            icon="alert"
+            onRetry={loadRecommendations}
           />
         </div>
       ) : (
