@@ -1,0 +1,305 @@
+:root {
+  /* Brand core (Matching/Pin) */
+  --brand-400: #34a3f1;
+  --brand-500: #0070b8;
+  --brand-600: #0052b6;
+  --brand-700: #004486;
+  --brand-800: #002f6d;
+
+  /* Neutrals & companions */
+  --slate-900: #0f172a;
+  --slate-800: #3c4856; /* Classy/Matching/Grey Friends */
+  --slate-400: #a0acbd; /* Classy/Grey Friends */
+  --slate-200: #e6edf3;
+
+  /* Accent companions */
+  --teal-600: #38837b; /* Small Switch */
+  --amber-600: #e19e20; /* Friend */
+  --rose-500: #e778a6; /* Classy/Dust */
+
+  /* Surfaces */
+  --surface-0: #ffffff;
+  --surface-1: #f2faff; /* Discreet/Natural */
+  --surface-2: #e6f4f1; /* Switch/Natural */
+
+  /* Project semantic tokens */
+  --color-primary: var(--brand-600);
+  --color-secondary: var(--slate-800);
+  --color-accent: var(--brand-400);
+  --color-bg: var(--surface-1);
+  --color-surface: var(--surface-0);
+  --color-text: var(--slate-800);
+  --color-muted: var(--slate-400);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-border: #e5e7eb;
+
+  /* Accent transparencies */
+  --accent-15: rgba(52, 163, 241, 0.15);
+  --accent-10: rgba(52, 163, 241, 0.1);
+
+  /* Gradients (subtle, modern) */
+  --gradient-generic: linear-gradient(90deg, #0052b6, #34a3f1);
+  --gradient-matching: linear-gradient(180deg, #0052b6 0%, #0070b8 100%);
+
+  /* Chart categorical colors */
+  --chart-1: var(--brand-500);
+  --chart-2: var(--teal-600);
+  --chart-3: var(--amber-600);
+  --chart-4: #6a97ff; /* Collective */
+  --chart-5: #f56ea8; /* Collective */
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+h2,
+h3,
+h4 {
+  margin-bottom: 1rem;
+}
+
+/* Page header */
+.page-header {
+  margin: 0 0 1rem 0;
+}
+
+.page-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+/* Stack spacing utility */
+.stack-lg > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Toolbar for filters/controls */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.toolbar > * {
+  margin: 0 !important;
+}
+
+/* Minimal UI kit */
+.btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  transition: background 150ms ease, opacity 150ms ease;
+}
+.btn:hover {
+  opacity: 0.95;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input,
+.select {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead tr {
+  background: var(--color-bg);
+}
+
+.table th,
+.table td {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.table tbody tr:hover {
+  background: var(--accent-10);
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  line-height: 1;
+  background: var(--accent-15);
+  color: var(--color-accent);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.chart-container {
+  background-color: var(--color-surface);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Modern sidebar links */
+.sidebar-link {
+  color: #e9ecef;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  display: block;
+  transition: background 200ms ease, color 200ms ease, transform 150ms ease;
+}
+
+.sidebar-link:hover {
+  background: var(--accent-10);
+  color: #ffffff;
+}
+
+.sidebar-link.active {
+  background: var(--accent-15);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Mobile overlay when sidebar is open */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 900;
+}
+
+/* Accessible hide */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Modern hamburger */
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background 200ms ease, border-color 200ms ease;
+}
+
+.hamburger:hover {
+  border-color: var(--color-accent);
+}
+
+.hamburger-line {
+  width: 18px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.hamburger.is-open .hamburger-line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger.is-open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.is-open .hamburger-line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}

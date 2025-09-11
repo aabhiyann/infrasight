@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LineChart,
   Line,
@@ -10,47 +9,71 @@ import {
   Legend,
 } from "recharts";
 import type { ForecastPoint } from "../api/forecastApi";
+import {
+  defaultChartConfig,
+  formatCurrency,
+  type BaseChartProps,
+} from "./chartConfig";
 
-interface Props {
+interface Props extends BaseChartProps {
   data: ForecastPoint[];
   service: string;
 }
 
-const ForecastChart: React.FC<Props> = ({ data, service }) => {
+function ForecastChart({
+  data,
+  service,
+  hideTitle,
+  height = defaultChartConfig.height,
+  showGrid = defaultChartConfig.showGrid,
+  showLegend = defaultChartConfig.showLegend,
+  currencyFormat = defaultChartConfig.currencyFormat,
+  dateTickAngle = defaultChartConfig.dateTickAngle,
+}: Props) {
   return (
-    <div style={{ marginBottom: "2rem" }}>
-      <h3>{service}</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" angle={-45} textAnchor="end" height={60} />
+    <div>
+      {!hideTitle && <h3>{service}</h3>}
+      <ResponsiveContainer width="100%" height={height}>
+        <LineChart data={data} margin={defaultChartConfig.margin}>
+          {showGrid && <CartesianGrid strokeDasharray="3 3" />}
+          <XAxis
+            dataKey="date"
+            angle={dateTickAngle}
+            textAnchor={dateTickAngle ? "end" : "middle"}
+            height={dateTickAngle ? 60 : undefined}
+          />
           <YAxis />
-          <Tooltip />
-          <Legend />
+          <Tooltip
+            formatter={(value: number) =>
+              currencyFormat ? formatCurrency(value) : String(value)
+            }
+            labelFormatter={(label) => `Date: ${label}`}
+          />
+          {showLegend && <Legend />}
           <Line
             type="monotone"
             dataKey="predicted_cost"
-            stroke="#8884d8"
+            stroke="var(--color-secondary)"
             name="Predicted"
           />
           <Line
             type="monotone"
-            dataKey="lower_bound"
-            stroke="#82ca9d"
+            dataKey="upper_bound"
+            stroke="var(--color-accent)"
+            name="Upper Bound"
             strokeDasharray="5 5"
-            name="Lower Bound"
           />
           <Line
             type="monotone"
-            dataKey="upper_bound"
-            stroke="#ff7300"
+            dataKey="lower_bound"
+            stroke="var(--color-success)"
+            name="Lower Bound"
             strokeDasharray="5 5"
-            name="Upper Bound"
           />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
-};
+}
 
 export default ForecastChart;

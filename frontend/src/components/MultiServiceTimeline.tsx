@@ -9,12 +9,24 @@ import {
   Legend,
 } from "recharts";
 import type { CostRecord } from "../api/costApi";
+import {
+  defaultChartConfig,
+  formatCurrency,
+  type BaseChartProps,
+} from "./chartConfig";
 
-interface Props {
+interface Props extends BaseChartProps {
   data: CostRecord[];
 }
 
-const MultiServiceTimeline = ({ data }: Props) => {
+const MultiServiceTimeline = ({
+  data,
+  height = 400,
+  showGrid = defaultChartConfig.showGrid,
+  showLegend = defaultChartConfig.showLegend,
+  currencyFormat = defaultChartConfig.currencyFormat,
+  dateTickAngle = -45,
+}: Props) => {
   // Step 1: Create pivot table - dates as rows, services as columns
   const pivotData: Record<string, Record<string, number>> = {};
 
@@ -38,40 +50,40 @@ const MultiServiceTimeline = ({ data }: Props) => {
 
   // Step 4: Generate colors for each service
   const colors = [
-    "#8884d8",
-    "#82ca9d",
-    "#ffc658",
-    "#ff7300",
-    "#00ff00",
-    "#ff00ff",
-    "#00ffff",
-    "#ffff00",
-    "#ff0000",
-    "#0000ff",
+    "var(--chart-1)",
+    "var(--chart-2)",
+    "var(--chart-3)",
+    "var(--chart-4)",
+    "var(--chart-5)",
+    "#b48cf2",
+    "#22d3ee",
+    "#f59e0b",
+    "#ef4444",
+    "#6366f1",
   ];
 
   return (
     <div>
       <h3>AWS Service Costs Over Time</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
+      <ResponsiveContainer width="100%" height={height}>
+        <LineChart data={chartData} margin={defaultChartConfig.margin}>
+          {showGrid && <CartesianGrid strokeDasharray="3 3" />}
           <XAxis
             dataKey="date"
-            angle={-45}
-            textAnchor="end"
-            height={60}
+            angle={dateTickAngle}
+            textAnchor={dateTickAngle ? "end" : "middle"}
+            height={dateTickAngle ? 60 : undefined}
             tick={{ fontSize: 12 }}
           />
           <YAxis />
           <Tooltip
             formatter={(value: number, name: string) => [
-              `$${value.toFixed(2)}`,
+              currencyFormat ? formatCurrency(value) : String(value),
               name,
             ]}
             labelFormatter={(label) => `Date: ${label}`}
           />
-          <Legend />
+          {showLegend && <Legend />}
           {services.map((service, index) => (
             <Line
               key={service}

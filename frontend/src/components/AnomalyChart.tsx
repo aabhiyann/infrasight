@@ -8,12 +8,23 @@ import {
   Scatter,
 } from "recharts";
 import type { Anomaly } from "../api/anomalyApi";
+import {
+  defaultChartConfig,
+  formatCurrency,
+  type BaseChartProps,
+} from "./chartConfig";
 
-interface Props {
+interface Props extends BaseChartProps {
   data: Anomaly[];
 }
 
-const AnomalyChart = ({ data }: Props) => {
+const AnomalyChart = ({
+  data,
+  height = 400,
+  showGrid = defaultChartConfig.showGrid,
+  currencyFormat = defaultChartConfig.currencyFormat,
+  dateTickAngle = -45,
+}: Props) => {
   if (data.length === 0) {
     return (
       <div style={{ textAlign: "center", padding: "2rem" }}>
@@ -26,62 +37,53 @@ const AnomalyChart = ({ data }: Props) => {
   return (
     <div>
       <h3>Cost Anomalies Detected ({data.length} total)</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <ScatterChart>
-          <CartesianGrid />
+      <ResponsiveContainer width="100%" height={height}>
+        <ScatterChart margin={defaultChartConfig.margin}>
+          {showGrid && <CartesianGrid />}
           <XAxis
             dataKey="date"
             name="Date"
-            angle={-45}
-            textAnchor="end"
-            height={60}
+            angle={dateTickAngle}
+            textAnchor={dateTickAngle ? "end" : "middle"}
+            height={dateTickAngle ? 60 : undefined}
           />
           <YAxis dataKey="amount" name="Cost ($)" />
           <Tooltip
             cursor={{ strokeDasharray: "3 3" }}
             formatter={(value: number, name: string) => [
-              `$${value.toFixed(2)}`,
+              currencyFormat ? formatCurrency(value) : String(value),
               name,
             ]}
             labelFormatter={(label) => `Date: ${label}`}
           />
-          <Scatter name="Anomalies" data={data} fill="#ff4444" r={6} />
+          <Scatter
+            name="Anomalies"
+            data={data}
+            fill="var(--color-danger)"
+            r={6}
+          />
         </ScatterChart>
       </ResponsiveContainer>
 
       {/* Summary Table */}
       <div style={{ marginTop: "2rem" }}>
         <h4>Anomaly Details</h4>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table className="table">
           <thead>
-            <tr style={{ backgroundColor: "#f5f5f5" }}>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>Date</th>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>
-                Service
-              </th>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>
-                Amount
-              </th>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>
-                Z-Score
-              </th>
+            <tr>
+              <th>Date</th>
+              <th>Service</th>
+              <th>Amount</th>
+              <th>Z-Score</th>
             </tr>
           </thead>
           <tbody>
             {data.map((anomaly, index) => (
               <tr key={index}>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  {anomaly.date}
-                </td>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  {anomaly.service}
-                </td>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  ${anomaly.amount.toFixed(2)}
-                </td>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                  {anomaly.z_score.toFixed(2)}
-                </td>
+                <td>{anomaly.date}</td>
+                <td>{anomaly.service}</td>
+                <td>${anomaly.amount.toFixed(2)}</td>
+                <td>{anomaly.z_score.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>

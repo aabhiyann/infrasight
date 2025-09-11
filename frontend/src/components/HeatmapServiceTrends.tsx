@@ -17,11 +17,11 @@ const HeatmapServiceTrends = ({ data }: Props) => {
 
   // Step 3: Generate color based on amount
   function getColor(value: number): string {
-    if (value === 0 || isNaN(value)) return "#f0f0f0";
-    if (value < 5) return "#d0e1f9";
-    if (value < 15) return "#89c2d9";
-    if (value < 30) return "#468faf";
-    return "#1d3557";
+    if (value === 0 || isNaN(value)) return "#f1f5f9";
+    if (value < 5) return "#cfe8ff";
+    if (value < 15) return "#93c5fd";
+    if (value < 30) return "#60a5fa";
+    return "var(--color-primary)";
   }
 
   return (
@@ -30,7 +30,7 @@ const HeatmapServiceTrends = ({ data }: Props) => {
       <table style={{ borderCollapse: "collapse" }}>
         <thead>
           <tr>
-            <th style={{ position: "sticky", left: 0, background: "#fff" }}>
+            <th style={{ position: "sticky", left: 0, background: "var(--color-surface)" }}>
               Service
             </th>
             {dates.map((date) => (
@@ -47,7 +47,7 @@ const HeatmapServiceTrends = ({ data }: Props) => {
                 style={{
                   position: "sticky",
                   left: 0,
-                  background: "#fff",
+                  background: "var(--color-surface)",
                   fontWeight: "bold",
                   padding: "2px 4px",
                 }}
@@ -64,7 +64,7 @@ const HeatmapServiceTrends = ({ data }: Props) => {
                       backgroundColor: getColor(value),
                       width: "12px",
                       height: "12px",
-                      border: "1px solid #ccc",
+                      border: "1px solid var(--color-border)",
                     }}
                   />
                 );

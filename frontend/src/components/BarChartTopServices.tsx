@@ -35,7 +35,7 @@ const BarChartTopServices = ({ data }: Props) => {
           <XAxis type="number" />
           <YAxis type="category" dataKey="service" width={150} />
           <Tooltip />
-          <Bar dataKey="total" fill="#82ca9d" />
+          <Bar dataKey="total" fill="var(--color-success)" />
         </BarChart>
       </ResponsiveContainer>
     </div>

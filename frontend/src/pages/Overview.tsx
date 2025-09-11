@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
 import CostChart from "../components/CostChart";
-import BarChartTopServices from "../components/BarChartTopServices";
+import ChartCard from "../components/ChartCard";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
+import TopServicesBarChart from "../components/TopServicesBarChart";
+import OverviewSummary from "../components/OverviewSummary";
 
-const Overview: React.FC = () => {
+function Overview() {
   const [data, setData] = useState<CostRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,20 +21,34 @@ const Overview: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>AWS Cost Overview</h2>
+    <div className="container stack-lg">
+      <div className="page-header">
+        <h2 className="page-title">AWS Cost Overview</h2>
+        <p className="page-subtitle">
+          Key spend metrics, trends, and drivers at a glance.
+        </p>
+      </div>
+      <OverviewSummary costData={data} />
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <CostChart data={data} />
-          <MultiServiceTimeline data={data} />
-          <BarChartTopServices data={data} />
-          <HeatmapServiceTrends data={data} />
+          <ChartCard title="Cost Over Time">
+            <CostChart data={data} />
+          </ChartCard>
+          <ChartCard title="Service Timelines">
+            <MultiServiceTimeline data={data} />
+          </ChartCard>
+          <ChartCard title="Top 5 Services This Month (by Total Cost)">
+            <TopServicesBarChart costData={data} hideTitle />
+          </ChartCard>
+          <ChartCard title="Service Trend Heatmap">
+            <HeatmapServiceTrends data={data} />
+          </ChartCard>
         </>
       )}
     </div>
   );
-};
+}
 
 export default Overview;
