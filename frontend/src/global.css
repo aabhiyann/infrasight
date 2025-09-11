@@ -520,3 +520,351 @@ body {
 .hamburger.is-open .hamburger-line:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
 }
+
+/* Anomaly Table Styles */
+.anomaly-table-container {
+  margin-top: 2rem;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.table-header h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.table-count {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  background: var(--color-surface);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.table-wrapper {
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.anomaly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.anomaly-table thead {
+  background: var(--color-surface-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.anomaly-table th {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.anomaly-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.anomaly-table th.sortable:hover {
+  background: var(--color-surface-hover);
+}
+
+.sort-icon {
+  margin-left: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.anomaly-table th.sortable:hover .sort-icon {
+  color: var(--color-accent);
+}
+
+.anomaly-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text);
+}
+
+.anomaly-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.anomaly-table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+.anomaly-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.date-cell {
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.service-cell {
+  font-weight: 500;
+}
+
+.service-name {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.amount-cell {
+  text-align: right;
+  font-weight: 600;
+}
+
+.amount-value {
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+  color: var(--color-danger);
+  font-size: 0.9rem;
+}
+
+.zscore-cell {
+  text-align: right;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+}
+
+.zscore-value {
+  background: var(--color-surface-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.severity-cell {
+  text-align: center;
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-danger {
+  background: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
+  border: 1px solid rgba(211, 47, 47, 0.2);
+}
+
+.badge-warning {
+  background: rgba(245, 124, 0, 0.1);
+  color: #f57c00;
+  border: 1px solid rgba(245, 124, 0, 0.2);
+}
+
+.badge-info {
+  background: rgba(25, 118, 210, 0.1);
+  color: #1976d2;
+  border: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.badge-success {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+/* Enhanced Scatter Plot Styles */
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-header h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.view-toggle {
+  display: flex;
+  background: var(--color-surface);
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid var(--color-border);
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  color: var(--color-text);
+  background: var(--color-surface-hover);
+}
+
+.toggle-btn.active {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Tooltip Styles */
+.custom-tooltip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 250px;
+}
+
+.tooltip-header {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.tooltip-header strong {
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tooltip-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tooltip-label {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tooltip-value {
+  color: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .anomaly-table {
+    min-width: 600px;
+  }
+
+  .anomaly-table th,
+  .anomaly-table td {
+    padding: 0.75rem 1rem;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .view-toggle {
+    width: 100%;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .legend-items {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .legend-item {
+    font-size: 0.8rem;
+  }
+}

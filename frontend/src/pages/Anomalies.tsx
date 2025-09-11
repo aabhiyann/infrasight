@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
+import AnomalyTable from "../components/AnomalyTable";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
@@ -103,9 +104,12 @@ const Anomalies = () => {
           />
         </div>
       ) : (
-        <div className="card">
-          <AnomalyScatterPlot anomalies={filtered} />
-        </div>
+        <>
+          <div className="card">
+            <AnomalyScatterPlot anomalies={filtered} />
+          </div>
+          <AnomalyTable anomalies={filtered} />
+        </>
       )}
     </div>
   );
