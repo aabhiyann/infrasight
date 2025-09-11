@@ -1,4 +1,6 @@
 import ChartCard from "../components/ChartCard";
+import Skeleton from "../components/Skeleton";
+import EmptyState from "../components/EmptyState";
 import { useEffect, useState } from "react";
 import {
   fetchForecastData,
@@ -67,9 +69,16 @@ const Forecast = () => {
       </div>
 
       {loading ? (
-        <p>Loading forecast data...</p>
+        <div className="card">
+          <Skeleton height={280} />
+        </div>
       ) : !forecastData ? (
-        <p>No forecast data available.</p>
+        <div className="card">
+          <EmptyState
+            title="No forecast data"
+            message="Try adjusting filters or check back later."
+          />
+        </div>
       ) : (
         <>
           {selectedService ? (
