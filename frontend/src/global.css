@@ -868,3 +868,177 @@ body {
     font-size: 0.8rem;
   }
 }
+
+/* Recommendation Table Styles */
+.recommendation-table-container {
+  margin-top: 2rem;
+}
+
+.recommendation-table-container .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.recommendation-table-container .table-header h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.recommendation-table-container .table-count {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  background: var(--color-surface);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.recommendation-table-container .empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.recommendation-table-container .table-wrapper {
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.recommendation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.recommendation-table thead {
+  background: var(--color-surface-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.recommendation-table th {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.recommendation-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.recommendation-table th.sortable:hover {
+  background: var(--color-surface-hover);
+}
+
+.recommendation-table th.sortable:hover .sort-icon {
+  color: var(--color-accent);
+}
+
+.recommendation-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text);
+  vertical-align: top;
+}
+
+.recommendation-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.recommendation-table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+.recommendation-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.service-cell {
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.service-name {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.reason-cell {
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.reason-content {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.suggestion-cell {
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.suggestion-content {
+  position: relative;
+}
+
+.suggestion-text {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.priority-cell {
+  text-align: center;
+  min-width: 120px;
+}
+
+/* Responsive Design for Recommendation Table */
+@media (max-width: 768px) {
+  .recommendation-table-container .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .recommendation-table {
+    min-width: 700px;
+  }
+
+  .recommendation-table th,
+  .recommendation-table td {
+    padding: 0.75rem 1rem;
+  }
+
+  .recommendation-table-container .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .reason-cell,
+  .suggestion-cell {
+    max-width: 200px;
+  }
+}
