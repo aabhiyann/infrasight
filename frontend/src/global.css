@@ -115,6 +115,23 @@ h4 {
   cursor: not-allowed;
 }
 
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid transparent;
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
 .input,
 .select {
   background: var(--color-surface);
@@ -122,6 +139,15 @@ h4 {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 0.45rem 0.6rem;
+}
+
+/* Focus rings */
+.btn:focus-visible,
+.input:focus-visible,
+.select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-10);
+  border-color: var(--color-accent);
 }
 
 .card-header {
@@ -208,6 +234,12 @@ h4 {
 .card-value {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+/* Card hover elevation */
+.card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 200ms ease;
 }
 
 .chart-container {
