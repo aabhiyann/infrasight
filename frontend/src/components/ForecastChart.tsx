@@ -13,12 +13,13 @@ import type { ForecastPoint } from "../api/forecastApi";
 interface Props {
   data: ForecastPoint[];
   service: string;
+  hideTitle?: boolean;
 }
 
-function ForecastChart({ data, service }: Props) {
+function ForecastChart({ data, service, hideTitle }: Props) {
   return (
     <div>
-      <h3>{service}</h3>
+      {!hideTitle && <h3>{service}</h3>}
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />

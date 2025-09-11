@@ -12,9 +12,10 @@ import type { CostRecord } from "../api/costApi";
 
 interface Props {
   costData: CostRecord[];
+  hideTitle?: boolean;
 }
 
-const TopServicesBarChart = ({ costData }: Props) => {
+const TopServicesBarChart = ({ costData, hideTitle }: Props) => {
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
@@ -36,8 +37,8 @@ const TopServicesBarChart = ({ costData }: Props) => {
     .slice(0, 5);
 
   return (
-    <div style={{ marginTop: "2rem" }}>
-      <h3>Top 5 Services This Month (by Total Cost)</h3>
+    <div>
+      {!hideTitle && <h3>Top 5 Services This Month (by Total Cost)</h3>}
       {topServices.length === 0 ? (
         <p>No data available for this month.</p>
       ) : (

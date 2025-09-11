@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface ChartCardProps {
   title?: string;
@@ -25,5 +25,3 @@ const ChartCard = ({ title, subtitle, children }: ChartCardProps) => {
 };
 
 export default ChartCard;
-
-

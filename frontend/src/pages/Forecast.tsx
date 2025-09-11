@@ -1,3 +1,4 @@
+import ChartCard from "../components/ChartCard";
 import { useEffect, useState } from "react";
 import {
   fetchForecastData,
@@ -70,25 +71,31 @@ const Forecast = () => {
       ) : (
         <>
           {selectedService ? (
-            <div className="card">
+            <ChartCard title={selectedService}>
               <ForecastChart
                 data={forecastData.service_forecasts[selectedService] || []}
                 service={selectedService}
+                hideTitle
               />
-            </div>
+            </ChartCard>
           ) : (
             <>
-              <div className="card">
+              <ChartCard title="Total Cost">
                 <ForecastChart
                   data={forecastData.total_forecast}
                   service="Total Cost"
+                  hideTitle
                 />
-              </div>
+              </ChartCard>
               {Object.entries(forecastData.service_forecasts).map(
                 ([service, forecast]) => (
-                  <div className="card" key={service}>
-                    <ForecastChart data={forecast} service={service} />
-                  </div>
+                  <ChartCard title={service} key={service}>
+                    <ForecastChart
+                      data={forecast}
+                      service={service}
+                      hideTitle
+                    />
+                  </ChartCard>
                 )
               )}
             </>

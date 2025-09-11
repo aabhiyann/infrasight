@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
 import CostChart from "../components/CostChart";
+import ChartCard from "../components/ChartCard";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
 import TopServicesBarChart from "../components/TopServicesBarChart";
@@ -32,19 +33,18 @@ function Overview() {
         <p>Loading...</p>
       ) : (
         <>
-          <div style={{ marginTop: "2rem" }} className="card">
-            <h3>Cost Over Time</h3>
+          <ChartCard title="Cost Over Time">
             <CostChart data={data} />
-          </div>
-          <div className="card">
+          </ChartCard>
+          <ChartCard title="Service Timelines">
             <MultiServiceTimeline data={data} />
-          </div>
-          <div className="card">
-            <TopServicesBarChart costData={data} />
-          </div>
-          <div className="card">
+          </ChartCard>
+          <ChartCard title="Top 5 Services This Month (by Total Cost)">
+            <TopServicesBarChart costData={data} hideTitle />
+          </ChartCard>
+          <ChartCard title="Service Trend Heatmap">
             <HeatmapServiceTrends data={data} />
-          </div>
+          </ChartCard>
         </>
       )}
     </div>
