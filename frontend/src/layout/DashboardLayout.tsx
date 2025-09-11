@@ -17,13 +17,21 @@ const DashboardLayout = () => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar isOpen={isOpen} />
+      {/* Mobile overlay */}
+      {!isOpen ? null : (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsOpen(false)}
+          style={{ display: window.innerWidth < 768 ? "block" : "none" }}
+        />
+      )}
       <main
         style={{
           marginLeft: isOpen ? 200 : 0,
           padding: "2rem",
           width: "100%",
           minHeight: "100vh",
-          backgroundColor: "#f8f9fa",
+          backgroundColor: "var(--color-bg)",
           transition: "margin-left 0.3s ease",
         }}
       >
@@ -35,23 +43,27 @@ const DashboardLayout = () => {
             alignItems: "center",
             gap: 8,
             marginBottom: "1rem",
-            background: "#ffffff",
-            border: "1px solid #dee2e6",
+            background: isOpen ? "#f1f3f5" : "var(--color-surface)",
+            border: "1px solid var(--color-border)",
             padding: "0.5rem 0.75rem",
-            borderRadius: 6,
+            borderRadius: 999,
             cursor: "pointer",
             position: "sticky",
             top: 16,
             zIndex: 10,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            transition: "background 200ms ease",
           }}
         >
           <span
             style={{
-              width: 18,
+              width: 16,
               height: 2,
-              background: "#212529",
-              boxShadow: "0 6px 0 #212529, 0 -6px 0 #212529",
+              background: "var(--color-text)",
+              boxShadow:
+                "0 6px 0 var(--color-text), 0 -6px 0 var(--color-text)",
               display: "inline-block",
+              borderRadius: 2,
             }}
           />
           {isOpen ? "Hide" : "Show"} Menu

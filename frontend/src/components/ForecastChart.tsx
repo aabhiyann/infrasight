@@ -29,20 +29,20 @@ function ForecastChart({ data, service }: Props) {
           <Line
             type="monotone"
             dataKey="predicted_cost"
-            stroke="#8884d8"
+            stroke="var(--color-secondary)"
             name="Predicted"
           />
           <Line
             type="monotone"
             dataKey="lower_bound"
-            stroke="#82ca9d"
+            stroke="var(--color-success)"
             strokeDasharray="5 5"
             name="Lower Bound"
           />
           <Line
             type="monotone"
             dataKey="upper_bound"
-            stroke="#ff7300"
+            stroke="var(--color-accent)"
             strokeDasharray="5 5"
             name="Upper Bound"
           />

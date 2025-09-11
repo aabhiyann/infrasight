@@ -34,7 +34,7 @@ const CostChart = ({ data }: Props) => {
         <Line
           type="monotone"
           dataKey="total"
-          stroke="#8884d8"
+          stroke="var(--color-secondary)"
           strokeWidth={2}
           dot
         />

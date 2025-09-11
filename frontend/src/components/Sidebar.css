@@ -1,6 +1,6 @@
 .sidebar {
   width: 200px;
-  background-color: #1d3557;
+  background-color: var(--color-primary);
   color: #fff;
   padding: 1rem;
   height: 100vh;
@@ -27,6 +27,6 @@
 }
 
 .nav-item.active {
-  color: #fca311;
+  color: var(--color-accent);
   font-weight: bold;
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
 import CostChart from "../components/CostChart";
-import BarChartTopServices from "../components/BarChartTopServices";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
+import TopServicesBarChart from "../components/TopServicesBarChart";
 import OverviewSummary from "../components/OverviewSummary";
 
 function Overview() {
@@ -27,9 +27,14 @@ function Overview() {
         <p>Loading...</p>
       ) : (
         <>
-          <CostChart data={data} />
+          <div style={{ marginTop: "2rem" }}>
+            <h3>Cost Over Time</h3>
+            <div className="chart-container">
+              <CostChart data={data} />
+            </div>
+          </div>
           <MultiServiceTimeline data={data} />
-          <BarChartTopServices data={data} />
+          <TopServicesBarChart costData={data} />
           <HeatmapServiceTrends data={data} />
         </>
       )}

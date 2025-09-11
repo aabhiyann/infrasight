@@ -38,16 +38,16 @@ const MultiServiceTimeline = ({ data }: Props) => {
 
   // Step 4: Generate colors for each service
   const colors = [
-    "#8884d8",
-    "#82ca9d",
-    "#ffc658",
-    "#ff7300",
-    "#00ff00",
-    "#ff00ff",
-    "#00ffff",
-    "#ffff00",
-    "#ff0000",
-    "#0000ff",
+    "var(--chart-1)",
+    "var(--chart-2)",
+    "var(--chart-3)",
+    "var(--chart-4)",
+    "var(--chart-5)",
+    "#b48cf2",
+    "#22d3ee",
+    "#f59e0b",
+    "#ef4444",
+    "#6366f1",
   ];
 
   return (

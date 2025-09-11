@@ -70,14 +70,29 @@ const Recommendations = () => {
       ) : (
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
-            <tr style={{ backgroundColor: "#f5f5f5" }}>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>
+            <tr style={{ backgroundColor: "var(--color-bg)" }}>
+              <th
+                style={{
+                  padding: "8px",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
                 Service
               </th>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>
+              <th
+                style={{
+                  padding: "8px",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
                 Reason
               </th>
-              <th style={{ padding: "8px", border: "1px solid #ddd" }}>
+              <th
+                style={{
+                  padding: "8px",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
                 Suggestion
               </th>
             </tr>
@@ -85,13 +100,28 @@ const Recommendations = () => {
           <tbody>
             {recommendations.map((r, i) => (
               <tr key={i}>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
+                <td
+                  style={{
+                    padding: "8px",
+                    border: "1px solid var(--color-border)",
+                  }}
+                >
                   {r.service}
                 </td>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
+                <td
+                  style={{
+                    padding: "8px",
+                    border: "1px solid var(--color-border)",
+                  }}
+                >
                   {r.reason}
                 </td>
-                <td style={{ padding: "8px", border: "1px solid #ddd" }}>
+                <td
+                  style={{
+                    padding: "8px",
+                    border: "1px solid var(--color-border)",
+                  }}
+                >
                   {r.suggestion}
                 </td>
               </tr>

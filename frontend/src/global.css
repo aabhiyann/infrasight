@@ -1,9 +1,61 @@
+:root {
+  /* Brand core (Matching/Pin) */
+  --brand-400: #34a3f1;
+  --brand-500: #0070b8;
+  --brand-600: #0052b6;
+  --brand-700: #004486;
+  --brand-800: #002f6d;
+
+  /* Neutrals & companions */
+  --slate-900: #0f172a;
+  --slate-800: #3c4856; /* Classy/Matching/Grey Friends */
+  --slate-400: #a0acbd; /* Classy/Grey Friends */
+  --slate-200: #e6edf3;
+
+  /* Accent companions */
+  --teal-600: #38837b; /* Small Switch */
+  --amber-600: #e19e20; /* Friend */
+  --rose-500: #e778a6; /* Classy/Dust */
+
+  /* Surfaces */
+  --surface-0: #ffffff;
+  --surface-1: #f2faff; /* Discreet/Natural */
+  --surface-2: #e6f4f1; /* Switch/Natural */
+
+  /* Project semantic tokens */
+  --color-primary: var(--brand-600);
+  --color-secondary: var(--slate-800);
+  --color-accent: var(--brand-400);
+  --color-bg: var(--surface-1);
+  --color-surface: var(--surface-0);
+  --color-text: var(--slate-800);
+  --color-muted: var(--slate-400);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-border: #e5e7eb;
+
+  /* Accent transparencies */
+  --accent-15: rgba(52, 163, 241, 0.15);
+  --accent-10: rgba(52, 163, 241, 0.1);
+
+  /* Gradients (subtle, modern) */
+  --gradient-generic: linear-gradient(90deg, #0052b6, #34a3f1);
+  --gradient-matching: linear-gradient(180deg, #0052b6 0%, #0070b8 100%);
+
+  /* Chart categorical colors */
+  --chart-1: var(--brand-500);
+  --chart-2: var(--teal-600);
+  --chart-3: var(--amber-600);
+  --chart-4: #6a97ff; /* Collective */
+  --chart-5: #f56ea8; /* Collective */
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 h2,
@@ -38,14 +90,14 @@ h4 {
 }
 
 .card {
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
-  color: #6c757d;
+  color: var(--color-muted);
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
@@ -53,4 +105,42 @@ h4 {
 .card-value {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.chart-container {
+  background-color: var(--color-surface);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Modern sidebar links */
+.sidebar-link {
+  color: #e9ecef;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  display: block;
+  transition: background 200ms ease, color 200ms ease, transform 150ms ease;
+}
+
+.sidebar-link:hover {
+  background: var(--accent-10);
+  color: #ffffff;
+}
+
+.sidebar-link.active {
+  background: var(--accent-15);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Mobile overlay when sidebar is open */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 900;
 }
