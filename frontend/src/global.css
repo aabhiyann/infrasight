@@ -426,8 +426,8 @@ body {
 
 /* Smooth transitions and reduced motion support */
 * {
-  transition: background-color 200ms ease, border-color 200ms ease, 
-              color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  transition: background-color 200ms ease, border-color 200ms ease,
+    color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -435,7 +435,7 @@ body {
     transition: none !important;
     animation: none !important;
   }
-  
+
   .skeleton {
     animation: none;
     background: var(--color-border);
