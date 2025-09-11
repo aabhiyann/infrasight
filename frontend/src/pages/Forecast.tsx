@@ -50,8 +50,13 @@ const Forecast = () => {
   }, [selectedService]);
 
   return (
-    <div className="container">
-      <h2>Cost Forecasts</h2>
+    <div className="container stack-lg">
+      <div className="page-header">
+        <h2 className="page-title">Cost Forecasts</h2>
+        <p className="page-subtitle">
+          Predictions and confidence bounds for total and per-service costs.
+        </p>
+      </div>
       <ServiceSelector
         services={availableServices}
         selectedService={selectedService}
