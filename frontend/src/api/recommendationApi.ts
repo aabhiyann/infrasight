@@ -26,7 +26,11 @@ export async function fetchRecommendations(
         status?: string;
         insights?: string[];
       }>;
-    }>(`${BASE_URL}/recommendations`, filters);
+    }>(
+      `${BASE_URL}/recommendations`,
+      {},
+      { params: { max_budget: filters.max_budget, service: filters.service } }
+    );
 
     const mapped: Recommendation[] = response.data.recommendations.map((r) => {
       const insights =
