@@ -9,13 +9,25 @@ import {
   Legend,
 } from "recharts";
 import type { CostRecord } from "../api/costApi";
+import {
+  defaultChartConfig,
+  formatCurrency,
+  type BaseChartProps,
+} from "./chartConfig";
 
-interface Props {
+interface Props extends BaseChartProps {
   costData: CostRecord[];
   hideTitle?: boolean;
 }
 
-const TopServicesBarChart = ({ costData, hideTitle }: Props) => {
+const TopServicesBarChart = ({
+  costData,
+  hideTitle,
+  height = defaultChartConfig.height,
+  showGrid = defaultChartConfig.showGrid,
+  showLegend = defaultChartConfig.showLegend,
+  currencyFormat = defaultChartConfig.currencyFormat,
+}: Props) => {
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
@@ -42,12 +54,12 @@ const TopServicesBarChart = ({ costData, hideTitle }: Props) => {
       {topServices.length === 0 ? (
         <p>No data available for this month.</p>
       ) : (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={height}>
           <BarChart
             data={topServices}
             margin={{ top: 20, right: 30, left: 0, bottom: 40 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            {showGrid && <CartesianGrid strokeDasharray="3 3" />}
             <XAxis
               dataKey="service"
               angle={-30}
@@ -56,8 +68,12 @@ const TopServicesBarChart = ({ costData, hideTitle }: Props) => {
               height={60}
             />
             <YAxis />
-            <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
-            <Legend />
+            <Tooltip
+              formatter={(value: number) =>
+                currencyFormat ? formatCurrency(value) : String(value)
+              }
+            />
+            {showLegend && <Legend />}
             <Bar dataKey="total" name="Total Cost" fill="var(--color-accent)" />
           </BarChart>
         </ResponsiveContainer>
