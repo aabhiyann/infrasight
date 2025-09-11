@@ -76,6 +76,29 @@
   --accent-15: rgba(0, 0, 255, 0.3);
   --accent-10: rgba(0, 0, 255, 0.2);
 }
+
+/* High contrast mode enhancements */
+[data-theme="high-contrast"] .btn {
+  border-width: 2px;
+  font-weight: 600;
+}
+
+[data-theme="high-contrast"] .card {
+  border: 2px solid var(--color-border);
+}
+
+[data-theme="high-contrast"] .table th,
+[data-theme="high-contrast"] .table td {
+  border-width: 2px;
+}
+
+/* Focus improvements for high contrast */
+[data-theme="high-contrast"] .btn:focus-visible,
+[data-theme="high-contrast"] .input:focus-visible,
+[data-theme="high-contrast"] .select:focus-visible {
+  box-shadow: 0 0 0 4px var(--color-accent);
+  border-width: 3px;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,

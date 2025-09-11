@@ -12,6 +12,7 @@ import type { ForecastPoint } from "../api/forecastApi";
 import {
   defaultChartConfig,
   formatCurrency,
+  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
 
@@ -35,21 +36,42 @@ function ForecastChart({
       {!hideTitle && <h3>{service}</h3>}
       <ResponsiveContainer width="100%" height={height}>
         <LineChart data={data} margin={defaultChartConfig.margin}>
-          {showGrid && <CartesianGrid strokeDasharray="3 3" />}
+          {showGrid && (
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke={chartStyles.gridColor}
+            />
+          )}
           <XAxis
             dataKey="date"
             angle={dateTickAngle}
             textAnchor={dateTickAngle ? "end" : "middle"}
             height={dateTickAngle ? 60 : undefined}
+            tick={{ fill: chartStyles.textColor, fontSize: 12 }}
           />
-          <YAxis />
+          <YAxis
+            tick={{ fill: chartStyles.textColor, fontSize: 12 }}
+            tickFormatter={currencyFormat ? formatCurrency : undefined}
+          />
           <Tooltip
             formatter={(value: number) =>
               currencyFormat ? formatCurrency(value) : String(value)
             }
             labelFormatter={(label) => `Date: ${label}`}
+            contentStyle={{
+              backgroundColor: "var(--color-surface)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "8px",
+              color: "var(--color-text)",
+            }}
           />
-          {showLegend && <Legend />}
+          {showLegend && (
+            <Legend
+              verticalAlign={chartStyles.legendVerticalAlign}
+              align={chartStyles.legendAlign}
+              wrapperStyle={chartStyles.legendItemStyle}
+            />
+          )}
           <Line
             type="monotone"
             dataKey="predicted_cost"

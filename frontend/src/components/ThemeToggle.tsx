@@ -58,6 +58,7 @@ const ThemeToggle = () => {
           ? "high contrast"
           : "light"
       } mode`}
+      aria-label={`Current theme: ${getLabel()}. Click to switch theme.`}
       style={{
         display: "flex",
         alignItems: "center",

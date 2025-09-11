@@ -21,8 +21,29 @@ export const defaultChartConfig: Required<Omit<BaseChartProps, "hideTitle">> & {
   showGrid: true,
   showLegend: true,
   currencyFormat: true,
-  dateTickAngle: 0,
-  margin: { top: 20, right: 30, left: 0, bottom: 5 },
+  dateTickAngle: -45, // Standardized angle for better readability
+  margin: { top: 20, right: 30, left: 60, bottom: 40 }, // More space for labels
+};
+
+// Standardized chart styling
+export const chartStyles = {
+  colors: [
+    "var(--chart-1)",
+    "var(--chart-2)",
+    "var(--chart-3)",
+    "var(--chart-4)",
+    "var(--chart-5)",
+  ],
+  gridColor: "var(--color-border)",
+  textColor: "var(--color-text)",
+  mutedTextColor: "var(--color-muted)",
+  legendPosition: "bottom" as const,
+  legendAlign: "center" as const,
+  legendVerticalAlign: "bottom" as const,
+  legendItemStyle: {
+    fontSize: "12px",
+    color: "var(--color-text)",
+  },
 };
 
 export const formatCurrency = (value: number): string =>
