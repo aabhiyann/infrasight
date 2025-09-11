@@ -9,18 +9,27 @@ import TopServicesBarChart from "../components/TopServicesBarChart";
 import OverviewSummary from "../components/OverviewSummary";
 import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
+import RefreshButton from "../components/RefreshButton";
+import { useAutoRefresh } from "../hooks/useAutoRefresh";
 
 function Overview() {
   const [data, setData] = useState<CostRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<string>("");
 
+  const loadData = async () => {
+    const result = await fetchCleanedCosts();
+    setData(result);
+    setLoading(false);
+  };
+
+  const { isRefreshing, lastRefresh, manualRefresh } = useAutoRefresh({
+    onRefresh: loadData,
+    intervalMs: 300000, // 5 minutes
+    enabled: !loading,
+  });
+
   useEffect(() => {
-    async function loadData() {
-      const result = await fetchCleanedCosts();
-      setData(result);
-      setLoading(false);
-    }
     loadData();
   }, []);
 
@@ -39,6 +48,12 @@ function Overview() {
         <ServiceFilterDropdown
           selected={selectedService}
           onChange={setSelectedService}
+        />
+        <RefreshButton
+          onRefresh={manualRefresh}
+          isRefreshing={isRefreshing}
+          lastRefresh={lastRefresh}
+          className="ml-auto"
         />
       </div>
       {loading ? (

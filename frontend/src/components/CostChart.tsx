@@ -57,9 +57,24 @@ const CostChart = ({
     .map(([date, total]) => ({ date, total }))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  const anomalyDots = anomalies
-    .filter((a) => (serviceFilter ? a.service === serviceFilter : true))
-    .map((a) => ({ date: a.date, total: a.amount }));
+
+  const filteredAnomalies = anomalies.filter((a) => (serviceFilter ? a.service === serviceFilter : true));
+  
+  const highSeverityAnomalies = filteredAnomalies
+    .filter(a => a.z_score >= 3)
+    .map(a => ({ date: a.date, total: a.amount, z_score: a.z_score }));
+    
+  const mediumHighAnomalies = filteredAnomalies
+    .filter(a => a.z_score >= 2.5 && a.z_score < 3)
+    .map(a => ({ date: a.date, total: a.amount, z_score: a.z_score }));
+    
+  const mediumAnomalies = filteredAnomalies
+    .filter(a => a.z_score >= 2 && a.z_score < 2.5)
+    .map(a => ({ date: a.date, total: a.amount, z_score: a.z_score }));
+    
+  const lowAnomalies = filteredAnomalies
+    .filter(a => a.z_score < 2)
+    .map(a => ({ date: a.date, total: a.amount, z_score: a.z_score }));
 
   return (
     <ResponsiveContainer width="100%" height={height}>
@@ -86,10 +101,33 @@ const CostChart = ({
           strokeWidth={2}
           dot
         />
-        <Scatter
-          data={anomalyDots}
-          fill="var(--color-danger)"
-          shape="triangle"
+        {/* High severity anomalies - red, large */}
+        <Scatter 
+          data={highSeverityAnomalies} 
+          fill="#dc2626"
+          shape="circle"
+          r={8}
+        />
+        {/* Medium-high severity anomalies - orange, medium */}
+        <Scatter 
+          data={mediumHighAnomalies} 
+          fill="#ea580c"
+          shape="circle"
+          r={6}
+        />
+        {/* Medium severity anomalies - amber, small */}
+        <Scatter 
+          data={mediumAnomalies} 
+          fill="#d97706"
+          shape="circle"
+          r={4}
+        />
+        {/* Low severity anomalies - blue, smallest */}
+        <Scatter 
+          data={lowAnomalies} 
+          fill="#2563eb"
+          shape="circle"
+          r={3}
         />
       </LineChart>
     </ResponsiveContainer>
