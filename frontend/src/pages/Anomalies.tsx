@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
-import AnomalyChart from "../components/AnomalyChart";
+import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
 import ServiceSelector from "../components/ServiceSelector";
 
 const Anomalies = () => {
@@ -45,9 +45,11 @@ const Anomalies = () => {
       </div>
       {loading ? (
         <p>Loading anomalies...</p>
+      ) : filtered.length === 0 ? (
+        <p>No anomalies found.</p>
       ) : (
         <div className="card">
-          <AnomalyChart data={filtered} />
+          <AnomalyScatterPlot anomalies={filtered} />
         </div>
       )}
     </div>
