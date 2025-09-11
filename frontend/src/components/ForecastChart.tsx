@@ -16,7 +16,7 @@ interface Props {
   service: string;
 }
 
-const ForecastChart: React.FC<Props> = ({ data, service }) => {
+function ForecastChart({ data, service }: Props) {
   return (
     <div style={{ marginBottom: "2rem" }}>
       <h3>{service}</h3>
@@ -51,6 +51,6 @@ const ForecastChart: React.FC<Props> = ({ data, service }) => {
       </ResponsiveContainer>
     </div>
   );
-};
+}
 
 export default ForecastChart;

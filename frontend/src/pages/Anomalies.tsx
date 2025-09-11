@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyChart from "../components/AnomalyChart";
 
-const Anomalies: React.FC = () => {
+function Anomalies() {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +25,6 @@ const Anomalies: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default Anomalies;

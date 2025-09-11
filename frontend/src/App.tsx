@@ -4,7 +4,7 @@ import Overview from "./pages/Overview";
 import Forecast from "./pages/Forecast";
 import Anomalies from "./pages/Anomalies";
 import Logs from "./pages/Logs";
-
+import Recommendations from "./pages/Recommendations";
 const App = () => {
   return (
     <BrowserRouter>
@@ -15,6 +15,7 @@ const App = () => {
           <Route path="forecast" element={<Forecast />} />
           <Route path="anomalies" element={<Anomalies />} />
           <Route path="logs" element={<Logs />} />
+          <Route path="recommendations" element={<Recommendations />} />
         </Route>
       </Routes>
     </BrowserRouter>

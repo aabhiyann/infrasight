@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
 import CostChart from "../components/CostChart";
 import BarChartTopServices from "../components/BarChartTopServices";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
 
-const Overview: React.FC = () => {
+function Overview() {
   const [data, setData] = useState<CostRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +33,6 @@ const Overview: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default Overview;

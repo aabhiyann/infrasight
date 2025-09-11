@@ -7,6 +7,7 @@ const DashboardLayout = () => {
     { label: "Overview", path: "/overview" },
     { label: "Forecast", path: "/forecast" },
     { label: "Anomalies", path: "/anomalies" },
+    { label: "Recommendations", path: "/recommendations" },
     { label: "Logs", path: "/logs" },
   ];
 

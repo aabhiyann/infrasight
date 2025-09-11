@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { fetchForecastData, type ForecastResponse } from "../api/forecastApi";
 import ForecastChart from "../components/ForecastChart";
 
-const Forecast: React.FC = () => {
+function Forecast() {
   const [forecastData, setForecastData] = useState<ForecastResponse | null>(
     null
   );
@@ -48,6 +48,6 @@ const Forecast: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default Forecast;
