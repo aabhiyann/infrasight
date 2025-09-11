@@ -3,6 +3,7 @@ import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
 import CostChart from "../components/CostChart";
 import BarChartTopServices from "../components/BarChartTopServices";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
+import MultiServiceTimeline from "../components/MultiServiceTimeline";
 
 const Overview: React.FC = () => {
   const [data, setData] = useState<CostRecord[]>([]);
@@ -25,6 +26,7 @@ const Overview: React.FC = () => {
       ) : (
         <>
           <CostChart data={data} />
+          <MultiServiceTimeline data={data} />
           <BarChartTopServices data={data} />
           <HeatmapServiceTrends data={data} />
         </>
