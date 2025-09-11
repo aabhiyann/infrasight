@@ -6,7 +6,7 @@ import {
   type ForecastResponse,
 } from "../api/forecastApi";
 import ForecastChart from "../components/ForecastChart";
-import ServiceSelector from "../components/ServiceSelector";
+import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 
 const Forecast = () => {
   const [forecastData, setForecastData] = useState<ForecastResponse | null>(
@@ -58,11 +58,13 @@ const Forecast = () => {
           Predictions and confidence bounds for total and per-service costs.
         </p>
       </div>
-      <ServiceSelector
-        services={availableServices}
-        selectedService={selectedService}
-        onChange={setSelectedService}
-      />
+      <div className="toolbar">
+        <label htmlFor="service">Service:</label>
+        <ServiceFilterDropdown
+          selected={selectedService}
+          onChange={setSelectedService}
+        />
+      </div>
 
       {loading ? (
         <p>Loading forecast data...</p>

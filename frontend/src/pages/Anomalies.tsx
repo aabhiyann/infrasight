@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
-import ServiceSelector from "../components/ServiceSelector";
+import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 
 const Anomalies = () => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [filtered, setFiltered] = useState<Anomaly[]>([]);
-  const [services, setServices] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
   const [zThreshold, setZThreshold] = useState<number>(2.0);
@@ -18,7 +17,6 @@ const Anomalies = () => {
       setError(null);
       const result = await fetchAnomalies(zThreshold);
       setAnomalies(result);
-      setServices([...new Set(result.map((a) => a.service))]);
       setLoading(false);
       if (result.length === 0) {
         setError("No anomalies returned. Try lowering the Z-threshold.");
@@ -44,9 +42,9 @@ const Anomalies = () => {
         </p>
       </div>
       <div className="toolbar">
-        <ServiceSelector
-          services={services}
-          selectedService={selectedService}
+        <label htmlFor="service">Service:</label>
+        <ServiceFilterDropdown
+          selected={selectedService}
           onChange={setSelectedService}
         />
         <div
