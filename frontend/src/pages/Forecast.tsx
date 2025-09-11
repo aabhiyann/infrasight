@@ -33,6 +33,13 @@ const Forecast = () => {
         setLoading(true);
         const result = await fetchForecastData(7, selectedService || undefined);
         setForecastData(result);
+        // Fallback: if services list is empty, derive from forecast response
+        if (availableServices.length === 0 && result) {
+          const keys = Object.keys(result.service_forecasts || {});
+          if (keys.length > 0) {
+            setAvailableServices(keys);
+          }
+        }
       } catch (error) {
         console.error("Failed to load forecast data:", error);
       } finally {
