@@ -1,0 +1,32 @@
+.sidebar {
+  width: 200px;
+  background-color: #1d3557;
+  color: #fff;
+  padding: 1rem;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  color: #fff;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.nav-item.active {
+  color: #fca311;
+  font-weight: bold;
+}

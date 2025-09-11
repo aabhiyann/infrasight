@@ -1,0 +1,9 @@
+.layout-root {
+  display: flex;
+}
+
+.layout-main {
+  margin-left: 200px;
+  padding: 2rem;
+  width: 100%;
+}

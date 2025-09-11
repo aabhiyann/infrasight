@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import "./DashboardLayout.css";
 
 const DashboardLayout = () => {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="layout-root">
       <Sidebar />
-      <main style={{ marginLeft: 200, padding: "2rem", width: "100%" }}>
+      <main className="layout-main">
         <Outlet />
       </main>
     </div>
