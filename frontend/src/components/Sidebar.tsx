@@ -1,52 +1,54 @@
 import { NavLink } from "react-router-dom";
-import "./Sidebar.css";
 
 const Sidebar = () => {
   return (
-    <div className="sidebar">
-      <h2>InfraSight</h2>
-      <nav>
-        <NavLink
-          to="/overview"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
+    <div
+      style={{
+        width: 200,
+        backgroundColor: "#1d3557",
+        color: "#fff",
+        padding: "1rem",
+        height: "100vh",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <div>
+        <h2 style={{ fontSize: 20, marginBottom: "1.5rem" }}>InfraSight</h2>
+        <nav
+          style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
         >
-          Overview
-        </NavLink>
-        <NavLink
-          to="/forecast"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          Forecast
-        </NavLink>
-        <NavLink
-          to="/anomalies"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          Anomalies
-        </NavLink>
-        <NavLink
-          to="/recommendations"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          Recommendations
-        </NavLink>
-        <NavLink
-          to="/logs"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          Logs
-        </NavLink>
-      </nav>
+          {[
+            { to: "/overview", label: "Overview" },
+            { to: "/forecast", label: "Forecast" },
+            { to: "/anomalies", label: "Anomalies" },
+            { to: "/recommendations", label: "Recommendations" },
+            { to: "/logs", label: "Logs" },
+          ].map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              style={({ isActive }) => ({
+                color: isActive ? "#fca311" : "#fff",
+                textDecoration: "none",
+                fontWeight: isActive ? "bold" : "normal",
+                padding: "0.5rem",
+                borderRadius: "4px",
+                transition: "background-color 0.3s",
+                cursor: "pointer",
+              })}
+              className="nav-link"
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+      </div>
+      <p style={{ fontSize: "0.8rem", marginTop: "auto" }}>© 2025 InfraSight</p>
     </div>
   );
 };
