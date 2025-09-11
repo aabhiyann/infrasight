@@ -20,22 +20,31 @@ function Overview() {
   }, []);
 
   return (
-    <div className="container">
-      <h2>AWS Cost Overview</h2>
+    <div className="container stack-lg">
+      <div className="page-header">
+        <h2 className="page-title">AWS Cost Overview</h2>
+        <p className="page-subtitle">
+          Key spend metrics, trends, and drivers at a glance.
+        </p>
+      </div>
       <OverviewSummary costData={data} />
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <div style={{ marginTop: "2rem" }}>
+          <div style={{ marginTop: "2rem" }} className="card">
             <h3>Cost Over Time</h3>
-            <div className="chart-container">
-              <CostChart data={data} />
-            </div>
+            <CostChart data={data} />
           </div>
-          <MultiServiceTimeline data={data} />
-          <TopServicesBarChart costData={data} />
-          <HeatmapServiceTrends data={data} />
+          <div className="card">
+            <MultiServiceTimeline data={data} />
+          </div>
+          <div className="card">
+            <TopServicesBarChart costData={data} />
+          </div>
+          <div className="card">
+            <HeatmapServiceTrends data={data} />
+          </div>
         </>
       )}
     </div>

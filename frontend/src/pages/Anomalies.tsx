@@ -29,14 +29,25 @@ const Anomalies = () => {
   }, [selectedService, anomalies]);
 
   return (
-    <div className="container">
-      <h2>Detected Anomalies</h2>
+    <div className="container stack-lg">
+      <div className="page-header">
+        <h2 className="page-title">Detected Anomalies</h2>
+        <p className="page-subtitle">
+          Unusual spend spikes and outliers across services.
+        </p>
+      </div>
       <ServiceSelector
         services={services}
         selectedService={selectedService}
         onChange={setSelectedService}
       />
-      {loading ? <p>Loading anomalies...</p> : <AnomalyChart data={filtered} />}
+      {loading ? (
+        <p>Loading anomalies...</p>
+      ) : (
+        <div className="card">
+          <AnomalyChart data={filtered} />
+        </div>
+      )}
     </div>
   );
 };

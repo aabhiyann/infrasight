@@ -70,23 +70,25 @@ const Forecast = () => {
       ) : (
         <>
           {selectedService ? (
-            <ForecastChart
-              data={forecastData.service_forecasts[selectedService] || []}
-              service={selectedService}
-            />
+            <div className="card">
+              <ForecastChart
+                data={forecastData.service_forecasts[selectedService] || []}
+                service={selectedService}
+              />
+            </div>
           ) : (
             <>
-              <ForecastChart
-                data={forecastData.total_forecast}
-                service="Total Cost"
-              />
+              <div className="card">
+                <ForecastChart
+                  data={forecastData.total_forecast}
+                  service="Total Cost"
+                />
+              </div>
               {Object.entries(forecastData.service_forecasts).map(
                 ([service, forecast]) => (
-                  <ForecastChart
-                    key={service}
-                    data={forecast}
-                    service={service}
-                  />
+                  <div className="card" key={service}>
+                    <ForecastChart data={forecast} service={service} />
+                  </div>
                 )
               )}
             </>
