@@ -19,7 +19,7 @@ function Overview() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="container">
       <h2>AWS Cost Overview</h2>
       {loading ? (
         <p>Loading...</p>

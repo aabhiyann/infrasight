@@ -18,7 +18,7 @@ export default function Recommendations() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="container">
       <h2>Cost-Saving Recommendations</h2>
       {loading ? (
         <p>Loading recommendations...</p>

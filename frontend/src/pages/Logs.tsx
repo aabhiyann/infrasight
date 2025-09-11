@@ -1,6 +1,6 @@
 const Logs = () => {
   return (
-    <div>
+    <div className="container">
       <h2>Cost Logs</h2>
       <p>Database logs and entries will be fetched and shown here.</p>
     </div>

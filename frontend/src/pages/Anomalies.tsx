@@ -16,7 +16,7 @@ function Anomalies() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="container">
       <h2>Detected Anomalies</h2>
       {loading ? (
         <p>Loading anomalies...</p>
