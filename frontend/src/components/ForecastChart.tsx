@@ -17,7 +17,7 @@ interface Props {
 
 function ForecastChart({ data, service }: Props) {
   return (
-    <div style={{ marginBottom: "2rem" }}>
+    <div>
       <h3>{service}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>

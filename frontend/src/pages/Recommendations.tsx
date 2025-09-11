@@ -43,14 +43,14 @@ const Recommendations = () => {
       </div>
 
       {/* Filters */}
-      <div style={{ marginBottom: "1rem" }}>
+      <div className="toolbar">
         <ServiceSelector
           services={services}
           selectedService={selectedService}
           onChange={setSelectedService}
         />
 
-        <label style={{ marginLeft: "1rem" }}>
+        <label>
           Max Budget:{" "}
           <input
             type="number"
@@ -62,9 +62,7 @@ const Recommendations = () => {
           />
         </label>
 
-        <button onClick={loadRecommendations} style={{ marginLeft: "1rem" }}>
-          Apply Filters
-        </button>
+        <button onClick={loadRecommendations}>Apply Filters</button>
       </div>
 
       {/* Results */}

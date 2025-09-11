@@ -36,11 +36,13 @@ const Anomalies = () => {
           Unusual spend spikes and outliers across services.
         </p>
       </div>
-      <ServiceSelector
-        services={services}
-        selectedService={selectedService}
-        onChange={setSelectedService}
-      />
+      <div className="toolbar">
+        <ServiceSelector
+          services={services}
+          selectedService={selectedService}
+          onChange={setSelectedService}
+        />
+      </div>
       {loading ? (
         <p>Loading anomalies...</p>
       ) : (
