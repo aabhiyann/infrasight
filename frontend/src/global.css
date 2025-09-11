@@ -22,7 +22,7 @@
   --surface-1: #f2faff; /* Discreet/Natural */
   --surface-2: #e6f4f1; /* Switch/Natural */
 
-  /* Project semantic tokens */
+  /* Project semantic tokens - Light mode */
   --color-primary: var(--brand-600);
   --color-secondary: var(--slate-800);
   --color-accent: var(--brand-400);
@@ -50,6 +50,32 @@
   --chart-4: #6a97ff; /* Collective */
   --chart-5: #f56ea8; /* Collective */
 }
+
+/* Dark mode */
+[data-theme="dark"] {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-muted: #94a3b8;
+  --color-border: #334155;
+  --surface-1: #1e293b;
+  --surface-2: #334155;
+  --accent-15: rgba(52, 163, 241, 0.25);
+  --accent-10: rgba(52, 163, 241, 0.15);
+}
+
+/* High contrast mode */
+[data-theme="high-contrast"] {
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-text: #000000;
+  --color-muted: #333333;
+  --color-border: #000000;
+  --color-primary: #0000ff;
+  --color-accent: #0000ff;
+  --accent-15: rgba(0, 0, 255, 0.3);
+  --accent-10: rgba(0, 0, 255, 0.2);
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -58,10 +84,63 @@ body {
   color: var(--color-text);
 }
 
-h2,
-h3,
-h4 {
+/* Complete typography scale */
+h1 {
+  font-size: 2.25rem;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  font-weight: 600;
   margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+h5 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1.4;
 }
 
 /* Page header */
@@ -187,6 +266,11 @@ h4 {
 .table--compact th,
 .table--compact td {
   padding: 6px 8px;
+}
+
+/* Zebra striping for better readability */
+.table tbody tr:nth-child(even) {
+  background: var(--surface-1);
 }
 
 .table tbody tr:hover {
@@ -338,6 +422,24 @@ h4 {
   background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(2px);
   z-index: 900;
+}
+
+/* Smooth transitions and reduced motion support */
+* {
+  transition: background-color 200ms ease, border-color 200ms ease, 
+              color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .skeleton {
+    animation: none;
+    background: var(--color-border);
+  }
 }
 
 /* Accessible hide */
