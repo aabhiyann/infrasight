@@ -5,6 +5,7 @@ import {
 } from "../api/recommendationApi";
 import { fetchAvailableServices } from "../api/forecastApi";
 import ServiceSelector from "../components/ServiceSelector";
+import RecommendationTable from "../components/RecommendationTable";
 
 const Recommendations = () => {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -71,28 +72,9 @@ const Recommendations = () => {
       {/* Results */}
       {loading ? (
         <p>Loading recommendations...</p>
-      ) : recommendations.length === 0 ? (
-        <p>No recommendations found.</p>
       ) : (
         <div className="card">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>Reason</th>
-                <th>Suggestion</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recommendations.map((r, i) => (
-                <tr key={i}>
-                  <td>{r.service}</td>
-                  <td>{r.reason}</td>
-                  <td>{r.suggestion}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <RecommendationTable recommendations={recommendations} />
         </div>
       )}
     </div>
