@@ -14,7 +14,7 @@ interface Props {
   data: CostRecord[];
 }
 
-const BarChartTopServices: React.FC<Props> = ({ data }) => {
+const BarChartTopServices = ({ data }: Props) => {
   // Step 1: Aggregate total cost per service
   const totals: Record<string, number> = {};
   data.forEach((item) => {
