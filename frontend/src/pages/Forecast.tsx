@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchForecastData,
   fetchAvailableServices,
   type ForecastResponse,
 } from "../api/forecastApi";
 import ForecastChart from "../components/ForecastChart";
+import ServiceSelector from "../components/ServiceSelector";
 
-function Forecast() {
+const Forecast = () => {
   const [forecastData, setForecastData] = useState<ForecastResponse | null>(
     null
   );
+  const [availableServices, setAvailableServices] = useState<string[]>([]);
+  const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
-  const [services, setServices] = useState<string[]>([]);
-  const [selectedService, setSelectedService] = useState<string | undefined>(
-    undefined
-  );
 
-  // Load available services once
   useEffect(() => {
-    (async () => {
-      const svc = await fetchAvailableServices();
-      setServices(svc);
-    })();
+    async function loadInitialData() {
+      try {
+        const services = await fetchAvailableServices();
+        setAvailableServices(services);
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
+      }
+    }
+    loadInitialData();
   }, []);
 
-  // Load forecast whenever selected service changes
   useEffect(() => {
-    async function loadData() {
-      setLoading(true);
+    async function loadForecast() {
       try {
-        const result = await fetchForecastData(7, selectedService);
+        setLoading(true);
+        const result = await fetchForecastData(7, selectedService || undefined);
         setForecastData(result);
       } catch (error) {
         console.error("Failed to load forecast data:", error);
@@ -37,56 +39,50 @@ function Forecast() {
         setLoading(false);
       }
     }
-    loadData();
+    loadForecast();
   }, [selectedService]);
 
   return (
     <div className="container">
       <h2>Cost Forecasts</h2>
-      {/* Service Filter */}
-      {services.length > 0 && (
-        <div style={{ marginBottom: "1rem" }}>
-          <label htmlFor="service-select" style={{ marginRight: 8 }}>
-            Service:
-          </label>
-          <select
-            id="service-select"
-            value={selectedService ?? ""}
-            onChange={(e) =>
-              setSelectedService(e.target.value ? e.target.value : undefined)
-            }
-          >
-            <option value="">All Services</option>
-            {services.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+      <ServiceSelector
+        services={availableServices}
+        selectedService={selectedService}
+        onChange={setSelectedService}
+      />
+
       {loading ? (
         <p>Loading forecast data...</p>
       ) : !forecastData ? (
         <p>No forecast data available.</p>
       ) : (
         <>
-          {/* Total Forecast */}
-          <ForecastChart
-            data={forecastData.total_forecast}
-            service="Total Cost"
-          />
-
-          {/* Service-specific Forecasts */}
-          {Object.entries(forecastData.service_forecasts).map(
-            ([service, forecast]) => (
-              <ForecastChart key={service} data={forecast} service={service} />
-            )
+          {selectedService ? (
+            <ForecastChart
+              data={forecastData.service_forecasts[selectedService] || []}
+              service={selectedService}
+            />
+          ) : (
+            <>
+              <ForecastChart
+                data={forecastData.total_forecast}
+                service="Total Cost"
+              />
+              {Object.entries(forecastData.service_forecasts).map(
+                ([service, forecast]) => (
+                  <ForecastChart
+                    key={service}
+                    data={forecast}
+                    service={service}
+                  />
+                )
+              )}
+            </>
           )}
         </>
       )}
     </div>
   );
-}
+};
 
 export default Forecast;
