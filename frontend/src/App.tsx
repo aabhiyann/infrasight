@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DashboardLayout from "./components/DashboardLayout";
 import Overview from "./pages/Overview";
@@ -6,7 +5,7 @@ import Forecast from "./pages/Forecast";
 import Anomalies from "./pages/Anomalies";
 import Logs from "./pages/Logs";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>

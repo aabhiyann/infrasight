@@ -9,12 +9,22 @@ export interface Anomaly {
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
-export async function fetchAnomalies(): Promise<Anomaly[]> {
+export async function fetchAnomalies(
+  z_threshold: number = 2.0
+): Promise<Anomaly[]> {
   try {
-    const response = await axios.get<{ data: Anomaly[] }>(
-      `${BASE_URL}/anomalies`
-    );
-    return response.data.data;
+    const response = await axios.get<{
+      flattened_anomalies: Anomaly[];
+      summary: {
+        total_anomalies: number;
+        services_affected: number;
+        services: string[];
+      };
+      threshold_used: number;
+      status: string;
+    }>(`${BASE_URL}/anomalies?z_threshold=${z_threshold}`);
+
+    return response.data.flattened_anomalies;
   } catch (error) {
     console.error("Failed to fetch anomalies:", error);
     return [];
