@@ -26,7 +26,7 @@ const Text: React.FC<TextProps> = ({
 }) => {
   const typographyClasses = getTypographyClasses(props);
   const spacingClasses = getSpacingClasses(props);
-  
+
   const colorClasses = {
     primary: "text-primary",
     secondary: "text-secondary",
@@ -44,7 +44,11 @@ const Text: React.FC<TextProps> = ({
     className
   );
 
-  return <Component className={classes} style={style}>{children}</Component>;
+  return (
+    <Component className={classes} style={style}>
+      {children}
+    </Component>
+  );
 };
 
 export default Text;

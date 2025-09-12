@@ -1,6 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Box, Flex, Text, Stack } from "./ui";
+import {
+  OverviewIcon,
+  ForecastIcon,
+  AnomalyIcon,
+  RecommendationIcon,
+  LogsIcon,
+  LogoutIcon,
+  InfraSightLogo,
+} from "./ui/Icons";
+import "./Sidebar.css";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -34,24 +44,14 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
         borderRight: "1px solid var(--color-border)",
       }}
     >
-      <Flex direction="column" justify="space-between" style={{ height: "100%" }}>
+      <Flex
+        direction="column"
+        justify="space-between"
+        style={{ height: "100%" }}
+      >
         <Box>
-          <Flex align="center" gap="sm" mb="xl">
-            <Box
-              className="sidebar-logo"
-              p="sm"
-              style={{
-                background: "var(--gradient-generic)",
-                borderRadius: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text fontSize="lg" fontWeight="bold" style={{ color: "white" }}>
-                IS
-              </Text>
-            </Box>
+          <Flex align="center" gap="md" mb="xl">
+            <InfraSightLogo size={32} />
             <Text as="h2" fontSize="lg" fontWeight="bold">
               InfraSight
             </Text>
@@ -59,12 +59,16 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
           <nav>
             <Stack spacing="xs">
               {[
-                { to: "/overview", label: "Overview", icon: "📊" },
-                { to: "/forecast", label: "Forecast", icon: "📈" },
-                { to: "/anomalies", label: "Anomalies", icon: "⚠️" },
-                { to: "/recommendations", label: "Recommendations", icon: "💡" },
-                { to: "/logs", label: "Logs", icon: "📋" },
-              ].map(({ to, label, icon }) => (
+                { to: "/overview", label: "Overview", icon: OverviewIcon },
+                { to: "/forecast", label: "Forecast", icon: ForecastIcon },
+                { to: "/anomalies", label: "Anomalies", icon: AnomalyIcon },
+                {
+                  to: "/recommendations",
+                  label: "Recommendations",
+                  icon: RecommendationIcon,
+                },
+                { to: "/logs", label: "Logs", icon: LogsIcon },
+              ].map(({ to, label, icon: IconComponent }) => (
                 <NavLink
                   key={to}
                   to={to}
@@ -72,7 +76,7 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
                     isActive ? "sidebar-link active" : "sidebar-link"
                   }
                 >
-                  <span className="sidebar-icon">{icon}</span>
+                  <IconComponent size={20} className="sidebar-icon" />
                   <span>{label}</span>
                 </NavLink>
               ))}
@@ -83,11 +87,7 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
         <Box>
           {/* User Info */}
           {user && (
-            <Box
-              mb="lg"
-              p="md"
-              className="sidebar-user-info"
-            >
+            <Box mb="lg" p="md" className="sidebar-user-info">
               <Flex align="center" gap="sm" mb="xs">
                 <Box
                   className="sidebar-avatar"
@@ -101,7 +101,11 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Text fontSize="sm" fontWeight="bold" style={{ color: "white" }}>
+                  <Text
+                    fontSize="sm"
+                    fontWeight="bold"
+                    style={{ color: "white" }}
+                  >
                     {user.username.charAt(0).toUpperCase()}
                   </Text>
                 </Box>
@@ -123,7 +127,7 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
             className="sidebar-logout-btn"
             style={{ width: "100%" }}
           >
-            <span className="sidebar-icon">🚪</span>
+            <LogoutIcon size={20} className="sidebar-icon" />
             <span>Logout</span>
           </button>
 

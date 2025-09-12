@@ -27,7 +27,7 @@ const Flex: React.FC<FlexProps> = ({
   ...spacingProps
 }) => {
   const spacingClasses = getSpacingClasses(spacingProps);
-  
+
   const classes = cn(
     "d-flex",
     `flex-${direction}`,
@@ -39,7 +39,11 @@ const Flex: React.FC<FlexProps> = ({
     className
   );
 
-  return <Component className={classes} style={style}>{children}</Component>;
+  return (
+    <Component className={classes} style={style}>
+      {children}
+    </Component>
+  );
 };
 
 export default Flex;

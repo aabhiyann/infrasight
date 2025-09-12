@@ -3021,12 +3021,12 @@ body {
   .sidebar {
     width: 280px !important;
   }
-  
+
   .sidebar-link {
     padding: 1rem;
     font-size: 1rem;
   }
-  
+
   .sidebar-icon {
     font-size: 1.25rem;
     width: 24px;
@@ -3040,7 +3040,7 @@ body {
 }
 
 .sidebar-link::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
