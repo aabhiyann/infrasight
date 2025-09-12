@@ -103,6 +103,9 @@
 /* Design System Utility Classes */
 
 /* Spacing */
+.p-none {
+  padding: 0;
+}
 .p-xs {
   padding: 0.25rem;
 }
@@ -128,6 +131,10 @@
   padding: 4rem;
 }
 
+.px-none {
+  padding-left: 0;
+  padding-right: 0;
+}
 .px-xs {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -153,6 +160,10 @@
   padding-right: 2rem;
 }
 
+.py-none {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .py-xs {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -178,6 +189,9 @@
   padding-bottom: 2rem;
 }
 
+.m-none {
+  margin: 0;
+}
 .m-xs {
   margin: 0.25rem;
 }
@@ -203,6 +217,10 @@
   margin: 4rem;
 }
 
+.mx-none {
+  margin-left: 0;
+  margin-right: 0;
+}
 .mx-xs {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -228,6 +246,10 @@
   margin-right: 2rem;
 }
 
+.my-none {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 .my-xs {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
@@ -253,6 +275,9 @@
   margin-bottom: 2rem;
 }
 
+.mt-none {
+  margin-top: 0;
+}
 .mt-xs {
   margin-top: 0.25rem;
 }
@@ -272,6 +297,9 @@
   margin-top: 2rem;
 }
 
+.mr-none {
+  margin-right: 0;
+}
 .mr-xs {
   margin-right: 0.25rem;
 }
@@ -291,6 +319,9 @@
   margin-right: 2rem;
 }
 
+.mb-none {
+  margin-bottom: 0;
+}
 .mb-xs {
   margin-bottom: 0.25rem;
 }
@@ -310,6 +341,9 @@
   margin-bottom: 2rem;
 }
 
+.ml-none {
+  margin-left: 0;
+}
 .ml-xs {
   margin-left: 0.25rem;
 }
@@ -329,6 +363,9 @@
   margin-left: 2rem;
 }
 
+.gap-none {
+  gap: 0;
+}
 .gap-xs {
   gap: 0.25rem;
 }
@@ -2832,4 +2869,57 @@ body {
     height: 32px;
     font-size: 0.875rem;
   }
+}
+
+/* Additional UI Component Classes */
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.max-w-sm {
+  max-width: 24rem;
+}
+.max-w-md {
+  max-width: 28rem;
+}
+.max-w-lg {
+  max-width: 32rem;
+}
+.max-w-xl {
+  max-width: 36rem;
+}
+.max-w-2xl {
+  max-width: 42rem;
+}
+.max-w-full {
+  max-width: 100%;
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+.text-secondary {
+  color: var(--color-secondary);
+}
+.text-muted {
+  color: var(--color-muted);
+}
+.text-danger {
+  color: var(--color-danger);
+}
+.text-success {
+  color: var(--color-success);
+}
+.text-warning {
+  color: var(--color-warning);
+}
+
+.list-none {
+  list-style: none;
 }

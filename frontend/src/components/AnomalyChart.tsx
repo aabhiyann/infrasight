@@ -27,7 +27,7 @@ const AnomalyChart = ({
 }: AnomalyChartProps) => {
   if (data.length === 0) {
     return (
-      <div style={{ textAlign: "center", padding: "2rem" }}>
+      <div className="text-center p-2xl">
         <h3>No Anomalies Detected</h3>
         <p>No cost anomalies found in the current dataset.</p>
       </div>
@@ -66,7 +66,7 @@ const AnomalyChart = ({
       </ResponsiveContainer>
 
       {/* Summary Table */}
-      <div style={{ marginTop: "2rem" }}>
+      <div className="mt-2xl">
         <h4>Anomaly Details</h4>
         <table className="table">
           <thead>

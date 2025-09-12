@@ -2,6 +2,7 @@
 // This ensures consistent spacing, colors, and styling across the entire project
 
 export type Spacing =
+  | "none" // 0
   | "xs" // 0.25rem (4px)
   | "sm" // 0.5rem (8px)
   | "md" // 0.75rem (12px)
@@ -107,6 +108,7 @@ export interface CardProps extends SpacingProps {
 
 // Design Tokens
 export const spacing: Record<Spacing, string> = {
+  none: "0",
   xs: "0.25rem", // 4px
   sm: "0.5rem", // 8px
   md: "0.75rem", // 12px

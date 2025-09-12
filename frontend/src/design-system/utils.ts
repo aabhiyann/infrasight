@@ -25,23 +25,23 @@ export const cn = (
 export const getSpacingClasses = (props: SpacingProps): string => {
   const classes: string[] = [];
 
-  if (props.p) classes.push(`p-${props.p}`);
-  if (props.px) classes.push(`px-${props.px}`);
-  if (props.py) classes.push(`py-${props.py}`);
-  if (props.pt) classes.push(`pt-${props.pt}`);
-  if (props.pr) classes.push(`pr-${props.pr}`);
-  if (props.pb) classes.push(`pb-${props.pb}`);
-  if (props.pl) classes.push(`pl-${props.pl}`);
+  if (props.p !== undefined) classes.push(`p-${props.p}`);
+  if (props.px !== undefined) classes.push(`px-${props.px}`);
+  if (props.py !== undefined) classes.push(`py-${props.py}`);
+  if (props.pt !== undefined) classes.push(`pt-${props.pt}`);
+  if (props.pr !== undefined) classes.push(`pr-${props.pr}`);
+  if (props.pb !== undefined) classes.push(`pb-${props.pb}`);
+  if (props.pl !== undefined) classes.push(`pl-${props.pl}`);
 
-  if (props.m) classes.push(`m-${props.m}`);
-  if (props.mx) classes.push(`mx-${props.mx}`);
-  if (props.my) classes.push(`my-${props.my}`);
-  if (props.mt) classes.push(`mt-${props.mt}`);
-  if (props.mr) classes.push(`mr-${props.mr}`);
-  if (props.mb) classes.push(`mb-${props.mb}`);
-  if (props.ml) classes.push(`ml-${props.ml}`);
+  if (props.m !== undefined) classes.push(`m-${props.m}`);
+  if (props.mx !== undefined) classes.push(`mx-${props.mx}`);
+  if (props.my !== undefined) classes.push(`my-${props.my}`);
+  if (props.mt !== undefined) classes.push(`mt-${props.mt}`);
+  if (props.mr !== undefined) classes.push(`mr-${props.mr}`);
+  if (props.mb !== undefined) classes.push(`mb-${props.mb}`);
+  if (props.ml !== undefined) classes.push(`ml-${props.ml}`);
 
-  if (props.gap) classes.push(`gap-${props.gap}`);
+  if (props.gap !== undefined) classes.push(`gap-${props.gap}`);
 
   return classes.join(" ");
 };

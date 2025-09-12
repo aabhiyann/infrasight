@@ -33,16 +33,16 @@ const EmptyState = ({
   const getDefaultAction = () => {
     if (onRetry) {
       return (
-        <button className="btn" onClick={onRetry}>
-          <RefreshCw size={16} style={{ marginRight: "0.5rem" }} />
+        <button className="btn d-flex items-center gap-xs" onClick={onRetry}>
+          <RefreshCw size={16} />
           Try Again
         </button>
       );
     }
     if (onAdd) {
       return (
-        <button className="btn" onClick={onAdd}>
-          <Plus size={16} style={{ marginRight: "0.5rem" }} />
+        <button className="btn d-flex items-center gap-xs" onClick={onAdd}>
+          <Plus size={16} />
           Add New
         </button>
       );
@@ -55,14 +55,10 @@ const EmptyState = ({
       <div className="empty-icon" aria-hidden>
         {getIcon()}
       </div>
-      <h3 style={{ margin: "0.25rem 0" }}>{title}</h3>
-      {message ? (
-        <p style={{ margin: 0, color: "var(--color-muted)" }}>{message}</p>
-      ) : null}
+      <h3 className="my-xs">{title}</h3>
+      {message ? <p className="m-none text-muted">{message}</p> : null}
       {(action || getDefaultAction()) && (
-        <div style={{ marginTop: "0.75rem" }}>
-          {action || getDefaultAction()}
-        </div>
+        <div className="mt-md">{action || getDefaultAction()}</div>
       )}
     </div>
   );

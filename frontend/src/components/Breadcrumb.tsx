@@ -12,30 +12,15 @@ interface BreadcrumbProps {
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
     <nav className="breadcrumbs" aria-label="Breadcrumb">
-      <ol
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          margin: 0,
-          padding: 0,
-          listStyle: "none",
-        }}
-      >
+      <ol className="d-flex items-center gap-sm m-none p-none list-none">
         <li>
-          <a
-            href="/"
-            style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}
-          >
+          <a href="/" className="d-flex items-center gap-xs">
             <Home size={14} />
             <span>Dashboard</span>
           </a>
         </li>
         {items.map((item, index) => (
-          <li
-            key={index}
-            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-          >
+          <li key={index} className="d-flex items-center gap-sm">
             <ChevronRight size={14} />
             {item.href ? (
               <a href={item.href}>{item.label}</a>
