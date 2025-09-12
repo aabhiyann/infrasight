@@ -156,31 +156,19 @@ const AnomalyScatterPlot = ({ anomalies }: AnomalyScatterPlotProps) => {
       <div className="chart-footer">
         <div className="legend-items">
           <div className="legend-item">
-            <div
-              className="legend-color"
-              style={{ backgroundColor: "var(--color-danger)" }}
-            ></div>
+            <div className="legend-color legend-color-danger"></div>
             <span>High (Z ≥ 3.0)</span>
           </div>
           <div className="legend-item">
-            <div
-              className="legend-color"
-              style={{ backgroundColor: "var(--color-warning)" }}
-            ></div>
+            <div className="legend-color legend-color-warning"></div>
             <span>Medium-High (Z ≥ 2.5)</span>
           </div>
           <div className="legend-item">
-            <div
-              className="legend-color"
-              style={{ backgroundColor: "var(--amber-600)" }}
-            ></div>
+            <div className="legend-color legend-color-amber"></div>
             <span>Medium (Z ≥ 2.0)</span>
           </div>
           <div className="legend-item">
-            <div
-              className="legend-color"
-              style={{ backgroundColor: "var(--color-primary)" }}
-            ></div>
+            <div className="legend-color legend-color-primary"></div>
             <span>Low (Z &lt; 2.0)</span>
           </div>
         </div>

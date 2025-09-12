@@ -34,9 +34,7 @@ const HeatmapServiceTrends = ({ data }: HeatmapServiceTrendsProps) => {
         <table className="heatmap-table">
           <thead>
             <tr>
-              <th className="heatmap-sticky-header">
-                Service
-              </th>
+              <th className="heatmap-sticky-header">Service</th>
               {dates.map((date) => (
                 <th key={date} className="heatmap-date-header">
                   {date}
@@ -47,9 +45,7 @@ const HeatmapServiceTrends = ({ data }: HeatmapServiceTrendsProps) => {
           <tbody>
             {services.map((service) => (
               <tr key={service}>
-                <td className="heatmap-sticky-cell">
-                  {service}
-                </td>
+                <td className="heatmap-sticky-cell">{service}</td>
                 {dates.map((date) => {
                   const value = lookup[`${service}-${date}`] || 0;
                   return (

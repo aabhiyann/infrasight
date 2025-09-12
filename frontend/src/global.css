@@ -2958,3 +2958,73 @@ body {
 .sidebar-logout-btn:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* Heatmap Component Styles */
+.heatmap-container {
+  overflow-x: auto;
+}
+
+.heatmap-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.heatmap-sticky-header {
+  position: sticky;
+  left: 0;
+  background: var(--color-surface);
+  padding: 0.5rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  z-index: 2;
+}
+
+.heatmap-date-header {
+  padding: 0.125rem 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  min-width: 3rem;
+}
+
+.heatmap-sticky-cell {
+  position: sticky;
+  left: 0;
+  background: var(--color-surface);
+  font-weight: 600;
+  padding: 0.125rem 0.25rem;
+  border: 1px solid var(--color-border);
+  z-index: 1;
+  min-width: 8rem;
+}
+
+.heatmap-cell {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.heatmap-cell:hover {
+  opacity: 0.8;
+}
+
+/* Legend Color Classes */
+.legend-color-danger {
+  background-color: var(--color-danger) !important;
+}
+
+.legend-color-warning {
+  background-color: var(--color-warning) !important;
+}
+
+.legend-color-amber {
+  background-color: var(--amber-600) !important;
+}
+
+.legend-color-primary {
+  background-color: var(--color-primary) !important;
+}

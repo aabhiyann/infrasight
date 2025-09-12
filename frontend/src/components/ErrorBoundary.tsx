@@ -48,8 +48,8 @@ class ErrorBoundary extends Component<Props, State> {
                 "An unexpected error occurred. Please try refreshing the page."}
             </p>
             <div className="error-actions">
-              <button className="btn btn-primary" onClick={this.handleRetry}>
-                <RefreshCw size={16} style={{ marginRight: "0.5rem" }} />
+              <button className="btn btn-primary d-flex items-center gap-xs" onClick={this.handleRetry}>
+                <RefreshCw size={16} />
                 Try Again
               </button>
               <button
