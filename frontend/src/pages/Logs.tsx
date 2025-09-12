@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
+import AddLogForm from "../components/AddLogForm";
+import Modal from "../components/Modal";
 import { fetchLogs, type LogEntry } from "../api/logApi.ts";
+import { fetchAvailableServices } from "../api/forecastApi";
 import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
@@ -9,6 +12,8 @@ const Logs = () => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [availableServices, setAvailableServices] = useState<string[]>([]);
 
   const loadLogs = async () => {
     try {
@@ -23,16 +28,29 @@ const Logs = () => {
 
   useEffect(() => {
     loadLogs();
+    fetchAvailableServices().then(setAvailableServices);
   }, []);
+
+  const handleAddLogSuccess = (newLog: LogEntry) => {
+    setLogs((prevLogs) => [newLog, ...prevLogs]);
+  };
 
   return (
     <div className="container stack-lg">
       <Breadcrumb items={[{ label: "Cost Logs" }]} />
       <div className="page-header">
-        <h2 className="page-title">Cost Logs</h2>
-        <p className="page-subtitle">
-          Database-backed ingestion and processing logs.
-        </p>
+        <div>
+          <h2 className="page-title">Cost Logs</h2>
+          <p className="page-subtitle">
+            Database-backed ingestion and processing logs.
+          </p>
+        </div>
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="btn btn-primary"
+        >
+          ➕ Add New Log
+        </button>
       </div>
       {loading ? (
         <div className="card">
@@ -64,6 +82,18 @@ const Logs = () => {
           <LogTable logs={logs} />
         </div>
       )}
+
+      <Modal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        title="Add New Log Entry"
+      >
+        <AddLogForm
+          onSuccess={handleAddLogSuccess}
+          onClose={() => setIsAddModalOpen(false)}
+          availableServices={availableServices}
+        />
+      </Modal>
     </div>
   );
 };
