@@ -35,6 +35,16 @@ const Logs = () => {
     setLogs((prevLogs) => [newLog, ...prevLogs]);
   };
 
+  const handleLogUpdate = (updatedLog: LogEntry) => {
+    setLogs((prevLogs) =>
+      prevLogs.map((log) => (log.id === updatedLog.id ? updatedLog : log))
+    );
+  };
+
+  const handleLogDelete = (logId: number) => {
+    setLogs((prevLogs) => prevLogs.filter((log) => log.id !== logId));
+  };
+
   return (
     <div className="container stack-lg">
       <Breadcrumb items={[{ label: "Cost Logs" }]} />
@@ -79,7 +89,12 @@ const Logs = () => {
         </div>
       ) : (
         <div className="card">
-          <LogTable logs={logs} />
+          <LogTable
+            logs={logs}
+            onLogUpdate={handleLogUpdate}
+            onLogDelete={handleLogDelete}
+            availableServices={availableServices}
+          />
         </div>
       )}
 

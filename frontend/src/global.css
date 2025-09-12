@@ -1701,3 +1701,127 @@ body {
     width: 100%;
   }
 }
+
+/* Action Buttons */
+.actions-cell {
+  text-align: center;
+  min-width: 100px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.action-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.edit-btn:hover {
+  background: var(--color-accent);
+  color: white;
+}
+
+.delete-btn {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.delete-btn:hover {
+  background: var(--color-danger);
+  color: white;
+}
+
+/* Confirmation Modal Styles */
+.confirm-content {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.confirm-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.confirm-message {
+  font-size: 1rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Button Variants */
+.btn-danger {
+  background: var(--color-danger);
+  color: white;
+  border-color: var(--color-danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #c62828;
+  border-color: #c62828;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
+}
+
+.btn-warning {
+  background: #f57c00;
+  color: white;
+  border-color: #f57c00;
+}
+
+.btn-warning:hover:not(:disabled) {
+  background: #ef6c00;
+  border-color: #ef6c00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(245, 124, 0, 0.3);
+}
+
+.btn-info {
+  background: #1976d2;
+  color: white;
+  border-color: #1976d2;
+}
+
+.btn-info:hover:not(:disabled) {
+  background: #1565c0;
+  border-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+}
+
+/* Responsive Design for Action Buttons */
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.875rem;
+  }
+}

@@ -5,6 +5,10 @@ import {
   formatLogsForExport,
   generateFilename,
 } from "../utils/csvExport";
+import { deleteLog } from "../api/logApi";
+import ConfirmModal from "./ConfirmModal";
+import Modal from "./Modal";
+import AddLogForm from "./AddLogForm";
 
 interface LogEntry {
   id: number;
@@ -16,17 +20,28 @@ interface LogEntry {
 
 interface Props {
   logs: LogEntry[];
+  onLogUpdate: (updatedLog: LogEntry) => void;
+  onLogDelete: (logId: number) => void;
+  availableServices: string[];
 }
 
 type SortField = "date" | "service" | "amount" | "source";
 type SortDirection = "asc" | "desc";
 
-const LogTable = ({ logs }: Props) => {
+const LogTable = ({
+  logs,
+  onLogUpdate,
+  onLogDelete,
+  availableServices,
+}: Props) => {
   const [sortField, setSortField] = useState<SortField>("date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedLog, setSelectedLog] = useState<LogEntry | null>(null);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -107,6 +122,35 @@ const LogTable = ({ logs }: Props) => {
     const csvContent = convertToCSV(exportData);
     const filename = generateFilename("logs");
     downloadCSV(csvContent, filename);
+  };
+
+  const handleEditLog = (log: LogEntry) => {
+    setSelectedLog(log);
+    setEditModalOpen(true);
+  };
+
+  const handleDeleteLog = (log: LogEntry) => {
+    setSelectedLog(log);
+    setDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!selectedLog) return;
+
+    try {
+      await deleteLog(selectedLog.id);
+      onLogDelete(selectedLog.id);
+      setSelectedLog(null);
+    } catch (error) {
+      console.error("Failed to delete log:", error);
+      alert("Failed to delete log. Please try again.");
+    }
+  };
+
+  const handleLogUpdate = (updatedLog: LogEntry) => {
+    onLogUpdate(updatedLog);
+    setEditModalOpen(false);
+    setSelectedLog(null);
   };
 
   const formatDate = (dateString: string) => {
@@ -212,6 +256,7 @@ const LogTable = ({ logs }: Props) => {
                   <th className="sortable" onClick={() => handleSort("source")}>
                     Source <SortIcon field="source" />
                   </th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -230,6 +275,24 @@ const LogTable = ({ logs }: Props) => {
                     </td>
                     <td className="source-cell">
                       {getSourceBadge(log.source)}
+                    </td>
+                    <td className="actions-cell">
+                      <div className="action-buttons">
+                        <button
+                          onClick={() => handleEditLog(log)}
+                          className="action-btn edit-btn"
+                          title="Edit log entry"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          onClick={() => handleDeleteLog(log)}
+                          className="action-btn delete-btn"
+                          title="Delete log entry"
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -304,6 +367,41 @@ const LogTable = ({ logs }: Props) => {
           )}
         </>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setSelectedLog(null);
+        }}
+        onConfirm={handleConfirmDelete}
+        title="Delete Log Entry"
+        message={`Are you sure you want to delete this log entry for ${selectedLog?.service}? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
+
+      {/* Edit Modal */}
+      <Modal
+        isOpen={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setSelectedLog(null);
+        }}
+        title="Edit Log Entry"
+      >
+        <AddLogForm
+          onSuccess={handleLogUpdate}
+          onClose={() => {
+            setEditModalOpen(false);
+            setSelectedLog(null);
+          }}
+          availableServices={availableServices}
+          initialData={selectedLog}
+        />
+      </Modal>
     </div>
   );
 };

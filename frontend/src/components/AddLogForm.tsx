@@ -15,6 +15,7 @@ interface AddLogFormProps {
   onSuccess: (newLog: LogEntry) => void;
   onClose: () => void;
   availableServices: string[];
+  initialData?: LogEntry | null;
 }
 
 interface FormData {
@@ -35,12 +36,17 @@ const AddLogForm = ({
   onSuccess,
   onClose,
   availableServices,
+  initialData,
 }: AddLogFormProps) => {
+  const isEditing = !!initialData;
+
   const [formData, setFormData] = useState<FormData>({
-    date: new Date().toISOString().slice(0, 16), // Default to now
-    service: "",
-    amount: "",
-    source: "manual",
+    date: initialData
+      ? new Date(initialData.date).toISOString().slice(0, 16)
+      : new Date().toISOString().slice(0, 16),
+    service: initialData?.service || "",
+    amount: initialData?.amount?.toString() || "",
+    source: initialData?.source || "manual",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -101,23 +107,45 @@ const AddLogForm = ({
         source: formData.source,
       };
 
-      const response = await axios.post(`${BASE_URL}/log`, logData);
+      let response;
+      if (isEditing && initialData) {
+        // Update existing log
+        response = await axios.put(
+          `${BASE_URL}/log/${initialData.id}`,
+          logData
+        );
+        const updatedLog: LogEntry = {
+          id: initialData.id,
+          date: formData.date,
+          service: formData.service,
+          amount: parseFloat(formData.amount),
+          source: formData.source,
+        };
+        onSuccess(updatedLog);
+      } else {
+        // Create new log
+        response = await axios.post(`${BASE_URL}/log`, logData);
+        const newLog: LogEntry = {
+          id: response.data.id,
+          date: formData.date,
+          service: formData.service,
+          amount: parseFloat(formData.amount),
+          source: formData.source,
+        };
+        onSuccess(newLog);
+      }
 
-      // Create the new log entry for the table
-      const newLog: LogEntry = {
-        id: response.data.id,
-        date: formData.date,
-        service: formData.service,
-        amount: parseFloat(formData.amount),
-        source: formData.source,
-      };
-
-      onSuccess(newLog);
       onClose();
     } catch (error) {
-      console.error("Failed to create log entry:", error);
-      // You could add a toast notification here
-      alert("Failed to create log entry. Please try again.");
+      console.error(
+        `Failed to ${isEditing ? "update" : "create"} log entry:`,
+        error
+      );
+      alert(
+        `Failed to ${
+          isEditing ? "update" : "create"
+        } log entry. Please try again.`
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -215,7 +243,13 @@ const AddLogForm = ({
           className="btn btn-primary"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Adding..." : "Add Log Entry"}
+          {isSubmitting
+            ? isEditing
+              ? "Updating..."
+              : "Adding..."
+            : isEditing
+            ? "Update Log Entry"
+            : "Add Log Entry"}
         </button>
       </div>
     </form>
