@@ -12,14 +12,14 @@ interface Recommendation {
   suggestion: string;
 }
 
-interface Props {
+interface RecommendationTableProps {
   recommendations: Recommendation[];
 }
 
 type SortField = "service" | "reason" | "suggestion";
 type SortDirection = "asc" | "desc";
 
-const RecommendationTable = ({ recommendations }: Props) => {
+const RecommendationTable = ({ recommendations }: RecommendationTableProps) => {
   const [sortField, setSortField] = useState<SortField>("service");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
 

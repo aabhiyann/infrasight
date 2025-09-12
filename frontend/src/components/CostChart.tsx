@@ -18,7 +18,7 @@ import {
   type BaseChartProps,
 } from "./chartConfig";
 
-interface Props extends BaseChartProps {
+interface CostChartProps extends BaseChartProps {
   data: CostRecord[];
   serviceFilter?: string;
 }
@@ -31,7 +31,7 @@ const CostChart = ({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
   dateTickAngle = defaultChartConfig.dateTickAngle,
-}: Props) => {
+}: CostChartProps) => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
 
   useEffect(() => {

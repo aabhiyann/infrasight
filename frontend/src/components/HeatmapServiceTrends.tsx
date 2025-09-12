@@ -1,10 +1,10 @@
 import type { CostRecord } from "../api/costApi";
 
-interface Props {
+interface HeatmapServiceTrendsProps {
   data: CostRecord[];
 }
 
-const HeatmapServiceTrends = ({ data }: Props) => {
+const HeatmapServiceTrends = ({ data }: HeatmapServiceTrendsProps) => {
   // Step 1: Get unique dates and services
   const dates = Array.from(new Set(data.map((item) => item.date))).sort();
   const services = Array.from(new Set(data.map((item) => item.service))).sort();
@@ -30,7 +30,13 @@ const HeatmapServiceTrends = ({ data }: Props) => {
       <table style={{ borderCollapse: "collapse" }}>
         <thead>
           <tr>
-            <th style={{ position: "sticky", left: 0, background: "var(--color-surface)" }}>
+            <th
+              style={{
+                position: "sticky",
+                left: 0,
+                background: "var(--color-surface)",
+              }}
+            >
               Service
             </th>
             {dates.map((date) => (

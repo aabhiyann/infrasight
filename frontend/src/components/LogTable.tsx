@@ -18,7 +18,7 @@ interface LogEntry {
   source?: string;
 }
 
-interface Props {
+interface LogTableProps {
   logs: LogEntry[];
   onLogUpdate: (updatedLog: LogEntry) => void;
   onLogDelete: (logId: number) => void;
@@ -33,7 +33,7 @@ const LogTable = ({
   onLogUpdate,
   onLogDelete,
   availableServices,
-}: Props) => {
+}: LogTableProps) => {
   const [sortField, setSortField] = useState<SortField>("date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [searchTerm, setSearchTerm] = useState("");

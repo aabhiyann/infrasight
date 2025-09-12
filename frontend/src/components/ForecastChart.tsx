@@ -16,7 +16,7 @@ import {
   type BaseChartProps,
 } from "./chartConfig";
 
-interface Props extends BaseChartProps {
+interface ForecastChartProps extends BaseChartProps {
   data: ForecastPoint[];
   service: string;
 }
@@ -30,7 +30,7 @@ function ForecastChart({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
   dateTickAngle = defaultChartConfig.dateTickAngle,
-}: Props) {
+}: ForecastChartProps) {
   return (
     <div>
       {!hideTitle && <h3>{service}</h3>}

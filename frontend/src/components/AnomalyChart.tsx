@@ -14,7 +14,7 @@ import {
   type BaseChartProps,
 } from "./chartConfig";
 
-interface Props extends BaseChartProps {
+interface AnomalyChartProps extends BaseChartProps {
   data: Anomaly[];
 }
 
@@ -24,7 +24,7 @@ const AnomalyChart = ({
   showGrid = defaultChartConfig.showGrid,
   currencyFormat = defaultChartConfig.currencyFormat,
   dateTickAngle = -45,
-}: Props) => {
+}: AnomalyChartProps) => {
   if (data.length === 0) {
     return (
       <div style={{ textAlign: "center", padding: "2rem" }}>

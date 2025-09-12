@@ -7,14 +7,14 @@ import {
   generateFilename,
 } from "../utils/csvExport";
 
-interface Props {
+interface AnomalyTableProps {
   anomalies: Anomaly[];
 }
 
 type SortField = "date" | "service" | "amount" | "z_score";
 type SortDirection = "asc" | "desc";
 
-const AnomalyTable = ({ anomalies }: Props) => {
+const AnomalyTable = ({ anomalies }: AnomalyTableProps) => {
   const [sortField, setSortField] = useState<SortField>("z_score");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 

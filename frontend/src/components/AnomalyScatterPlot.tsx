@@ -19,7 +19,7 @@ interface AnomalyPoint {
   z_score: number;
 }
 
-interface Props {
+interface AnomalyScatterPlotProps {
   anomalies: AnomalyPoint[];
 }
 
@@ -36,7 +36,7 @@ function getSeverityColor(z: number): string {
   return "var(--color-primary)"; // low - blue
 }
 
-const AnomalyScatterPlot = ({ anomalies }: Props) => {
+const AnomalyScatterPlot = ({ anomalies }: AnomalyScatterPlotProps) => {
   const [viewMode, setViewMode] = useState<"cost" | "service">("cost");
 
   const formattedData = anomalies.map((a) => ({

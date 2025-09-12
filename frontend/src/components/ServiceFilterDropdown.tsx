@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchServices } from "../api/serviceApi.ts";
+import { fetchServices } from "../api/serviceApi";
 
-interface Props {
+interface ServiceFilterDropdownProps {
   selected: string;
   onChange: (value: string) => void;
   includeAllOption?: boolean;
@@ -11,7 +11,7 @@ const ServiceFilterDropdown = ({
   selected,
   onChange,
   includeAllOption = true,
-}: Props) => {
+}: ServiceFilterDropdownProps) => {
   const [services, setServices] = useState<string[]>([]);
 
   useEffect(() => {

@@ -15,7 +15,7 @@ import {
   type BaseChartProps,
 } from "./chartConfig";
 
-interface Props extends BaseChartProps {
+interface MultiServiceTimelineProps extends BaseChartProps {
   data: CostRecord[];
 }
 
@@ -26,7 +26,7 @@ const MultiServiceTimeline = ({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
   dateTickAngle = -45,
-}: Props) => {
+}: MultiServiceTimelineProps) => {
   // Step 1: Create pivot table - dates as rows, services as columns
   const pivotData: Record<string, Record<string, number>> = {};
 
