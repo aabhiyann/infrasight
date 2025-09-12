@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+
 import { useAuth } from "../contexts/AuthContext";
 import { Box, Flex, Text, Stack } from "./ui";
 import {
@@ -8,44 +8,17 @@ import {
   AnomalyIcon,
   RecommendationIcon,
   LogsIcon,
-  LogoutIcon,
   InfraSightLogo,
 } from "./ui/Icons";
 import "./Sidebar.css";
+import UserMenu from "./UserMenu";
 
 interface SidebarProps {
   isOpen?: boolean;
 }
 
 const Sidebar = ({ isOpen = true }: SidebarProps) => {
-  const { user, logout } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
+  const { user } = useAuth();
 
   return (
     <Box
@@ -106,60 +79,7 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
 
         <Box>
           {/* User Info */}
-          {user && (
-            <div className="sidebar-user-dropdown" ref={menuRef}>
-              <button
-                className="sidebar-user-info sidebar-user-trigger"
-                onClick={() => setMenuOpen((v) => !v)}
-                aria-haspopup="menu"
-                aria-expanded={menuOpen}
-              >
-                <Flex align="center" gap="sm" mb="none">
-                  <Box className="sidebar-avatar">
-                    <Text
-                      fontSize="sm"
-                      fontWeight="bold"
-                      style={{ color: "white" }}
-                    >
-                      {user.username.charAt(0).toUpperCase()}
-                    </Text>
-                  </Box>
-                  <Box className="sidebar-user-text">
-                    <Text fontSize="sm" fontWeight="semibold" mb="none">
-                      {user.username}
-                    </Text>
-                    <Text
-                      fontSize="xs"
-                      color="muted"
-                      className="sidebar-user-email"
-                    >
-                      {user.email}
-                    </Text>
-                  </Box>
-                </Flex>
-              </button>
-
-              {menuOpen && (
-                <div className="sidebar-user-menu" role="menu">
-                  <button
-                    className="sidebar-menu-item"
-                    role="menuitem"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <span>Settings</span>
-                  </button>
-                  <button
-                    className="sidebar-menu-item danger"
-                    role="menuitem"
-                    onClick={handleLogout}
-                  >
-                    <LogoutIcon size={18} className="sidebar-icon" />
-                    <span>Logout</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+          {user && <UserMenu variant="sidebar" />}
 
           <Text fontSize="xs" color="muted" mt="xl" className="text-center">
             © 2025 InfraSight
