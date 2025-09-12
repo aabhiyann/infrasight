@@ -54,8 +54,7 @@ function Overview() {
         <button
           onClick={loadData}
           disabled={loading}
-          className="btn btn-secondary"
-          style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+          className="btn btn-secondary d-flex items-center gap-sm"
         >
           <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
           {loading ? "Refreshing..." : "Refresh"}

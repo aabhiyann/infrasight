@@ -54,14 +54,7 @@ const Anomalies = () => {
           selected={selectedService}
           onChange={setSelectedService}
         />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            marginLeft: "auto",
-          }}
-        >
+        <div className="d-flex items-center gap-sm ml-auto">
           <label htmlFor="z-threshold" className="text-sm">
             Z-Threshold:
           </label>
@@ -76,7 +69,7 @@ const Anomalies = () => {
             className="w-20 input"
           />
         </div>
-        <div className="text-sm" style={{ marginLeft: "auto" }}>
+        <div className="text-sm ml-auto">
           Last updated: {lastRefresh.toLocaleTimeString()}
         </div>
       </div>

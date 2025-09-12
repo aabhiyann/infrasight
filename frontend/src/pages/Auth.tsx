@@ -7,9 +7,9 @@ const Auth: React.FC = () => {
 
   return (
     <div className="auth-container">
-      <div className="max-w-md w-full space-y-6">
+      <div className="w-full max-w-md mx-auto">
         {/* Logo/Brand */}
-        <div className="text-center">
+        <div className="text-center mb-8">
           <h1 className="auth-title">InfraSight</h1>
           <p className="auth-subtitle">Cloud Cost Intelligence Dashboard</p>
         </div>
