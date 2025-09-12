@@ -95,13 +95,17 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% + 8px);
+  /* Open upward to avoid overflowing below the viewport when user section is at the bottom */
+  bottom: calc(100% + 8px);
+  top: auto;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   padding: 6px;
   z-index: 1100;
+  max-height: 60vh; /* Ensure it always fits on small screens */
+  overflow: auto;
 }
 
 .sidebar-menu-item {

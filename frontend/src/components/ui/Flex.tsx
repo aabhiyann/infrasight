@@ -28,11 +28,27 @@ const Flex: React.FC<FlexProps> = ({
 }) => {
   const spacingClasses = getSpacingClasses(spacingProps);
 
+  // Map props to utility class suffixes
+  const justifyClassSuffix = (() => {
+    switch (justify) {
+      case "space-between":
+        return "between";
+      case "space-around":
+        return "around";
+      case "start":
+      case "center":
+      case "end":
+        return justify;
+      default:
+        return "start";
+    }
+  })();
+
   const classes = cn(
     "d-flex",
     `flex-${direction}`,
     `items-${align}`,
-    `justify-${justify}`,
+    `justify-${justifyClassSuffix}`,
     wrap && "flex-wrap",
     gap && `gap-${gap}`,
     spacingClasses,
