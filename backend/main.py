@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations, ml_data, debug_visuals
+from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations, ml_data, debug_visuals, auth
 import os
 
 
@@ -20,6 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Authentication routes
+app.include_router(auth.router, prefix="/api/auth", tags=["authentication"])
+
+# Protected API routes
 app.include_router(log.router, prefix="/api")
 app.include_router(insights.router, prefix="/api")
 app.include_router(mock_data.router, prefix="/api")

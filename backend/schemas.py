@@ -1,6 +1,6 @@
-from pydantic import BaseModel
-from datetime import date
-from typing import List, Dict, Any
+from pydantic import BaseModel, EmailStr
+from datetime import date, datetime
+from typing import List, Dict, Any, Optional
 
 # For validating user input when request hits the api, not DB
 class LogCreate(BaseModel):
@@ -8,11 +8,18 @@ class LogCreate(BaseModel):
     service: str
     amount: float
 
+class LogUpdate(BaseModel):
+    date: Optional[date] = None
+    service: Optional[str] = None
+    amount: Optional[float] = None
+    source: Optional[str] = None
+
 class LogResponse(BaseModel):
     id: int
     date: date
     service: str
     amount: float
+    source: Optional[str] = None
 
 # This tells Pydantic to read from SQLAlchemy objects
     class Config:
@@ -66,3 +73,31 @@ class ForecastResponse(BaseModel):
     total_forecast: List[ForecastPoint]
     summary: ForecastSummary
     status: str
+
+# Authentication schemas
+class UserCreate(BaseModel):
+    email: EmailStr
+    username: str
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserResponse(BaseModel):
+    id: int
+    email: str
+    username: str
+    is_active: bool
+    is_admin: bool
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    user_id: Optional[int] = None

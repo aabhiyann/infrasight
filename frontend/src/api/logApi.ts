@@ -19,3 +19,28 @@ export async function fetchLogs(): Promise<LogEntry[]> {
     return [];
   }
 }
+
+export async function updateLog(
+  id: number,
+  logData: Partial<LogEntry>
+): Promise<LogEntry> {
+  try {
+    const res = await axios.put<{ log: LogEntry }>(
+      `${BASE_URL}/log/${id}`,
+      logData
+    );
+    return res.data.log;
+  } catch (e) {
+    console.error("Failed to update log", e);
+    throw e;
+  }
+}
+
+export async function deleteLog(id: number): Promise<void> {
+  try {
+    await axios.delete(`${BASE_URL}/log/${id}`);
+  } catch (e) {
+    console.error("Failed to delete log", e);
+    throw e;
+  }
+}

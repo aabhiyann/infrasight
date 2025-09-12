@@ -1,10 +1,14 @@
-interface Props {
+interface ServiceSelectorProps {
   services: string[];
   selectedService: string;
   onChange: (service: string) => void;
 }
 
-const ServiceSelector = ({ services, selectedService, onChange }: Props) => {
+const ServiceSelector = ({
+  services,
+  selectedService,
+  onChange,
+}: ServiceSelectorProps) => {
   return (
     <div className="toolbar">
       <label htmlFor="service-select">Select Service:</label>

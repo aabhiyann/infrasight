@@ -1,22 +1,44 @@
 import type { ReactNode } from "react";
+import Badge from "./Badge";
+import { Text, Flex } from "./ui";
 
 interface ChartCardProps {
   title?: string;
   subtitle?: string;
+  badge?: string;
+  badgeVariant?: "default" | "success" | "warning" | "danger" | "info";
   children: ReactNode;
 }
 
-const ChartCard = ({ title, subtitle, children }: ChartCardProps) => {
+const ChartCard = ({
+  title,
+  subtitle,
+  badge,
+  badgeVariant = "default",
+  children,
+}: ChartCardProps) => {
   return (
     <div className="card">
       {title ? (
-        <div style={{ marginBottom: "0.75rem" }}>
-          <h3 style={{ margin: 0 }}>{title}</h3>
-          {subtitle ? (
-            <p style={{ margin: "0.25rem 0 0 0", color: "var(--color-muted)" }}>
-              {subtitle}
-            </p>
-          ) : null}
+        <div className="card-header">
+          <Flex justify="space-between" align="center">
+            <div>
+              <Text
+                as="h3"
+                fontSize="lg"
+                fontWeight="semibold"
+                mb={subtitle ? "xs" : "none"}
+              >
+                {title}
+              </Text>
+              {subtitle ? (
+                <Text as="p" color="muted" fontSize="sm" mb="none">
+                  {subtitle}
+                </Text>
+              ) : null}
+            </div>
+            {badge && <Badge variant={badgeVariant}>{badge}</Badge>}
+          </Flex>
         </div>
       ) : null}
       {children}

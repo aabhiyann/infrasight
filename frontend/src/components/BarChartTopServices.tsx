@@ -9,11 +9,11 @@ import {
 } from "recharts";
 import type { CostRecord } from "../api/costApi";
 
-interface Props {
+interface BarChartTopServicesProps {
   data: CostRecord[];
 }
 
-const BarChartTopServices = ({ data }: Props) => {
+const BarChartTopServices = ({ data }: BarChartTopServicesProps) => {
   // Step 1: Aggregate total cost per service
   const totals: Record<string, number> = {};
   data.forEach((item) => {

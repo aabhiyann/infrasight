@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
-import ServiceSelector from "../components/ServiceSelector";
+import AnomalyTable from "../components/AnomalyTable";
+import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
+import Breadcrumb from "../components/Breadcrumb";
+import Skeleton from "../components/Skeleton";
+import EmptyState from "../components/EmptyState";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const Anomalies = () => {
+  usePageTitle("Anomalies");
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [filtered, setFiltered] = useState<Anomaly[]>([]);
-  const [services, setServices] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
   const [zThreshold, setZThreshold] = useState<number>(2.0);
   const [error, setError] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
   useEffect(() => {
     async function loadData() {
@@ -18,7 +24,7 @@ const Anomalies = () => {
       setError(null);
       const result = await fetchAnomalies(zThreshold);
       setAnomalies(result);
-      setServices([...new Set(result.map((a) => a.service))]);
+      setLastRefresh(new Date());
       setLoading(false);
       if (result.length === 0) {
         setError("No anomalies returned. Try lowering the Z-threshold.");
@@ -37,6 +43,7 @@ const Anomalies = () => {
 
   return (
     <div className="container stack-lg">
+      <Breadcrumb items={[{ label: "Detected Anomalies" }]} />
       <div className="page-header">
         <h2 className="page-title">Detected Anomalies</h2>
         <p className="page-subtitle">
@@ -44,20 +51,13 @@ const Anomalies = () => {
         </p>
       </div>
       <div className="toolbar">
-        <ServiceSelector
-          services={services}
-          selectedService={selectedService}
+        <label htmlFor="service">Service:</label>
+        <ServiceFilterDropdown
+          selected={selectedService}
           onChange={setSelectedService}
         />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            marginLeft: "auto",
-          }}
-        >
-          <label htmlFor="z-threshold" style={{ fontSize: 14 }}>
+        <div className="d-flex items-center gap-sm ml-auto">
+          <label htmlFor="z-threshold" className="text-sm">
             Z-Threshold:
           </label>
           <input
@@ -68,20 +68,48 @@ const Anomalies = () => {
             max={5.0}
             value={zThreshold}
             onChange={(e) => setZThreshold(parseFloat(e.target.value) || 0)}
-            style={{ width: 80 }}
+            className="w-20 input"
           />
+        </div>
+        <div className="text-sm ml-auto">
+          Last updated: {lastRefresh.toLocaleTimeString()}
         </div>
       </div>
       {loading ? (
-        <p>Loading anomalies...</p>
-      ) : error ? (
-        <p style={{ color: "#b00020" }}>{error}</p>
-      ) : filtered.length === 0 ? (
-        <p>No anomalies found.</p>
-      ) : (
         <div className="card">
-          <AnomalyScatterPlot anomalies={filtered} />
+          <Skeleton height={300} />
         </div>
+      ) : error ? (
+        <div className="card">
+          <EmptyState
+            title="Error loading anomalies"
+            message={error}
+            icon="alert"
+            onRetry={() => {
+              setError(null);
+              setLoading(true);
+              // Trigger reload
+              const current = zThreshold;
+              setZThreshold(0);
+              setTimeout(() => setZThreshold(current), 100);
+            }}
+          />
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="card">
+          <EmptyState
+            title="No anomalies found"
+            message="Try adjusting the Z-threshold or service filter."
+            icon="alert"
+          />
+        </div>
+      ) : (
+        <>
+          <div className="card">
+            <AnomalyScatterPlot anomalies={filtered} />
+          </div>
+          <AnomalyTable anomalies={filtered} />
+        </>
       )}
     </div>
   );

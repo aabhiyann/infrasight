@@ -1,4 +1,6 @@
 import ChartCard from "../components/ChartCard";
+import EmptyState from "../components/EmptyState";
+import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useState } from "react";
 import {
   fetchForecastData,
@@ -6,15 +8,21 @@ import {
   type ForecastResponse,
 } from "../api/forecastApi";
 import ForecastChart from "../components/ForecastChart";
-import ServiceSelector from "../components/ServiceSelector";
+import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
+import ChartSkeleton from "../components/ChartSkeleton";
+import ErrorBoundary from "../components/ErrorBoundary";
+import { RefreshCw } from "lucide-react";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const Forecast = () => {
+  usePageTitle("Forecast");
   const [forecastData, setForecastData] = useState<ForecastResponse | null>(
     null
   );
   const [availableServices, setAvailableServices] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadInitialData() {
@@ -28,48 +36,80 @@ const Forecast = () => {
     loadInitialData();
   }, []);
 
-  useEffect(() => {
-    async function loadForecast() {
-      try {
-        setLoading(true);
-        const result = await fetchForecastData(7, selectedService || undefined);
-        setForecastData(result);
-        // Fallback: if services list is empty, derive from forecast response
-        if (availableServices.length === 0 && result) {
-          const keys = Object.keys(result.service_forecasts || {});
-          if (keys.length > 0) {
-            setAvailableServices(keys);
-          }
+  const loadForecast = async () => {
+    try {
+      setError(null);
+      setLoading(true);
+      const result = await fetchForecastData(7, selectedService || undefined);
+      setForecastData(result);
+      // Fallback: if services list is empty, derive from forecast response
+      if (availableServices.length === 0 && result) {
+        const keys = Object.keys(result.service_forecasts || {});
+        if (keys.length > 0) {
+          setAvailableServices(keys);
         }
-      } catch (error) {
-        console.error("Failed to load forecast data:", error);
-      } finally {
-        setLoading(false);
       }
+    } catch (err) {
+      setError("Failed to load forecast data. Please try again.");
+      console.error("Failed to load forecast data:", err);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     loadForecast();
   }, [selectedService]);
 
   return (
     <div className="container stack-lg">
+      <Breadcrumb items={[{ label: "Cost Forecasts" }]} />
       <div className="page-header">
         <h2 className="page-title">Cost Forecasts</h2>
         <p className="page-subtitle">
           Predictions and confidence bounds for total and per-service costs.
         </p>
       </div>
-      <ServiceSelector
-        services={availableServices}
-        selectedService={selectedService}
-        onChange={setSelectedService}
-      />
+      <div className="toolbar">
+        <label htmlFor="service">Service:</label>
+        <ServiceFilterDropdown
+          selected={selectedService}
+          onChange={setSelectedService}
+        />
+        <button
+          onClick={loadForecast}
+          disabled={loading}
+          className="btn btn-secondary d-flex items-center gap-sm"
+        >
+          <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+          {loading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
 
       {loading ? (
-        <p>Loading forecast data...</p>
+        <div className="card">
+          <ChartSkeleton type="area" height={280} showLegend />
+        </div>
+      ) : error ? (
+        <div className="card">
+          <EmptyState
+            title="Error loading forecast"
+            message={error}
+            icon="alert"
+            onRetry={loadForecast}
+          />
+        </div>
       ) : !forecastData ? (
-        <p>No forecast data available.</p>
+        <div className="card">
+          <EmptyState
+            title="No forecast data"
+            message="Try adjusting filters or check back later."
+            icon="refresh"
+            onRetry={loadForecast}
+          />
+        </div>
       ) : (
-        <>
+        <ErrorBoundary>
           {selectedService ? (
             <ChartCard title={selectedService}>
               <ForecastChart
@@ -100,7 +140,7 @@ const Forecast = () => {
               )}
             </>
           )}
-        </>
+        </ErrorBoundary>
       )}
     </div>
   );

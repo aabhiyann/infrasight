@@ -15,7 +15,7 @@ import {
   type BaseChartProps,
 } from "./chartConfig";
 
-interface Props extends BaseChartProps {
+interface TopServicesBarChartProps extends BaseChartProps {
   costData: CostRecord[];
   hideTitle?: boolean;
 }
@@ -27,7 +27,7 @@ const TopServicesBarChart = ({
   showGrid = defaultChartConfig.showGrid,
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
-}: Props) => {
+}: TopServicesBarChartProps) => {
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
