@@ -1,0 +1,37 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="32" height="32" rx="8" fill="url(#logoGradient)" />
+  
+  <!-- Lowered layered cloud background -->
+  <path
+    d="M4 16C4 13.7909 5.79086 12 8 12C8.55228 12 9 11.5523 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 11.5523 15.4477 12 16 12C18.2091 12 20 13.7909 20 16C20 18.2091 18.2091 20 16 20H8C5.79086 20 4 18.2091 4 16Z"
+    fill="white"
+    opacity="0.2"
+  />
+  
+  <path
+    d="M12 18C12 15.7909 13.7909 14 16 14C16.5523 14 17 13.5523 17 13C17 11.3431 18.3431 10 20 10C21.6569 10 23 11.3431 23 13C23 13.5523 23.4477 14 24 14C26.2091 14 28 15.7909 28 18C28 20.2091 26.2091 22 24 22H16C13.7909 22 12 20.2091 12 18Z"
+    fill="white"
+    opacity="0.15"
+  />
+
+  <!-- Clear "IS" text -->
+  <text
+    x="16"
+    y="22"
+    font-size="18"
+    font-weight="bold"
+    text-anchor="middle"
+    fill="white"
+    font-family="system-ui, -apple-system, sans-serif"
+  >
+    IS
+  </text>
+</svg>

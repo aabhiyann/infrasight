@@ -2551,6 +2551,13 @@ body {
   font-size: 1.25rem;
 }
 
+.auth-logo-container {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .auth-title {
   font-size: 2rem;
   font-weight: 700;
@@ -2573,17 +2580,19 @@ body {
 }
 
 .auth-button {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  background: var(--gradient-generic);
+  width: auto;
+  min-width: 120px;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, #0052b6, #34a3f1) !important;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 82, 182, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 82, 182, 0.15);
+  align-self: center;
 }
 
 .auth-button:hover:not(:disabled) {

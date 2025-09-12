@@ -6,8 +6,10 @@ import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const Anomalies = () => {
+  usePageTitle("Anomalies");
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [filtered, setFiltered] = useState<Anomaly[]>([]);
   const [selectedService, setSelectedService] = useState("");

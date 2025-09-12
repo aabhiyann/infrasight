@@ -11,8 +11,10 @@ import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 import { RefreshCw } from "lucide-react";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 function Overview() {
+  usePageTitle("Overview");
   const [data, setData] = useState<CostRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

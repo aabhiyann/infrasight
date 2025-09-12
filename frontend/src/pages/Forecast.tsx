@@ -12,8 +12,10 @@ import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import ChartSkeleton from "../components/ChartSkeleton";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { RefreshCw } from "lucide-react";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const Forecast = () => {
+  usePageTitle("Forecast");
   const [forecastData, setForecastData] = useState<ForecastResponse | null>(
     null
   );
