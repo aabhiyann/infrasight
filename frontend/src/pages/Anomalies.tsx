@@ -60,7 +60,7 @@ const Anomalies = () => {
             marginLeft: "auto",
           }}
         >
-          <label htmlFor="z-threshold" style={{ fontSize: 14 }}>
+          <label htmlFor="z-threshold" className="text-sm">
             Z-Threshold:
           </label>
           <input
@@ -71,7 +71,7 @@ const Anomalies = () => {
             max={5.0}
             value={zThreshold}
             onChange={(e) => setZThreshold(parseFloat(e.target.value) || 0)}
-            style={{ width: 80 }}
+            className="w-20 input"
           />
         </div>
       </div>

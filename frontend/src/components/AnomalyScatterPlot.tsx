@@ -30,10 +30,10 @@ const formatDate = (iso: string) =>
   });
 
 function getSeverityColor(z: number): string {
-  if (z >= 3) return "#d32f2f"; // high - red
-  if (z >= 2.5) return "#f57c00"; // medium-high - orange
-  if (z >= 2) return "#fbc02d"; // medium - amber
-  return "#1976d2"; // low - blue
+  if (z >= 3) return "var(--color-danger)"; // high - red
+  if (z >= 2.5) return "var(--color-warning)"; // medium-high - orange
+  if (z >= 2) return "var(--amber-600)"; // medium - amber
+  return "var(--color-primary)"; // low - blue
 }
 
 const AnomalyScatterPlot = ({ anomalies }: Props) => {
@@ -87,7 +87,7 @@ const AnomalyScatterPlot = ({ anomalies }: Props) => {
   };
 
   return (
-    <div style={{ marginTop: "2rem" }}>
+    <div className="mt-2">
       <div className="chart-header">
         <h3>Detected Anomalies</h3>
         <div className="view-toggle">
@@ -158,28 +158,28 @@ const AnomalyScatterPlot = ({ anomalies }: Props) => {
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#d32f2f" }}
+              style={{ backgroundColor: "var(--color-danger)" }}
             ></div>
             <span>High (Z ≥ 3.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#f57c00" }}
+              style={{ backgroundColor: "var(--color-warning)" }}
             ></div>
             <span>Medium-High (Z ≥ 2.5)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#fbc02d" }}
+              style={{ backgroundColor: "var(--amber-600)" }}
             ></div>
             <span>Medium (Z ≥ 2.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#1976d2" }}
+              style={{ backgroundColor: "var(--color-primary)" }}
             ></div>
             <span>Low (Z &lt; 2.0)</span>
           </div>

@@ -40,31 +40,15 @@ const RefreshButton = ({
       <button
         onClick={handleClick}
         disabled={isRefreshing}
-        className={`btn btn-sm ${isRefreshing ? "loading" : ""}`}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          opacity: isRefreshing ? 0.7 : 1,
-        }}
+        className={`btn btn-sm refresh-btn ${isRefreshing ? "loading" : ""}`}
       >
-        <span
-          className={`refresh-icon ${isSpinning ? "spinning" : ""}`}
-          style={{
-            display: "inline-block",
-            transition: "transform 0.3s ease",
-            transform: isSpinning ? "rotate(360deg)" : "rotate(0deg)",
-          }}
-        >
+        <span className={`refresh-icon ${isSpinning ? "spinning" : ""}`}>
           ↻
         </span>
         {isRefreshing ? "Refreshing..." : "Refresh"}
       </button>
       {lastRefresh && (
-        <span
-          className="last-refresh"
-          style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}
-        >
+        <span className="last-refresh text-sm">
           Last updated: {formatLastRefresh(lastRefresh)}
         </span>
       )}
