@@ -1478,14 +1478,11 @@ body {
   justify-content: center;
   width: 42px;
   height: 42px;
-  margin-bottom: 1rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   cursor: pointer;
-  position: sticky;
-  top: 16px;
-  z-index: 10;
+  flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: background 200ms ease, border-color 200ms ease;
 }

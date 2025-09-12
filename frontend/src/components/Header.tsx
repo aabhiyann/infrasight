@@ -65,24 +65,35 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
         marginBottom: "1rem",
       }}
     >
-      <Flex align="center" justify="space-between" style={{ maxWidth: "100%" }}>
+      <Flex align="center" justify="space-between" style={{ width: "100%" }}>
         <Flex align="center" gap="lg">
           <button
             aria-label="Toggle sidebar"
             aria-expanded={isSidebarOpen}
             onClick={onToggleSidebar}
             className={`hamburger ${isSidebarOpen ? "is-open" : ""}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             <span className="hamburger-line" />
             <span className="hamburger-line" />
             <span className="hamburger-line" />
             <span className="sr-only">Menu</span>
           </button>
-          <Breadcrumb items={breadcrumbItems} />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Breadcrumb items={breadcrumbItems} />
+          </div>
         </Flex>
-        <Flex align="center" gap="md">
-          <ThemeToggle />
-          <UserMenu variant="header" />
+        <Flex align="center" gap="md" style={{ flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <ThemeToggle />
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <UserMenu variant="header" />
+          </div>
         </Flex>
       </Flex>
     </Box>
