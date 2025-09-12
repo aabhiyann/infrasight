@@ -1,10 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 interface SidebarProps {
   isOpen?: boolean;
 }
 
 const Sidebar = ({ isOpen = true }: SidebarProps) => {
+  const { user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -51,7 +62,52 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
           ))}
         </nav>
       </div>
-      <p style={{ fontSize: "0.8rem", marginTop: "auto" }}>© 2025 InfraSight</p>
+
+      <div>
+        {/* User Info */}
+        {user && (
+          <div
+            style={{
+              marginBottom: "1rem",
+              padding: "0.5rem",
+              background: "rgba(255,255,255,0.1)",
+              borderRadius: "4px",
+              fontSize: "0.9rem",
+            }}
+          >
+            <div style={{ fontWeight: "bold" }}>{user.username}</div>
+            <div style={{ opacity: 0.8, fontSize: "0.8rem" }}>{user.email}</div>
+          </div>
+        )}
+
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          style={{
+            width: "100%",
+            padding: "0.5rem",
+            background: "rgba(255,255,255,0.1)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            color: "#fff",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "0.9rem",
+            marginBottom: "1rem",
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.2)";
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+          }}
+        >
+          Logout
+        </button>
+
+        <p style={{ fontSize: "0.8rem", marginTop: "auto" }}>
+          © 2025 InfraSight
+        </p>
+      </div>
     </div>
   );
 };

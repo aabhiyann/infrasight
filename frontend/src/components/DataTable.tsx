@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { ChevronDown, Download } from "lucide-react";
+import { Download } from "lucide-react";
 
 export interface Column<T> {
   key: keyof T;
@@ -36,7 +36,7 @@ function DataTable<T extends Record<string, any>>({
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
 
   const handleSort = (field: keyof T) => {
     if (sortField === field) {

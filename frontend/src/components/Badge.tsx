@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 interface BadgeProps {
   children: ReactNode;
@@ -6,11 +6,7 @@ interface BadgeProps {
   size?: "sm" | "md" | "lg";
 }
 
-const Badge = ({ 
-  children, 
-  variant = "default", 
-  size = "md" 
-}: BadgeProps) => {
+const Badge = ({ children, variant = "default", size = "md" }: BadgeProps) => {
   const getVariantStyles = () => {
     switch (variant) {
       case "success":
