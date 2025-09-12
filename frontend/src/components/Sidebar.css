@@ -73,22 +73,49 @@
 .sidebar-user-info {
   background: var(--color-surface-secondary);
   border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
   border: 1px solid var(--color-border);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .sidebar-avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--gradient-generic);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
+}
+
+.sidebar-user-text {
+  min-width: 0;
+}
+
+.sidebar-user-email {
+  display: block;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.7;
+}
+
+.sidebar-user-info:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
+}
+
+/* Divider */
+.sidebar-divider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  opacity: 0.6;
 }
 
 /* Logout Button */

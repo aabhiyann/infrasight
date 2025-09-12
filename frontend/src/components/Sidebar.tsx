@@ -88,19 +88,8 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
           {/* User Info */}
           {user && (
             <Box mb="lg" p="md" className="sidebar-user-info">
-              <Flex align="center" gap="sm" mb="xs">
-                <Box
-                  className="sidebar-avatar"
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "50%",
-                    background: "var(--gradient-generic)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
+              <Flex align="center" gap="sm" mb="none">
+                <Box className="sidebar-avatar">
                   <Text
                     fontSize="sm"
                     fontWeight="bold"
@@ -109,11 +98,15 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
                     {user.username.charAt(0).toUpperCase()}
                   </Text>
                 </Box>
-                <Box>
+                <Box className="sidebar-user-text">
                   <Text fontSize="sm" fontWeight="semibold" mb="none">
                     {user.username}
                   </Text>
-                  <Text fontSize="xs" color="muted">
+                  <Text
+                    fontSize="xs"
+                    color="muted"
+                    className="sidebar-user-email"
+                  >
                     {user.email}
                   </Text>
                 </Box>
@@ -131,7 +124,7 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
             <span>Logout</span>
           </button>
 
-          <Text fontSize="xs" color="muted" mt="lg" className="text-center">
+          <Text fontSize="xs" color="muted" mt="xl" className="text-center">
             © 2025 InfraSight
           </Text>
         </Box>
