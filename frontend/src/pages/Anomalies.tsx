@@ -14,6 +14,7 @@ const Anomalies = () => {
   const [loading, setLoading] = useState(true);
   const [zThreshold, setZThreshold] = useState<number>(2.0);
   const [error, setError] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
   useEffect(() => {
     async function loadData() {
@@ -21,6 +22,7 @@ const Anomalies = () => {
       setError(null);
       const result = await fetchAnomalies(zThreshold);
       setAnomalies(result);
+      setLastRefresh(new Date());
       setLoading(false);
       if (result.length === 0) {
         setError("No anomalies returned. Try lowering the Z-threshold.");
@@ -73,6 +75,9 @@ const Anomalies = () => {
             onChange={(e) => setZThreshold(parseFloat(e.target.value) || 0)}
             className="w-20 input"
           />
+        </div>
+        <div className="text-sm" style={{ marginLeft: "auto" }}>
+          Last updated: {lastRefresh.toLocaleTimeString()}
         </div>
       </div>
       {loading ? (
