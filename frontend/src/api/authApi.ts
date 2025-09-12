@@ -41,6 +41,35 @@ class AuthApi {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
+  // Update profile
+  async updateProfile(data: {
+    username?: string;
+    email?: string;
+  }): Promise<User> {
+    try {
+      const response = await axios.put(`${this.baseURL}/profile`, data);
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.detail || "Profile update failed");
+    }
+  }
+
+  // Change password
+  async changePassword(data: {
+    current_password: string;
+    new_password: string;
+  }): Promise<{ message: string }> {
+    try {
+      const response = await axios.post(
+        `${this.baseURL}/change-password`,
+        data
+      );
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.detail || "Password change failed");
+    }
+  }
+
   // Remove token from localStorage and axios headers
   clearToken() {
     localStorage.removeItem("token");

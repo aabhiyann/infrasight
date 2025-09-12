@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Box, Flex, Text } from "./ui";
 import { LogoutIcon } from "./ui/Icons";
+import { useNavigate } from "react-router-dom";
 
 interface UserMenuProps {
   variant?: "header" | "sidebar";
@@ -11,6 +12,7 @@ const UserMenu = ({ variant = "sidebar" }: UserMenuProps) => {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -82,6 +84,10 @@ const UserMenu = ({ variant = "sidebar" }: UserMenuProps) => {
           <button
             className={isHeader ? "header-menu-item" : "sidebar-menu-item"}
             role="menuitem"
+            onClick={() => {
+              setOpen(false);
+              navigate("/settings");
+            }}
           >
             Settings
           </button>

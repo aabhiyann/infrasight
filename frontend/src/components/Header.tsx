@@ -45,9 +45,10 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
         position: "sticky",
         top: 0,
         zIndex: 900,
-        background: "var(--color-bg)",
+        background: "var(--color-surface)",
         borderBottom: "1px solid var(--color-border)",
-        padding: "10px 16px",
+        padding: "12px 20px",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
       }}
     >
       <Flex align="center" justify="space-between">
@@ -64,7 +65,7 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
             <span className="sr-only">Menu</span>
           </button>
           <div>
-            <Text as="h1" fontSize="lg" fontWeight="semibold" mb="xs">
+            <Text as="h1" fontSize="lg" fontWeight="semibold" mb="none">
               {activeTitle}
             </Text>
             <Breadcrumb items={[{ label: activeTitle }]} />

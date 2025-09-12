@@ -6,6 +6,7 @@ import Forecast from "./pages/Forecast";
 import Anomalies from "./pages/Anomalies";
 import Logs from "./pages/Logs";
 import Recommendations from "./pages/Recommendations";
+import Settings from "./pages/Settings";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="anomalies" element={<Anomalies />} />
           <Route path="logs" element={<Logs />} />
           <Route path="recommendations" element={<Recommendations />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </AuthProvider>
