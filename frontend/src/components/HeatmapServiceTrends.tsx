@@ -1,4 +1,5 @@
 import type { CostRecord } from "../api/costApi";
+import { Box, Text } from "./ui";
 
 interface HeatmapServiceTrendsProps {
   data: CostRecord[];
@@ -25,61 +26,49 @@ const HeatmapServiceTrends = ({ data }: HeatmapServiceTrendsProps) => {
   }
 
   return (
-    <div style={{ overflowX: "auto", marginTop: "2rem" }}>
-      <h3>Cost Heatmap (Service × Date)</h3>
-      <table style={{ borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th
-              style={{
-                position: "sticky",
-                left: 0,
-                background: "var(--color-surface)",
-              }}
-            >
-              Service
-            </th>
-            {dates.map((date) => (
-              <th key={date} style={{ padding: "2px 4px", fontSize: "12px" }}>
-                {date}
+    <Box className="overflow-x-auto mt-2xl">
+      <Text as="h3" fontSize="lg" fontWeight="semibold" mb="lg">
+        Cost Heatmap (Service × Date)
+      </Text>
+      <Box className="heatmap-container">
+        <table className="heatmap-table">
+          <thead>
+            <tr>
+              <th className="heatmap-sticky-header">
+                Service
               </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {services.map((service) => (
-            <tr key={service}>
-              <td
-                style={{
-                  position: "sticky",
-                  left: 0,
-                  background: "var(--color-surface)",
-                  fontWeight: "bold",
-                  padding: "2px 4px",
-                }}
-              >
-                {service}
-              </td>
-              {dates.map((date) => {
-                const value = lookup[`${service}-${date}`] || 0;
-                return (
-                  <td
-                    key={`${service}-${date}`}
-                    title={`$${value.toFixed(2)}`}
-                    style={{
-                      backgroundColor: getColor(value),
-                      width: "12px",
-                      height: "12px",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  />
-                );
-              })}
+              {dates.map((date) => (
+                <th key={date} className="heatmap-date-header">
+                  {date}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {services.map((service) => (
+              <tr key={service}>
+                <td className="heatmap-sticky-cell">
+                  {service}
+                </td>
+                {dates.map((date) => {
+                  const value = lookup[`${service}-${date}`] || 0;
+                  return (
+                    <td
+                      key={`${service}-${date}`}
+                      title={`$${value.toFixed(2)}`}
+                      className="heatmap-cell"
+                      style={{
+                        backgroundColor: getColor(value),
+                      }}
+                    />
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Box>
+    </Box>
   );
 };
 
