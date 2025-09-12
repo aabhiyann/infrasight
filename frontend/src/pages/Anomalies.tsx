@@ -70,7 +70,8 @@ const Anomalies = () => {
           />
         </div>
         <div className="text-sm ml-auto">
-          Last updated: {lastRefresh.toLocaleTimeString()}
+          <span className="hide-sm-text">Last updated: </span>
+          {lastRefresh.toLocaleTimeString()}
         </div>
       </div>
       {loading ? (

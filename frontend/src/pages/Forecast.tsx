@@ -78,9 +78,13 @@ const Forecast = () => {
           onClick={loadForecast}
           disabled={loading}
           className="btn btn-secondary d-flex items-center gap-sm"
+          aria-label={loading ? "Refreshing" : "Refresh"}
+          title={loading ? "Refreshing" : "Refresh"}
         >
           <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-          {loading ? "Refreshing..." : "Refresh"}
+          <span className="hide-sm-text">
+            {loading ? "Refreshing..." : "Refresh"}
+          </span>
         </button>
       </div>
 

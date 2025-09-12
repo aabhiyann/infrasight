@@ -55,9 +55,11 @@ const Logs = () => {
         </div>
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="btn btn-primary"
+          className="btn btn-primary d-flex items-center gap-sm"
+          aria-label="Add New Log"
+          title="Add New Log"
         >
-          ➕ Add New Log
+          ➕ <span className="hide-sm-text">Add New Log</span>
         </button>
       </div>
       {loading ? (

@@ -66,8 +66,13 @@ const Recommendations = () => {
           />
         </label>
 
-        <button className="btn" onClick={loadRecommendations}>
-          Apply Filters
+        <button
+          className="btn d-flex items-center gap-sm"
+          onClick={loadRecommendations}
+          aria-label="Apply Filters"
+          title="Apply Filters"
+        >
+          ⚙️ <span className="hide-sm-text">Apply Filters</span>
         </button>
       </div>
 
