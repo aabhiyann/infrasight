@@ -1,9 +1,8 @@
-import { Box, Flex, Text } from "./ui";
+import { Box, Flex } from "./ui";
 import ThemeToggle from "./ThemeToggle";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
-import UserMenu from "./UserMenu";
 
 interface HeaderProps {
   title?: string;
@@ -47,8 +46,11 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
         zIndex: 900,
         background: "var(--color-surface)",
         borderBottom: "1px solid var(--color-border)",
-        padding: "12px 20px",
+        padding: "8px 16px",
         boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+        // Make header span full width within padded main container
+        marginLeft: "-2rem",
+        marginRight: "-2rem",
       }}
     >
       <Flex align="center" justify="space-between">
@@ -64,16 +66,13 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
             <span className="hamburger-line" />
             <span className="sr-only">Menu</span>
           </button>
-          <div>
-            <Text as="h1" fontSize="lg" fontWeight="semibold" mb="none">
-              {activeTitle}
-            </Text>
-            <Breadcrumb items={[{ label: activeTitle }]} />
-          </div>
+          <Breadcrumb items={[
+            { label: "Dashboard", href: "/overview" },
+            { label: activeTitle }
+          ]} />
         </Flex>
         <Flex align="center" gap="md">
           <ThemeToggle />
-          <UserMenu variant="header" />
         </Flex>
       </Flex>
     </Box>

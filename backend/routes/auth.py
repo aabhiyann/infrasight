@@ -6,7 +6,7 @@ from typing import Optional
 
 from db import get_session
 from models import User
-from schemas import UserCreate, UserLogin, UserResponse, Token
+from schemas import UserCreate, UserLogin, UserResponse, Token, UserUpdate, ChangePasswordRequest
 from auth_utils import (
     verify_password, 
     get_password_hash, 
@@ -95,3 +95,52 @@ async def logout():
 async def verify_token_endpoint(current_user: User = Depends(get_current_user)):
     """Verify if token is valid."""
     return {"valid": True, "user_id": current_user.id}
+
+
+@router.put("/profile", response_model=UserResponse)
+async def update_profile(
+    updates: UserUpdate,
+    session: AsyncSession = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Update current user's profile (email/username)."""
+    # Check for email conflict
+    if updates.email and updates.email != current_user.email:
+        existing = await session.execute(select(User).where(User.email == updates.email))
+        if existing.scalar_one_or_none():
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
+
+    # Check for username conflict
+    if updates.username and updates.username != current_user.username:
+        existing = await session.execute(select(User).where(User.username == updates.username))
+        if existing.scalar_one_or_none():
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already taken")
+
+    if updates.email:
+        current_user.email = updates.email
+    if updates.username:
+        current_user.username = updates.username
+
+    session.add(current_user)
+    await session.commit()
+    await session.refresh(current_user)
+    return current_user
+
+
+@router.post("/change-password")
+async def change_password(
+    payload: ChangePasswordRequest,
+    session: AsyncSession = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Change current user's password."""
+    if not verify_password(payload.current_password, current_user.hashed_password):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Current password is incorrect")
+
+    if len(payload.new_password) < 8:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="New password must be at least 8 characters")
+
+    current_user.hashed_password = get_password_hash(payload.new_password)
+    session.add(current_user)
+    await session.commit()
+    return {"message": "Password updated"}
