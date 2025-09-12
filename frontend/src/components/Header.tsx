@@ -3,6 +3,7 @@ import ThemeToggle from "./ThemeToggle";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
+import UserMenu from "./UserMenu";
 
 interface HeaderProps {
   title?: string;
@@ -28,6 +29,15 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
     return routeTitleMap[path] || "Dashboard";
   }, [location.pathname, title]);
 
+  const breadcrumbItems = useMemo(() => {
+    const items = [];
+    if (location.pathname !== "/overview") {
+      items.push({ label: "Dashboard", href: "/overview" });
+    }
+    items.push({ label: activeTitle });
+    return items;
+  }, [location.pathname, activeTitle]);
+
   useEffect(() => {
     const onScroll = () => setElevated(window.scrollY > 2);
     window.addEventListener("scroll", onScroll);
@@ -46,15 +56,17 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
         zIndex: 900,
         background: "var(--color-surface)",
         borderBottom: "1px solid var(--color-border)",
-        padding: "8px 16px",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+        padding: "12px 24px",
+        boxShadow: elevated ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
         // Make header span full width within padded main container
         marginLeft: "-2rem",
         marginRight: "-2rem",
+        marginTop: "-2rem",
+        marginBottom: "1rem",
       }}
     >
-      <Flex align="center" justify="space-between">
-        <Flex align="center" gap="md">
+      <Flex align="center" justify="space-between" style={{ maxWidth: "100%" }}>
+        <Flex align="center" gap="lg">
           <button
             aria-label="Toggle sidebar"
             aria-expanded={isSidebarOpen}
@@ -66,13 +78,11 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
             <span className="hamburger-line" />
             <span className="sr-only">Menu</span>
           </button>
-          <Breadcrumb items={[
-            { label: "Dashboard", href: "/overview" },
-            { label: activeTitle }
-          ]} />
+          <Breadcrumb items={breadcrumbItems} />
         </Flex>
         <Flex align="center" gap="md">
           <ThemeToggle />
+          <UserMenu variant="header" />
         </Flex>
       </Flex>
     </Box>
