@@ -3,7 +3,6 @@ import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
 import AnomalyTable from "../components/AnomalyTable";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
-import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 import { usePageTitle } from "../hooks/usePageTitle";
@@ -43,7 +42,6 @@ const Anomalies = () => {
 
   return (
     <div className="container stack-lg">
-      <Breadcrumb items={[{ label: "Detected Anomalies" }]} />
       <div className="page-header">
         <h2 className="page-title">Detected Anomalies</h2>
         <p className="page-subtitle">

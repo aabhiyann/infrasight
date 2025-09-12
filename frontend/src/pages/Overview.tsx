@@ -7,7 +7,6 @@ import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
 import TopServicesBarChart from "../components/TopServicesBarChart";
 import OverviewSummary from "../components/OverviewSummary";
-import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 import { RefreshCw } from "lucide-react";
@@ -39,7 +38,6 @@ function Overview() {
 
   return (
     <div className="container stack-lg">
-      <Breadcrumb items={[{ label: "AWS Cost Overview" }]} />
       <div className="page-header">
         <h2 className="page-title">AWS Cost Overview</h2>
         <p className="page-subtitle">

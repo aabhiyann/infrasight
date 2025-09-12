@@ -4,7 +4,6 @@ import AddLogForm from "../components/AddLogForm";
 import Modal from "../components/Modal";
 import { fetchLogs, type LogEntry } from "../api/logApi.ts";
 import { fetchAvailableServices } from "../api/forecastApi";
-import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 
@@ -47,7 +46,6 @@ const Logs = () => {
 
   return (
     <div className="container stack-lg">
-      <Breadcrumb items={[{ label: "Cost Logs" }]} />
       <div className="page-header">
         <div>
           <h2 className="page-title">Cost Logs</h2>

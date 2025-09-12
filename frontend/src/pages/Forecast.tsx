@@ -1,6 +1,5 @@
 import ChartCard from "../components/ChartCard";
 import EmptyState from "../components/EmptyState";
-import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useState } from "react";
 import {
   fetchForecastData,
@@ -63,7 +62,6 @@ const Forecast = () => {
 
   return (
     <div className="container stack-lg">
-      <Breadcrumb items={[{ label: "Cost Forecasts" }]} />
       <div className="page-header">
         <h2 className="page-title">Cost Forecasts</h2>
         <p className="page-subtitle">
