@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
 import CostChart from "../components/CostChart";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
@@ -18,6 +19,24 @@ function Overview() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string>("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Read service filter from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const service = params.get("service") || "";
+    if (service) setSelectedService(service);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep URL in sync when selectedService changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (selectedService) params.set("service", selectedService);
+    else params.delete("service");
+    navigate({ search: params.toString() }, { replace: true });
+  }, [selectedService, location.search, navigate]);
 
   const loadData = async () => {
     try {

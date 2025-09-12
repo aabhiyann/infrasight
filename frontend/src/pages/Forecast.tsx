@@ -1,6 +1,7 @@
 import ChartCard from "../components/ChartCard";
 import EmptyState from "../components/EmptyState";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   fetchForecastData,
   fetchAvailableServices,
@@ -20,6 +21,8 @@ const Forecast = () => {
   );
   const [availableServices, setAvailableServices] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -59,6 +62,21 @@ const Forecast = () => {
   useEffect(() => {
     loadForecast();
   }, [selectedService]);
+
+  // URL sync
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const service = params.get("service") || "";
+    if (service) setSelectedService(service);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (selectedService) params.set("service", selectedService);
+    else params.delete("service");
+    navigate({ search: params.toString() }, { replace: true });
+  }, [selectedService, location.search, navigate]);
 
   return (
     <div className="container stack-lg">

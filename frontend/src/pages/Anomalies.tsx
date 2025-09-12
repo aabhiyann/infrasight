@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
 import AnomalyTable from "../components/AnomalyTable";
@@ -14,6 +15,8 @@ const Anomalies = () => {
   const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
   const [zThreshold, setZThreshold] = useState<number>(2.0);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
@@ -39,6 +42,25 @@ const Anomalies = () => {
       setFiltered(anomalies.filter((a) => a.service === selectedService));
     }
   }, [selectedService, anomalies]);
+
+  // Read initial filters from URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const service = params.get("service") || "";
+    const z = params.get("z") || "";
+    if (service) setSelectedService(service);
+    if (z) setZThreshold(parseFloat(z) || 2.0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sync filters to URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (selectedService) params.set("service", selectedService);
+    else params.delete("service");
+    params.set("z", String(zThreshold));
+    navigate({ search: params.toString() }, { replace: true });
+  }, [selectedService, zThreshold, location.search, navigate]);
 
   return (
     <div className="container stack-lg">

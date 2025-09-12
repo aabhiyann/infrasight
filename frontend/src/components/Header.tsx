@@ -56,12 +56,12 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
         zIndex: 900,
         background: "var(--color-surface)",
         borderBottom: "1px solid var(--color-border)",
-        padding: "clamp(8px, 2.4vw, 12px) clamp(12px, 4vw, 24px)",
+        padding: `clamp(8px, 2.4vw, var(--header-padding-y)) clamp(12px, 4vw, var(--header-padding-x))`,
         boxShadow: elevated ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
         // Make header span full width within padded main container while remaining reasonable on mobile
-        marginLeft: "clamp(-1rem, -4vw, -2rem)",
-        marginRight: "clamp(-1rem, -4vw, -2rem)",
-        marginTop: "clamp(-1rem, -4vw, -2rem)",
+        marginLeft: `clamp(-1rem, -4vw, calc(-1 * var(--header-margin-x)))`,
+        marginRight: `clamp(-1rem, -4vw, calc(-1 * var(--header-margin-x)))`,
+        marginTop: `clamp(-1rem, -4vw, calc(-1 * var(--header-margin-top)))`,
         marginBottom: "1rem",
       }}
     >
