@@ -1,4 +1,10 @@
 import { useState } from "react";
+import {
+  convertToCSV,
+  downloadCSV,
+  formatRecommendationsForExport,
+  generateFilename,
+} from "../utils/csvExport";
 
 interface Recommendation {
   service: string;
@@ -82,13 +88,30 @@ const RecommendationTable = ({ recommendations }: Props) => {
     );
   };
 
+  const handleExportCSV = () => {
+    const exportData = formatRecommendationsForExport(sortedRecommendations);
+    const csvContent = convertToCSV(exportData);
+    const filename = generateFilename("recommendations");
+    downloadCSV(csvContent, filename);
+  };
+
   return (
     <div className="recommendation-table-container">
       <div className="table-header">
         <h3>AI-Generated Recommendations</h3>
-        <span className="table-count">
-          {recommendations.length} recommendations found
-        </span>
+        <div className="table-header-actions">
+          <span className="table-count">
+            {recommendations.length} recommendations found
+          </span>
+          <button
+            onClick={handleExportCSV}
+            className="export-btn"
+            disabled={recommendations.length === 0}
+            title="Export recommendations to CSV"
+          >
+            📥 Export CSV
+          </button>
+        </div>
       </div>
 
       {recommendations.length === 0 ? (

@@ -1,4 +1,10 @@
 import { useState, useMemo } from "react";
+import {
+  convertToCSV,
+  downloadCSV,
+  formatLogsForExport,
+  generateFilename,
+} from "../utils/csvExport";
 
 interface LogEntry {
   id: number;
@@ -96,6 +102,13 @@ const LogTable = ({ logs }: Props) => {
     setCurrentPage(1); // Reset to first page
   };
 
+  const handleExportCSV = () => {
+    const exportData = formatLogsForExport(sortedLogs);
+    const csvContent = convertToCSV(exportData);
+    const filename = generateFilename("logs");
+    downloadCSV(csvContent, filename);
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -159,6 +172,14 @@ const LogTable = ({ logs }: Props) => {
             <option value={50}>50</option>
             <option value={100}>100</option>
           </select>
+          <button
+            onClick={handleExportCSV}
+            className="export-btn"
+            disabled={sortedLogs.length === 0}
+            title="Export filtered data to CSV"
+          >
+            📥 Export CSV
+          </button>
         </div>
       </div>
 

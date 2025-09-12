@@ -1,5 +1,11 @@
 import { useState } from "react";
 import type { Anomaly } from "../api/anomalyApi";
+import {
+  convertToCSV,
+  downloadCSV,
+  formatAnomaliesForExport,
+  generateFilename,
+} from "../utils/csvExport";
 
 interface Props {
   anomalies: Anomaly[];
@@ -80,11 +86,30 @@ const AnomalyTable = ({ anomalies }: Props) => {
     );
   };
 
+  const handleExportCSV = () => {
+    const exportData = formatAnomaliesForExport(sortedAnomalies);
+    const csvContent = convertToCSV(exportData);
+    const filename = generateFilename("anomalies");
+    downloadCSV(csvContent, filename);
+  };
+
   return (
     <div className="anomaly-table-container">
       <div className="table-header">
         <h3>Anomaly Details</h3>
-        <span className="table-count">{anomalies.length} anomalies found</span>
+        <div className="table-header-actions">
+          <span className="table-count">
+            {anomalies.length} anomalies found
+          </span>
+          <button
+            onClick={handleExportCSV}
+            className="export-btn"
+            disabled={anomalies.length === 0}
+            title="Export anomalies to CSV"
+          >
+            📥 Export CSV
+          </button>
+        </div>
       </div>
 
       <div className="table-wrapper">
