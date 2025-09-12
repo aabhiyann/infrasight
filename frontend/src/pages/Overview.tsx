@@ -9,25 +9,27 @@ import TopServicesBarChart from "../components/TopServicesBarChart";
 import OverviewSummary from "../components/OverviewSummary";
 import Breadcrumb from "../components/Breadcrumb";
 import Skeleton from "../components/Skeleton";
-import RefreshButton from "../components/RefreshButton";
-import { useAutoRefresh } from "../hooks/useAutoRefresh";
+import EmptyState from "../components/EmptyState";
+import { RefreshCw } from "lucide-react";
 
 function Overview() {
   const [data, setData] = useState<CostRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string>("");
 
   const loadData = async () => {
-    const result = await fetchCleanedCosts();
-    setData(result);
-    setLoading(false);
+    try {
+      setError(null);
+      setLoading(true);
+      const result = await fetchCleanedCosts();
+      setData(result);
+    } catch (err) {
+      setError("Failed to load cost data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const { isRefreshing, lastRefresh, manualRefresh } = useAutoRefresh({
-    onRefresh: loadData,
-    intervalMs: 300000, // 5 minutes
-    enabled: !loading,
-  });
 
   useEffect(() => {
     loadData();
@@ -49,16 +51,37 @@ function Overview() {
           selected={selectedService}
           onChange={setSelectedService}
         />
-        <RefreshButton
-          onRefresh={manualRefresh}
-          isRefreshing={isRefreshing}
-          lastRefresh={lastRefresh}
-          className="ml-auto"
-        />
+        <button
+          onClick={loadData}
+          disabled={loading}
+          className="btn btn-secondary"
+          style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+        >
+          <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+          {loading ? "Refreshing..." : "Refresh"}
+        </button>
       </div>
       {loading ? (
         <div className="card">
           <Skeleton height={200} />
+        </div>
+      ) : error ? (
+        <div className="card">
+          <EmptyState
+            title="Error loading data"
+            message={error}
+            icon="alert"
+            onRetry={loadData}
+          />
+        </div>
+      ) : data.length === 0 ? (
+        <div className="card">
+          <EmptyState
+            title="No data available"
+            message="No cost data found. Please check back later."
+            icon="alert"
+            onRetry={loadData}
+          />
         </div>
       ) : (
         <>
