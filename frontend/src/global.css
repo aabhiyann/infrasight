@@ -2924,10 +2924,13 @@ body {
   list-style: none;
 }
 
-/* Sidebar Component Styles */
+/* Modern Sidebar Component Styles */
 .sidebar {
   transform: translateX(-100%);
   transition: transform 0.3s ease;
+  background: var(--color-surface) !important;
+  border-right: 1px solid var(--color-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 .sidebar.sidebar-open {
@@ -2938,25 +2941,127 @@ body {
   transform: translateX(-100%);
 }
 
+.sidebar-logo {
+  background: var(--gradient-generic) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 82, 182, 0.3);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-link:hover {
+  background: var(--accent-10);
+  color: var(--color-accent);
+  transform: translateX(2px);
+}
+
+.sidebar-link.active {
+  background: var(--accent-15);
+  color: var(--color-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 82, 182, 0.1);
+}
+
+.sidebar-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
 .sidebar-user-info {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: var(--surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.sidebar-avatar {
+  background: var(--gradient-generic) !important;
+  box-shadow: 0 2px 4px rgba(0, 82, 182, 0.2);
 }
 
 .sidebar-logout-btn {
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   margin-bottom: 1rem;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  width: 100%;
 }
 
 .sidebar-logout-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-1);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px !important;
+  }
+  
+  .sidebar-link {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .sidebar-icon {
+    font-size: 1.25rem;
+    width: 24px;
+  }
+}
+
+/* Sidebar Animation Enhancements */
+.sidebar-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--color-primary);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+}
+
+.sidebar-link.active::before {
+  transform: scaleY(1);
+}
+
+/* Sidebar Logo Animation */
+.sidebar-logo {
+  transition: transform 0.2s ease;
+}
+
+.sidebar-logo:hover {
+  transform: scale(1.05);
 }
 
 /* Heatmap Component Styles */

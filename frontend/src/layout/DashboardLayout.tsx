@@ -32,7 +32,7 @@ const DashboardLayout = () => {
         width="full"
         className="dashboard-main"
         style={{
-          marginLeft: isOpen ? 200 : 0,
+          marginLeft: isOpen ? 240 : 0,
           backgroundColor: "var(--color-bg)",
           transition: "margin-left 0.3s ease",
           minHeight: "100vh",

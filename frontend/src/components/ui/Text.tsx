@@ -12,6 +12,7 @@ interface TextProps extends TypographyProps, SpacingProps {
   as?: "p" | "span" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   color?: "primary" | "secondary" | "muted" | "danger" | "success" | "warning";
   truncate?: boolean;
+  style?: React.CSSProperties;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -20,11 +21,12 @@ const Text: React.FC<TextProps> = ({
   as: Component = "p",
   color,
   truncate = false,
+  style,
   ...props
 }) => {
   const typographyClasses = getTypographyClasses(props);
   const spacingClasses = getSpacingClasses(props);
-
+  
   const colorClasses = {
     primary: "text-primary",
     secondary: "text-secondary",
@@ -42,7 +44,7 @@ const Text: React.FC<TextProps> = ({
     className
   );
 
-  return <Component className={classes}>{children}</Component>;
+  return <Component className={classes} style={style}>{children}</Component>;
 };
 
 export default Text;

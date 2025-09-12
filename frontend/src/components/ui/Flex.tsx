@@ -11,6 +11,7 @@ interface FlexProps extends SpacingProps {
   wrap?: boolean;
   gap?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
   as?: React.ElementType;
+  style?: React.CSSProperties;
 }
 
 const Flex: React.FC<FlexProps> = ({
@@ -22,10 +23,11 @@ const Flex: React.FC<FlexProps> = ({
   wrap = false,
   gap,
   as: Component = "div",
+  style,
   ...spacingProps
 }) => {
   const spacingClasses = getSpacingClasses(spacingProps);
-
+  
   const classes = cn(
     "d-flex",
     `flex-${direction}`,
@@ -37,7 +39,7 @@ const Flex: React.FC<FlexProps> = ({
     className
   );
 
-  return <Component className={classes}>{children}</Component>;
+  return <Component className={classes} style={style}>{children}</Component>;
 };
 
 export default Flex;
