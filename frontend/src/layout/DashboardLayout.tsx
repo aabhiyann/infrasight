@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import ThemeToggle from "../components/ThemeToggle";
+import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { Box, Flex, Text } from "../components/ui";
+import { Box, Text } from "../components/ui";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -38,20 +38,11 @@ const DashboardLayout = () => {
           minHeight: "100vh",
         }}
       >
-        <Flex align="center" gap="lg" mb="lg">
-          <button
-            aria-label="Toggle sidebar"
-            aria-expanded={isOpen}
-            onClick={() => setIsOpen((v) => !v)}
-            className={`hamburger ${isOpen ? "is-open" : ""}`}
-          >
-            <span className="hamburger-line" />
-            <span className="hamburger-line" />
-            <span className="hamburger-line" />
-            <span className="sr-only">Menu</span>
-          </button>
-          <ThemeToggle />
-        </Flex>
+        <Header
+          title={document.title.replace(" - InfraSight", "")}
+          onToggleSidebar={() => setIsOpen((v) => !v)}
+          isSidebarOpen={isOpen}
+        />
         <Outlet />
         <Box as="footer" className="app-footer">
           <Text as="span" fontSize="sm" color="muted">
