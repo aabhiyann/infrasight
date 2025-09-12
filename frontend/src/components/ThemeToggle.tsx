@@ -50,7 +50,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={cycleTheme}
-      className="btn btn-ghost"
+      className="btn btn-ghost d-flex items-center gap-sm px-md py-sm"
       title={`Switch to ${
         theme === "light"
           ? "dark"
@@ -59,12 +59,6 @@ const ThemeToggle = () => {
           : "light"
       } mode`}
       aria-label={`Current theme: ${getLabel()}. Click to switch theme.`}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.5rem",
-        padding: "0.5rem 0.75rem",
-      }}
     >
       {getIcon()}
       <span className="text-small">{getLabel()}</span>

@@ -29,13 +29,13 @@ const DashboardLayout = () => {
       <Box
         as="main"
         p="2xl"
-        width="100%"
-        minHeight="100vh"
+        width="full"
         className="dashboard-main"
         style={{
           marginLeft: isOpen ? 200 : 0,
           backgroundColor: "var(--color-bg)",
           transition: "margin-left 0.3s ease",
+          minHeight: "100vh",
         }}
       >
         <Flex align="center" gap="lg" mb="lg">

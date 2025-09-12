@@ -15,12 +15,14 @@ interface BoxProps extends SpacingProps, TypographyProps, LayoutProps {
   children: React.ReactNode;
   className?: string;
   as?: React.ElementType;
+  style?: React.CSSProperties;
 }
 
 const Box: React.FC<BoxProps> = ({
   children,
   className = "",
   as: Component = "div",
+  style,
   ...props
 }) => {
   const spacingClasses = getSpacingClasses(props);
@@ -34,7 +36,11 @@ const Box: React.FC<BoxProps> = ({
     className
   );
 
-  return <Component className={classes}>{children}</Component>;
+  return (
+    <Component className={classes} style={style}>
+      {children}
+    </Component>
+  );
 };
 
 export default Box;
