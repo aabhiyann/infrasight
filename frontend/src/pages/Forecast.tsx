@@ -12,6 +12,7 @@ import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import ChartSkeleton from "../components/ChartSkeleton";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { RefreshCw } from "lucide-react";
+import { useToast } from "../components/ui/Toast";
 import { usePageTitle } from "../hooks/usePageTitle";
 
 const Forecast = () => {
@@ -23,6 +24,7 @@ const Forecast = () => {
   const [selectedService, setSelectedService] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const { notify } = useToast();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,8 +56,10 @@ const Forecast = () => {
     } catch (err) {
       setError("Failed to load forecast data. Please try again.");
       console.error("Failed to load forecast data:", err);
+      notify("Failed to load forecast data", "error");
     } finally {
       setLoading(false);
+      notify("Forecast refreshed", "success", 1800);
     }
   };
 

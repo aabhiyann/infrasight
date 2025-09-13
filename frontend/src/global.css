@@ -1014,6 +1014,40 @@ body {
   padding: 0 1rem;
 }
 
+/* Toasts */
+.toast-container {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2000;
+}
+
+.toast {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+}
+
+.toast-success {
+  border-color: #16a34a;
+}
+.toast-info {
+  border-color: var(--color-accent);
+}
+.toast-warning {
+  border-color: var(--color-warning);
+}
+.toast-error {
+  border-color: var(--color-danger);
+}
+
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

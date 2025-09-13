@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "../components/ui/Toast";
 import {
   fetchRecommendations,
   type Recommendation,
@@ -17,6 +19,10 @@ const Recommendations = () => {
   const [selectedService, setSelectedService] = useState<string>("");
   const [budget, setBudget] = useState<number | "">("");
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { notify } = useToast();
+
   useEffect(() => {
     fetchAvailableServices().then(setServices);
   }, []);
@@ -34,7 +40,27 @@ const Recommendations = () => {
     const result = await fetchRecommendations(filters);
     setRecommendations(result);
     setLoading(false);
+    notify("Recommendations updated", "success", 2200);
   }
+
+  // URL sync: service and budget
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const service = params.get("service") || "";
+    const b = params.get("budget");
+    if (service) setSelectedService(service);
+    if (b !== null && b !== "") setBudget(Number(b));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (selectedService) params.set("service", selectedService);
+    else params.delete("service");
+    if (budget !== "") params.set("budget", String(budget));
+    else params.delete("budget");
+    navigate({ search: params.toString() }, { replace: true });
+  }, [selectedService, budget, location.search, navigate]);
 
   return (
     <div className="container stack-lg">

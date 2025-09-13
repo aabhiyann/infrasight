@@ -7,6 +7,7 @@ import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { useToast } from "../components/ui/Toast";
 
 const Anomalies = () => {
   usePageTitle("Anomalies");
@@ -19,6 +20,7 @@ const Anomalies = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+  const { notify } = useToast();
 
   useEffect(() => {
     async function loadData() {
@@ -31,6 +33,7 @@ const Anomalies = () => {
       if (result.length === 0) {
         setError("No anomalies returned. Try lowering the Z-threshold.");
       }
+      notify("Anomalies refreshed", "success", 1800);
     }
     loadData();
   }, [zThreshold]);

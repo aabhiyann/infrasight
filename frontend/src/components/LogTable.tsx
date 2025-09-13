@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useToast } from "./ui/Toast";
 import {
   convertToCSV,
   downloadCSV,
@@ -34,6 +35,7 @@ const LogTable = ({
   onLogDelete,
   availableServices,
 }: LogTableProps) => {
+  const { notify } = useToast();
   const [sortField, setSortField] = useState<SortField>("date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -122,6 +124,7 @@ const LogTable = ({
     const csvContent = convertToCSV(exportData);
     const filename = generateFilename("logs");
     downloadCSV(csvContent, filename);
+    notify("Logs exported to CSV", "success", 2000);
   };
 
   const handleEditLog = (log: LogEntry) => {
@@ -141,9 +144,11 @@ const LogTable = ({
       await deleteLog(selectedLog.id);
       onLogDelete(selectedLog.id);
       setSelectedLog(null);
+      setDeleteModalOpen(false);
+      notify("Log deleted", "success", 2000);
     } catch (error) {
       console.error("Failed to delete log:", error);
-      alert("Failed to delete log. Please try again.");
+      notify("Failed to delete log", "error");
     }
   };
 
@@ -151,6 +156,7 @@ const LogTable = ({
     onLogUpdate(updatedLog);
     setEditModalOpen(false);
     setSelectedLog(null);
+    notify("Log saved", "success", 2000);
   };
 
   const formatDate = (dateString: string) => {

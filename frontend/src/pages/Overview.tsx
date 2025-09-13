@@ -11,6 +11,7 @@ import OverviewSummary from "../components/OverviewSummary";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 import { RefreshCw } from "lucide-react";
+import { useToast } from "../components/ui/Toast";
 import { usePageTitle } from "../hooks/usePageTitle";
 
 function Overview() {
@@ -21,6 +22,7 @@ function Overview() {
   const [selectedService, setSelectedService] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
+  const { notify } = useToast();
 
   // Read service filter from URL on mount
   useEffect(() => {
@@ -46,8 +48,10 @@ function Overview() {
       setData(result);
     } catch (err) {
       setError("Failed to load cost data. Please try again.");
+      notify("Failed to load cost data", "error");
     } finally {
       setLoading(false);
+      notify("Overview refreshed", "success", 1800);
     }
   };
 
