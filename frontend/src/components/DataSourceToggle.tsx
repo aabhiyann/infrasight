@@ -19,22 +19,18 @@ const DataSourceToggle: React.FC = () => {
     if (loading) return <RefreshCw size={16} className="animate-spin" />;
     if (error) return "⚠️";
     if (dataSource === "real") return <Cloud size={16} />;
-    if (dataSource === "mock") return <Database size={16} />;
-    return <RefreshCw size={16} />; // Auto
+    return <Database size={16} />; // Mock
   };
 
   const getCurrentLabel = () => {
     if (loading) return "Loading...";
     if (error) return "Error";
     if (dataSource === "real") return "Real AWS";
-    if (dataSource === "mock") return "Mock Data";
-    return "Auto (Mock)"; // Auto defaults to Mock
+    return "Mock Data";
   };
 
   const cycleDataSource = () => {
-    const sources: DataSource[] = ["mock", "real", "auto"];
-    const currentIndex = sources.indexOf(dataSource);
-    const nextSource = sources[(currentIndex + 1) % sources.length];
+    const nextSource = dataSource === "mock" ? "real" : "mock";
     handleToggle(nextSource);
   };
 
