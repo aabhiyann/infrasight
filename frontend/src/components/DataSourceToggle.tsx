@@ -1,17 +1,10 @@
 import React from "react";
-import { Box, Flex } from "./ui";
 import { useDataSource } from "../contexts/DataSourceContext";
 import type { DataSource } from "../contexts/DataSourceContext";
 
 const DataSourceToggle: React.FC = () => {
-  const {
-    dataSource,
-    setDataSource,
-    isRealData,
-    dataSourceInfo,
-    loading,
-    error,
-  } = useDataSource();
+  const { dataSource, setDataSource, isRealData, loading, error } =
+    useDataSource();
 
   const handleToggle = (source: DataSource) => {
     setDataSource(source);
@@ -49,156 +42,88 @@ const DataSourceToggle: React.FC = () => {
   };
 
   return (
-    <Box className="data-source-toggle">
-      <Flex align="center" gap="sm" style={{ flexWrap: "wrap" }}>
-        {/* Status Indicator */}
-        <Flex align="center" gap="xs" style={{ fontSize: "0.875rem" }}>
-          <span style={{ color: getStatusColor() }}>{getStatusIcon()}</span>
-          <span style={{ color: getStatusColor(), fontWeight: 500 }}>
-            {getStatusText()}
-          </span>
-        </Flex>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        padding: "4px",
+        borderRadius: "6px",
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+      }}
+    >
+      {/* Status Indicator */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "4px",
+          fontSize: "0.75rem",
+          color: getStatusColor(),
+        }}
+      >
+        <span>{getStatusIcon()}</span>
+        <span style={{ fontWeight: 500 }}>{getStatusText()}</span>
+      </div>
 
-        {/* Toggle Buttons */}
-        <Flex align="center" gap="xs">
-          <button
-            onClick={() => handleToggle("mock")}
-            className={`data-source-btn ${
-              dataSource === "mock" ? "active" : ""
-            }`}
-            style={{
-              padding: "4px 8px",
-              fontSize: "0.75rem",
-              borderRadius: "4px",
-              border: "1px solid var(--color-border)",
-              background:
-                dataSource === "mock"
-                  ? "var(--color-primary)"
-                  : "var(--color-surface)",
-              color:
-                dataSource === "mock"
-                  ? "var(--color-primary-foreground)"
-                  : "var(--color-text)",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            disabled={loading}
-          >
-            🎭 Mock
-          </button>
-
-          <button
-            onClick={() => handleToggle("real")}
-            className={`data-source-btn ${
-              dataSource === "real" ? "active" : ""
-            }`}
-            style={{
-              padding: "4px 8px",
-              fontSize: "0.75rem",
-              borderRadius: "4px",
-              border: "1px solid var(--color-border)",
-              background:
-                dataSource === "real"
-                  ? "var(--color-primary)"
-                  : "var(--color-surface)",
-              color:
-                dataSource === "real"
-                  ? "var(--color-primary-foreground)"
-                  : "var(--color-text)",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            disabled={loading}
-          >
-            ☁️ Real
-          </button>
-
-          <button
-            onClick={() => handleToggle("auto")}
-            className={`data-source-btn ${
-              dataSource === "auto" ? "active" : ""
-            }`}
-            style={{
-              padding: "4px 8px",
-              fontSize: "0.75rem",
-              borderRadius: "4px",
-              border: "1px solid var(--color-border)",
-              background:
-                dataSource === "auto"
-                  ? "var(--color-primary)"
-                  : "var(--color-surface)",
-              color:
-                dataSource === "auto"
-                  ? "var(--color-primary-foreground)"
-                  : "var(--color-text)",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            disabled={loading}
-          >
-            🔄 Auto
-          </button>
-        </Flex>
-
-        {/* Connection Status */}
-        {dataSourceInfo?.aws_connection && (
-          <Flex
-            align="center"
-            gap="xs"
-            style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}
-          >
-            <span>
-              {dataSourceInfo.aws_connection.status === "success" ? "✅" : "❌"}
-            </span>
-            <span>
-              AWS:{" "}
-              {dataSourceInfo.aws_connection.status === "success"
-                ? "Connected"
-                : "Disconnected"}
-            </span>
-          </Flex>
-        )}
-      </Flex>
-
-      {/* Error Message */}
-      {error && (
-        <Box
+      {/* Toggle Buttons */}
+      <div style={{ display: "flex", gap: "4px" }}>
+        <button
+          onClick={() => handleToggle("mock")}
           style={{
-            marginTop: "4px",
-            fontSize: "0.75rem",
-            color: "var(--color-error)",
-            background: "var(--color-error-subtle)",
             padding: "4px 8px",
-            borderRadius: "4px",
-          }}
-        >
-          ⚠️ {error}
-        </Box>
-      )}
-
-      {/* Additional Info */}
-      {dataSourceInfo && !error && (
-        <Box
-          style={{
-            marginTop: "4px",
             fontSize: "0.75rem",
-            color: "var(--color-text-muted)",
+            borderRadius: "4px",
+            border: "1px solid var(--color-border)",
+            background:
+              dataSource === "mock" ? "var(--color-primary)" : "transparent",
+            color: dataSource === "mock" ? "white" : "var(--color-text)",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
           }}
+          disabled={loading}
         >
-          Backend default:{" "}
-          {dataSourceInfo.use_real_data_env === "true"
-            ? "Real Data"
-            : "Mock Data"}
-          {dataSourceInfo.aws_connection?.available_services && (
-            <span>
-              {" "}
-              • {dataSourceInfo.aws_connection.available_services} AWS services
-              available
-            </span>
-          )}
-        </Box>
-      )}
-    </Box>
+          🎭
+        </button>
+
+        <button
+          onClick={() => handleToggle("real")}
+          style={{
+            padding: "4px 8px",
+            fontSize: "0.75rem",
+            borderRadius: "4px",
+            border: "1px solid var(--color-border)",
+            background:
+              dataSource === "real" ? "var(--color-primary)" : "transparent",
+            color: dataSource === "real" ? "white" : "var(--color-text)",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+          disabled={loading}
+        >
+          ☁️
+        </button>
+
+        <button
+          onClick={() => handleToggle("auto")}
+          style={{
+            padding: "4px 8px",
+            fontSize: "0.75rem",
+            borderRadius: "4px",
+            border: "1px solid var(--color-border)",
+            background:
+              dataSource === "auto" ? "var(--color-primary)" : "transparent",
+            color: dataSource === "auto" ? "white" : "var(--color-text)",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+          disabled={loading}
+        >
+          🔄
+        </button>
+      </div>
+    </div>
   );
 };
 

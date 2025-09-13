@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 
-export type DataSource = 'mock' | 'real' | 'auto';
+export type DataSource = "mock" | "real" | "auto";
 
 interface DataSourceContextType {
   dataSource: DataSource;
@@ -13,14 +13,18 @@ interface DataSourceContextType {
   refreshDataSourceInfo: () => Promise<void>;
 }
 
-const DataSourceContext = createContext<DataSourceContextType | undefined>(undefined);
+const DataSourceContext = createContext<DataSourceContextType | undefined>(
+  undefined
+);
 
 interface DataSourceProviderProps {
   children: ReactNode;
 }
 
-export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({ children }) => {
-  const [dataSource, setDataSourceState] = useState<DataSource>('auto');
+export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({
+  children,
+}) => {
+  const [dataSource, setDataSourceState] = useState<DataSource>("auto");
   const [dataSourceInfo, setDataSourceInfo] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,20 +34,23 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({ children
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/data-source/status');
+      // Use the full backend URL
+      const backendUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+      const response = await fetch(`${backendUrl}/data-source/status`);
       if (!response.ok) {
-        throw new Error('Failed to fetch data source status');
+        throw new Error("Failed to fetch data source status");
       }
       const info = await response.json();
       setDataSourceInfo(info);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-      console.error('Error fetching data source info:', err);
+      setError(err instanceof Error ? err.message : "Unknown error");
+      console.error("Error fetching data source info:", err);
       // Set fallback info if backend is not available
       setDataSourceInfo({
-        current_source: 'mock',
-        use_real_data_env: 'false',
-        available_sources: ['mock', 'real']
+        current_source: "mock",
+        use_real_data_env: "false",
+        available_sources: ["mock", "real"],
       });
     } finally {
       setLoading(false);
@@ -63,7 +70,9 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({ children
   };
 
   // Calculate if we're using real data
-  const isRealData = dataSource === 'real' || (dataSource === 'auto' && dataSourceInfo?.current_source === 'real');
+  const isRealData =
+    dataSource === "real" ||
+    (dataSource === "auto" && dataSourceInfo?.current_source === "real");
 
   // Load initial data source info
   useEffect(() => {
@@ -90,15 +99,18 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({ children
 export const useDataSource = (): DataSourceContextType => {
   const context = useContext(DataSourceContext);
   if (context === undefined) {
-    throw new Error('useDataSource must be used within a DataSourceProvider');
+    throw new Error("useDataSource must be used within a DataSourceProvider");
   }
   return context;
 };
 
 // Helper function to build API URLs with data source parameter
-export const buildApiUrl = (baseUrl: string, dataSource: DataSource): string => {
-  if (dataSource === 'auto') {
+export const buildApiUrl = (
+  baseUrl: string,
+  dataSource: DataSource
+): string => {
+  if (dataSource === "auto") {
     return baseUrl; // Use backend's default (environment setting)
   }
-  return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}source=${dataSource}`;
+  return `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}source=${dataSource}`;
 };
