@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
-export type DataSource = "mock" | "real" | "auto";
+export type DataSource = "mock" | "real";
 
 interface DataSourceContextType {
   dataSource: DataSource;
@@ -24,7 +24,7 @@ interface DataSourceProviderProps {
 export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({
   children,
 }) => {
-  const [dataSource, setDataSourceState] = useState<DataSource>("auto");
+  const [dataSource, setDataSourceState] = useState<DataSource>("mock");
   const [dataSourceInfo, setDataSourceInfo] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -70,9 +70,7 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({
   };
 
   // Calculate if we're using real data
-  const isRealData =
-    dataSource === "real" ||
-    (dataSource === "auto" && dataSourceInfo?.current_source === "real");
+  const isRealData = dataSource === "real";
 
   // Load initial data source info
   useEffect(() => {
@@ -109,8 +107,5 @@ export const buildApiUrl = (
   baseUrl: string,
   dataSource: DataSource
 ): string => {
-  if (dataSource === "auto") {
-    return baseUrl; // Use backend's default (environment setting)
-  }
   return `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}source=${dataSource}`;
 };
