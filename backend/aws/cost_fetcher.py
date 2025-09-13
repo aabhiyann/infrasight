@@ -149,27 +149,27 @@ def test_aws_connection() -> Dict:
 
 # For backward compatibility and testing
 if __name__ == "__main__":
-    print("🧪 Testing AWS Cost Explorer connection...")
+    print("Testing AWS Cost Explorer connection...")
     
     # Test connection
     connection_test = test_aws_connection()
     print(f"Connection test: {connection_test}")
     
     if connection_test["status"] == "success":
-        print("\n📊 Fetching recent cost data...")
+        print("\nFetching recent cost data...")
         try:
             # Fetch last 7 days of data
             df = fetch_aws_cost_data_flat()
-            print(f"✅ Successfully fetched {len(df)} cost records")
+            print(f"Successfully fetched {len(df)} cost records")
             print(f"Date range: {df['date'].min()} to {df['date'].max()}")
             print(f"Services: {df['service'].nunique()} unique services")
             print(f"Total cost: ${df['amount'].sum():.2f}")
             
             # Show sample data
-            print("\n📋 Sample data:")
+            print("\nSample data:")
             print(df.head())
             
         except Exception as e:
-            print(f"❌ Error fetching cost data: {str(e)}")
+            print(f"Error fetching cost data: {str(e)}")
     else:
-        print("❌ Cannot fetch data due to connection issues")
+        print("Cannot fetch data due to connection issues")
