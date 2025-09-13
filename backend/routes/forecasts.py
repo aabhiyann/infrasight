@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from typing import Dict, List, Any, Optional
-from utils.file_loader import load_mock_cost_data
+from utils.file_loader import load_cost_data, get_data_source_info
 from ml_utils import forecast_costs
 from schemas import ForecastResponse
 
@@ -22,13 +22,18 @@ def convert_aws_data_to_flat_format(raw_data: dict) -> List[Dict]:
     return data
 
 @router.get("/forecast", response_model=ForecastResponse)
-async def get_cost_forecast(n_days: int = 7, service: Optional[str] = None):
+async def get_cost_forecast(
+    n_days: int = 7, 
+    service: Optional[str] = None,
+    source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")
+):
     """
     Advanced AWS cost forecasting with service-level predictions and confidence intervals.
     
     Args:
         n_days: Number of days to forecast (default=7, max=30)
         service: Optional service name to forecast only that service
+        source: Optional data source override ('mock', 'real', or None for auto-detect)
         
     Returns:
         ForecastResponse with:
@@ -44,8 +49,8 @@ async def get_cost_forecast(n_days: int = 7, service: Optional[str] = None):
                 detail="n_days must be between 1 and 30"
             )
         
-        # Load mock data (AWS Cost Explorer format)
-        raw_data = load_mock_cost_data()
+        # Load cost data from specified source or auto-detect
+        raw_data = load_cost_data(source)
         data = convert_aws_data_to_flat_format(raw_data)
         
         # Filter by service if specified
@@ -60,7 +65,10 @@ async def get_cost_forecast(n_days: int = 7, service: Optional[str] = None):
         # Generate forecast
         forecast_result = forecast_costs(data, n_days=n_days)
         
-        # Add status
+        # Add data source info and status
+        data_source_info = get_data_source_info()
+        forecast_result["data_source"] = data_source_info["current_source"]
+        forecast_result["data_source_info"] = data_source_info
         forecast_result["status"] = "success"
         
         return forecast_result
@@ -75,19 +83,26 @@ async def get_cost_forecast(n_days: int = 7, service: Optional[str] = None):
 
 
 @router.get("/forecast/services")
-async def get_available_services() -> Dict[str, Any]:
+async def get_available_services(
+    source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")
+) -> Dict[str, Any]:
     """
     Get list of available services for forecasting.
     """
     try:
-        raw_data = load_mock_cost_data()
+        raw_data = load_cost_data(source)
         data = convert_aws_data_to_flat_format(raw_data)
         services = list(set(record.get('service') for record in data if record.get('service')))
         services.sort()
         
+        # Add data source info
+        data_source_info = get_data_source_info()
+        
         return {
             "services": services,
             "total_services": len(services),
+            "data_source": data_source_info["current_source"],
+            "data_source_info": data_source_info,
             "status": "success"
         }
         
@@ -98,7 +113,10 @@ async def get_available_services() -> Dict[str, Any]:
         )
 
 @router.get("/forecast/compare")
-async def compare_forecast_methods(n_days: int = 7) -> Dict[str, Any]:
+async def compare_forecast_methods(
+    n_days: int = 7,
+    source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")
+) -> Dict[str, Any]:
     """
     Compare legacy vs advanced forecasting methods.
     """
@@ -109,7 +127,7 @@ async def compare_forecast_methods(n_days: int = 7) -> Dict[str, Any]:
                 detail="n_days must be between 1 and 30"
             )
         
-        raw_data = load_mock_cost_data()
+        raw_data = load_cost_data(source)
         data = convert_aws_data_to_flat_format(raw_data)
         
         # Get forecast
@@ -118,6 +136,9 @@ async def compare_forecast_methods(n_days: int = 7) -> Dict[str, Any]:
         # Calculate total cost
         total_cost = sum(pred['predicted_cost'] for pred in forecast_result['total_forecast'])
         
+        # Add data source info
+        data_source_info = get_data_source_info()
+        
         return {
             "forecast": {
                 "total_cost": round(total_cost, 2),
@@ -125,6 +146,8 @@ async def compare_forecast_methods(n_days: int = 7) -> Dict[str, Any]:
                 "service_breakdown": forecast_result['service_forecasts'],
                 "summary": forecast_result['summary']
             },
+            "data_source": data_source_info["current_source"],
+            "data_source_info": data_source_info,
             "status": "success"
         }
         

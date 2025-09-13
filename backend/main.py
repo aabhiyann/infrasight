@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations, ml_data, debug_visuals, auth
+from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations, ml_data, debug_visuals, auth, data_source
 import os
 
 
@@ -33,6 +33,7 @@ app.include_router(forecasts.router, prefix="/api")
 app.include_router(recommendations.router, prefix="/api")
 app.include_router(ml_data.router, prefix="/api")
 app.include_router(debug_visuals.router, prefix="/api")
+app.include_router(data_source.router, prefix="/api")
 
 
 

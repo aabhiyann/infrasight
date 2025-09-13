@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional, List
 from datetime import date
-from utils.file_loader import load_mock_cost_data_flat
+from utils.file_loader import load_cost_data_flat, get_data_source_info
 import pandas as pd
 
 router = APIRouter()
@@ -15,7 +15,8 @@ def get_cleaned_cost_data(
     max_amount: Optional[float] = Query(None, description="Maximum amount filter"),
     sort_by: Optional[str] = Query("date", description="Sort by: date, amount, service"),
     sort_order: Optional[str] = Query("asc", description="Sort order: asc, desc"),
-    limit: Optional[int] = Query(None, description="Limit number of results")
+    limit: Optional[int] = Query(None, description="Limit number of results"),
+    source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")
 ):
     """
     Returns cleaned AWS cost data in flat format with optional filtering and sorting.
@@ -27,8 +28,8 @@ def get_cleaned_cost_data(
     ]
     """
     try:
-        # Load and clean the data
-        df = load_mock_cost_data_flat()
+        # Load and clean the data from specified source or auto-detect
+        df = load_cost_data_flat(source)
         
         # Apply filters
         if service:
@@ -62,6 +63,9 @@ def get_cleaned_cost_data(
         for record in result:
             record['date'] = record['date'].strftime('%Y-%m-%d')
         
+        # Add data source info
+        data_source_info = get_data_source_info()
+        
         return {
             "data": result,
             "summary": {
@@ -82,8 +86,11 @@ def get_cleaned_cost_data(
                 "max_amount": max_amount,
                 "sort_by": sort_by,
                 "sort_order": sort_order,
-                "limit": limit
-            }
+                "limit": limit,
+                "source": source
+            },
+            "data_source": data_source_info["current_source"],
+            "data_source_info": data_source_info
         }
         
     except Exception as e:

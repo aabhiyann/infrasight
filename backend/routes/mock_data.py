@@ -4,29 +4,31 @@ from pathlib import Path
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
-from utils.file_loader import load_mock_cost_data
+from utils.file_loader import load_cost_data, load_mock_cost_data, get_data_source_info
 
 router = APIRouter()
 
 
-# Cost function
-# 1. get the cost data
-# 2. format the cost data
-# 3. return the cost data
-
 @router.get("/mock-data")
 async def get_mock_data():
+    """Legacy endpoint for mock data - now returns data source info."""
     return {
-        "message": "Mock data retrieved successfully"
+        "message": "Data source info retrieved successfully",
+        "data_source_info": get_data_source_info()
     }
 
-
 @router.get("/cost")
-def get_formatted_cost_data():
+def get_formatted_cost_data(source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")):
+    """
+    Get formatted cost data from specified source or auto-detect based on environment.
+    
+    Args:
+        source: Optional data source override ('mock', 'real', or None for auto-detect)
+    """
     try:
-        raw_data = load_mock_cost_data()
+        raw_data = load_cost_data(source)
     except FileNotFoundError:
-        raise HTTPException(status_code=500, detail="Mock cost data file not found.")
+        raise HTTPException(status_code=500, detail="Cost data file not found.")
     except json.JSONDecodeError:
         raise HTTPException(status_code=500, detail="Cost data is not valid JSON.")
 
@@ -47,7 +49,20 @@ def get_formatted_cost_data():
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing cost data: {str(e)}")
 
-    return {"cost_data": formatted_data}
+    # Add data source info to response
+    data_source_info = get_data_source_info()
+    
+    return {
+        "cost_data": formatted_data,
+        "data_source": data_source_info["current_source"],
+        "total_records": len(formatted_data),
+        "data_source_info": data_source_info
+    }
+
+@router.get("/data-source")
+def get_data_source_status():
+    """Get information about the current data source configuration."""
+    return get_data_source_info()
 
 # Filter logic
 # Define expected response body

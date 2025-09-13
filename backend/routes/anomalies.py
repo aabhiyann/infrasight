@@ -1,18 +1,22 @@
-from fastapi import APIRouter, HTTPException
-from typing import Dict, List, Any
-from utils.file_loader import load_mock_cost_data
+from fastapi import APIRouter, HTTPException, Query
+from typing import Dict, List, Any, Optional
+from utils.file_loader import load_cost_data, get_data_source_info
 from ml_utils import detect_anomalies
 from schemas import AnomalyResponse, AnomalySummaryResponse
 
 router = APIRouter()
 
 @router.get("/anomalies", response_model=AnomalyResponse)
-async def get_anomalies(z_threshold: float = 2.0):
+async def get_anomalies(
+    z_threshold: float = 2.0,
+    source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")
+):
     """
     Detect anomalies in AWS cost data using z-score method.
     
     Args:
         z_threshold: Z-score threshold for anomaly detection (default=2.0)
+        source: Optional data source override ('mock', 'real', or None for auto-detect)
         
     Returns:
         Dictionary containing:
@@ -21,8 +25,8 @@ async def get_anomalies(z_threshold: float = 2.0):
         - threshold_used: The z-threshold used for detection
     """
     try:
-        # Load mock data
-        data = load_mock_cost_data()
+        # Load cost data from specified source or auto-detect
+        data = load_cost_data(source)
         
         # Detect anomalies
         anomalies = detect_anomalies(data, z_threshold=z_threshold)
@@ -42,6 +46,9 @@ async def get_anomalies(z_threshold: float = 2.0):
                     "z_score": point["z_score"]
                 })
         
+        # Add data source info to response
+        data_source_info = get_data_source_info()
+        
         return {
             "anomalies": anomalies,
             "flattened_anomalies": flattened_anomalies,
@@ -51,6 +58,8 @@ async def get_anomalies(z_threshold: float = 2.0):
                 "services": list(anomalies.keys())
             },
             "threshold_used": z_threshold,
+            "data_source": data_source_info["current_source"],
+            "data_source_info": data_source_info,
             "status": "success"
         }
         
