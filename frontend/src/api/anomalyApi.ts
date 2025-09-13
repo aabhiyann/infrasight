@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { useApiWithDataSource } from "../hooks/useApiWithDataSource";
 export interface Anomaly {
   date: string;
   service: string;
@@ -29,4 +29,31 @@ export async function fetchAnomalies(
     console.error("Failed to fetch anomalies:", error);
     return [];
   }
+}
+
+// New hook-based function that respects data source selection
+export function useAnomalyApi() {
+  const { apiCall } = useApiWithDataSource();
+
+  const fetchAnomalies = async (
+    z_threshold: number = 2.0
+  ): Promise<Anomaly[]> => {
+    const endpoint = `/anomalies?z_threshold=${z_threshold}`;
+    const response = await apiCall<{
+      flattened_anomalies: Anomaly[];
+      summary: {
+        total_anomalies: number;
+        services_affected: number;
+        services: string[];
+      };
+      threshold_used: number;
+      status: string;
+    }>(endpoint);
+
+    return response.flattened_anomalies;
+  };
+
+  return {
+    fetchAnomalies,
+  };
 }

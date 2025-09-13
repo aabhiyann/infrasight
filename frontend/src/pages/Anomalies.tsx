@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
+import { useAnomalyApi, type Anomaly } from "../api/anomalyApi";
+import { useDataSource } from "../contexts/DataSourceContext";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
 import AnomalyTable from "../components/AnomalyTable";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
@@ -11,6 +12,8 @@ import { useToast } from "../components/ui/Toast";
 
 const Anomalies = () => {
   usePageTitle("Anomalies");
+  const { fetchAnomalies } = useAnomalyApi();
+  const { dataSource } = useDataSource();
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [filtered, setFiltered] = useState<Anomaly[]>([]);
   const [selectedService, setSelectedService] = useState("");
@@ -36,7 +39,7 @@ const Anomalies = () => {
       notify("Anomalies refreshed", "success", 1800);
     }
     loadData();
-  }, [zThreshold]);
+  }, [zThreshold, dataSource]); // Reload when data source changes
 
   useEffect(() => {
     if (!selectedService) {

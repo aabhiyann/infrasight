@@ -2,11 +2,8 @@ import ChartCard from "../components/ChartCard";
 import EmptyState from "../components/EmptyState";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  fetchForecastData,
-  fetchAvailableServices,
-  type ForecastResponse,
-} from "../api/forecastApi";
+import { useForecastApi, type ForecastResponse } from "../api/forecastApi";
+import { useDataSource } from "../contexts/DataSourceContext";
 import ForecastChart from "../components/ForecastChart";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import ChartSkeleton from "../components/ChartSkeleton";
@@ -17,6 +14,8 @@ import { usePageTitle } from "../hooks/usePageTitle";
 
 const Forecast = () => {
   usePageTitle("Forecast");
+  const { fetchForecastData, fetchAvailableServices } = useForecastApi();
+  const { dataSource } = useDataSource();
   const [forecastData, setForecastData] = useState<ForecastResponse | null>(
     null
   );
@@ -38,7 +37,7 @@ const Forecast = () => {
       }
     }
     loadInitialData();
-  }, []);
+  }, [dataSource]); // Reload services when data source changes
 
   const loadForecast = async () => {
     try {
@@ -65,7 +64,7 @@ const Forecast = () => {
 
   useEffect(() => {
     loadForecast();
-  }, [selectedService]);
+  }, [selectedService, dataSource]); // Reload when data source changes
 
   // URL sync
   useEffect(() => {

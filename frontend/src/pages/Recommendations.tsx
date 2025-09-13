@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "../components/ui/Toast";
 import {
-  fetchRecommendations,
+  useRecommendationApi,
   type Recommendation,
 } from "../api/recommendationApi";
-import { fetchAvailableServices } from "../api/forecastApi";
+import { useForecastApi } from "../api/forecastApi";
+import { useDataSource } from "../contexts/DataSourceContext";
 import ServiceSelector from "../components/ServiceSelector";
 import RecommendationTable from "../components/RecommendationTable";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 
 const Recommendations = () => {
+  const { fetchRecommendations } = useRecommendationApi();
+  const { fetchAvailableServices } = useForecastApi();
+  const { dataSource } = useDataSource();
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,11 +29,11 @@ const Recommendations = () => {
 
   useEffect(() => {
     fetchAvailableServices().then(setServices);
-  }, []);
+  }, [dataSource]); // Reload services when data source changes
 
   useEffect(() => {
     loadRecommendations();
-  }, []);
+  }, [dataSource]); // Reload recommendations when data source changes
 
   async function loadRecommendations() {
     setLoading(true);
