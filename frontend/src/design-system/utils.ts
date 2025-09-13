@@ -1,11 +1,4 @@
 import type {
-  Spacing,
-  FontSize,
-  FontWeight,
-  BorderRadius,
-  Shadow,
-  ButtonVariant,
-  ButtonSize,
   SpacingProps,
   TypographyProps,
   LayoutProps,

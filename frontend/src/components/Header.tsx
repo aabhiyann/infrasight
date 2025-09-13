@@ -1,6 +1,6 @@
 import { Box, Flex } from "./ui";
 import ThemeToggle from "./ThemeToggle";
-import DataSourceToggle from "./DataSourceToggle";
+import SimpleDataSourceToggle from "./SimpleDataSourceToggle";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
@@ -90,7 +90,7 @@ const Header = ({ title, onToggleSidebar, isSidebarOpen }: HeaderProps) => {
         </Flex>
         <Flex align="center" gap="md" style={{ flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <DataSourceToggle />
+            <SimpleDataSourceToggle />
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <ThemeToggle />

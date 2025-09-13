@@ -1,5 +1,6 @@
 import { useDataSource, buildApiUrl } from '../contexts/DataSourceContext';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 
 // Base URL - flexible for different environments
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";

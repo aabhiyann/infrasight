@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 
 export type DataSource = 'mock' | 'real' | 'auto';
 
@@ -38,6 +39,12 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({ children
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
       console.error('Error fetching data source info:', err);
+      // Set fallback info if backend is not available
+      setDataSourceInfo({
+        current_source: 'mock',
+        use_real_data_env: 'false',
+        available_sources: ['mock', 'real']
+      });
     } finally {
       setLoading(false);
     }

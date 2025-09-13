@@ -1,24 +1,19 @@
 import React from 'react';
 import { Box, Flex } from './ui';
-import { useDataSource, DataSource } from '../contexts/DataSourceContext';
-import { useToast } from './ui/Toast';
+import { useDataSource } from '../contexts/DataSourceContext';
+import type { DataSource } from '../contexts/DataSourceContext';
 
 const DataSourceToggle: React.FC = () => {
   const { dataSource, setDataSource, isRealData, dataSourceInfo, loading, error } = useDataSource();
-  const { toast } = useToast();
 
   const handleToggle = (source: DataSource) => {
     setDataSource(source);
     
-    // Show feedback toast
+    // Simple console log for now
     const sourceLabel = source === 'mock' ? 'Mock Data' : 
                        source === 'real' ? 'Real AWS Data' : 'Auto (Backend Default)';
     
-    toast({
-      title: "Data Source Changed",
-      description: `Switched to ${sourceLabel}`,
-      variant: "default",
-    });
+    console.log(`Data Source Changed: ${sourceLabel}`);
   };
 
   const getStatusColor = () => {
@@ -153,29 +148,6 @@ const DataSourceToggle: React.FC = () => {
         </Box>
       )}
 
-      <style jsx>{`
-        .data-source-btn:hover:not(:disabled) {
-          background: var(--color-primary-subtle) !important;
-          border-color: var(--color-primary) !important;
-        }
-
-        .data-source-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .data-source-btn.active {
-          box-shadow: 0 0 0 2px var(--color-primary-subtle);
-        }
-
-        @media (max-width: 768px) {
-          .data-source-toggle {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-          }
-        }
-      `}</style>
     </Box>
   );
 };
