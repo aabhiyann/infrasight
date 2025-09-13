@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchCleanedCosts, type CostRecord } from "../api/costApi";
+import { useCostApi, type CostRecord } from "../api/costApi";
+import { useDataSource } from "../contexts/DataSourceContext";
 import CostChart from "../components/CostChart";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import ChartCard from "../components/ChartCard";
@@ -16,6 +17,8 @@ import { usePageTitle } from "../hooks/usePageTitle";
 
 function Overview() {
   usePageTitle("Overview");
+  const { fetchCleanedCosts } = useCostApi();
+  const { dataSource } = useDataSource();
   const [data, setData] = useState<CostRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,8 +47,8 @@ function Overview() {
     try {
       setError(null);
       setLoading(true);
-      const result = await fetchCleanedCosts();
-      setData(result);
+      const response = await fetchCleanedCosts();
+      setData(response.data);
     } catch (err) {
       setError("Failed to load cost data. Please try again.");
       notify("Failed to load cost data", "error");
@@ -57,7 +60,7 @@ function Overview() {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [dataSource]); // Reload when data source changes
 
   return (
     <div className="container stack-lg">

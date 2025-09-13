@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useApiWithDataSource } from "../hooks/useApiWithDataSource";
 
 export interface ForecastPoint {
   date: string;
@@ -53,4 +54,33 @@ export async function fetchAvailableServices(): Promise<string[]> {
     console.error("Failed to fetch available services:", error);
     return [];
   }
+}
+
+// New hook-based functions that respect data source selection
+export function useForecastApi() {
+  const { apiCall } = useApiWithDataSource();
+
+  const fetchForecastData = async (
+    n_days: number = 7,
+    service?: string
+  ): Promise<ForecastResponse> => {
+    const params = new URLSearchParams();
+    params.append("n_days", n_days.toString());
+    if (service) params.append("service", service);
+
+    const endpoint = `/forecast?${params}`;
+    return apiCall<ForecastResponse>(endpoint);
+  };
+
+  const fetchAvailableServices = async (): Promise<string[]> => {
+    const response = await apiCall<{ services: string[] }>(
+      "/forecast/services"
+    );
+    return response.services || [];
+  };
+
+  return {
+    fetchForecastData,
+    fetchAvailableServices,
+  };
 }
