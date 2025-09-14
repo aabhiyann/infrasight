@@ -49,16 +49,14 @@ const DataSourceToggle: React.FC = () => {
   };
 
   return (
-    <div
-      className="dropdown"
-      ref={dropdownRef}
-      style={{ position: "relative" }}
-    >
+    <div className="header-user" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="btn btn-ghost d-flex items-center gap-sm px-md py-sm"
+        className="header-user-trigger d-flex items-center gap-sm"
         title={`Current: ${getCurrentLabel()}. Click to change data source.`}
         aria-label={`Data source: ${getCurrentLabel()}. Click to change.`}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
         disabled={loading || !!error}
       >
         {getCurrentIcon()}
@@ -70,47 +68,11 @@ const DataSourceToggle: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div
-          className="dropdown-menu"
-          style={{
-            position: "absolute",
-            top: "100%",
-            right: 0,
-            marginTop: "4px",
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "6px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            zIndex: 1000,
-            minWidth: "140px",
-          }}
-        >
+        <div className="header-user-menu" role="menu">
           <button
             onClick={() => handleSelect("mock")}
-            className={`dropdown-item d-flex items-center gap-sm px-md py-sm ${
-              dataSource === "mock" ? "active" : ""
-            }`}
-            style={{
-              width: "100%",
-              textAlign: "left",
-              background:
-                dataSource === "mock"
-                  ? "var(--color-primary-light)"
-                  : "transparent",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.875rem",
-            }}
-            onMouseEnter={(e) => {
-              if (dataSource !== "mock") {
-                e.currentTarget.style.background = "var(--color-surface-hover)";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (dataSource !== "mock") {
-                e.currentTarget.style.background = "transparent";
-              }
-            }}
+            className="header-menu-item d-flex items-center gap-sm"
+            role="menuitem"
           >
             <Database size={16} />
             <span>Mock Data</span>
@@ -119,30 +81,8 @@ const DataSourceToggle: React.FC = () => {
 
           <button
             onClick={() => handleSelect("real")}
-            className={`dropdown-item d-flex items-center gap-sm px-md py-sm ${
-              dataSource === "real" ? "active" : ""
-            }`}
-            style={{
-              width: "100%",
-              textAlign: "left",
-              background:
-                dataSource === "real"
-                  ? "var(--color-primary-light)"
-                  : "transparent",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.875rem",
-            }}
-            onMouseEnter={(e) => {
-              if (dataSource !== "real") {
-                e.currentTarget.style.background = "var(--color-surface-hover)";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (dataSource !== "real") {
-                e.currentTarget.style.background = "transparent";
-              }
-            }}
+            className="header-menu-item d-flex items-center gap-sm"
+            role="menuitem"
           >
             <Cloud size={16} />
             <span>Real AWS</span>
