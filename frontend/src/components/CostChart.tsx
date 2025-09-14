@@ -10,7 +10,7 @@ import {
   Scatter,
 } from "recharts";
 import type { CostRecord } from "../api/costApi";
-import { fetchAnomalies, type Anomaly } from "../api/anomalyApi";
+import { useAnomalyApi, type Anomaly } from "../api/anomalyApi";
 import { useEffect, useState } from "react";
 import {
   defaultChartConfig,
@@ -21,11 +21,16 @@ import {
 interface CostChartProps extends BaseChartProps {
   data: CostRecord[];
   serviceFilter?: string;
+  dateRange?: {
+    start: Date;
+    end: Date;
+  };
 }
 
 const CostChart = ({
   data,
   serviceFilter,
+  dateRange,
   height = defaultChartConfig.height,
   showGrid = defaultChartConfig.showGrid,
   showLegend = defaultChartConfig.showLegend,
@@ -33,12 +38,22 @@ const CostChart = ({
   dateTickAngle = defaultChartConfig.dateTickAngle,
 }: CostChartProps) => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
+  const { fetchAnomalies } = useAnomalyApi();
 
   useEffect(() => {
-    fetchAnomalies()
-      .then(setAnomalies)
-      .catch(() => setAnomalies([]));
-  }, []);
+    if (dateRange) {
+      fetchAnomalies(2.0, {
+        start_date: dateRange.start.toISOString().split("T")[0],
+        end_date: dateRange.end.toISOString().split("T")[0],
+      })
+        .then(setAnomalies)
+        .catch(() => setAnomalies([]));
+    } else {
+      fetchAnomalies()
+        .then(setAnomalies)
+        .catch(() => setAnomalies([]));
+    }
+  }, [dateRange, fetchAnomalies]);
   // Optional service-level filtering for both line and markers
   const filteredSource = serviceFilter
     ? data.filter((entry) => entry.service === serviceFilter)
@@ -86,6 +101,16 @@ const CostChart = ({
           angle={dateTickAngle}
           textAnchor={dateTickAngle ? "end" : "middle"}
           height={dateTickAngle ? 60 : undefined}
+          tickFormatter={(value) => {
+            // Format date for better readability
+            const date = new Date(value);
+            return date.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "2-digit",
+            });
+          }}
+          interval="preserveStartEnd"
         />
         <YAxis />
         <Tooltip

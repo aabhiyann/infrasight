@@ -48,6 +48,16 @@ function ForecastChart({
             textAnchor={dateTickAngle ? "end" : "middle"}
             height={dateTickAngle ? 60 : undefined}
             tick={{ fill: chartStyles.textColor, fontSize: 12 }}
+            tickFormatter={(value) => {
+              // Format date for better readability
+              const date = new Date(value);
+              return date.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "2-digit",
+              });
+            }}
+            interval="preserveStartEnd"
           />
           <YAxis
             tick={{ fill: chartStyles.textColor, fontSize: 12 }}

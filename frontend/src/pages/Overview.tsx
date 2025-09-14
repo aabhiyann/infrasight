@@ -129,7 +129,11 @@ function Overview() {
       ) : (
         <>
           <ChartCard title="Cost Over Time">
-            <CostChart data={data} serviceFilter={selectedService} />
+            <CostChart
+              data={data}
+              serviceFilter={selectedService}
+              dateRange={dateRange}
+            />
           </ChartCard>
           <ChartCard title="Service Timelines">
             <MultiServiceTimeline data={data} />
