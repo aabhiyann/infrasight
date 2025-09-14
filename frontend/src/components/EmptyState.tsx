@@ -26,7 +26,7 @@ const EmptyState = ({
       case "plus":
         return <Plus size={32} />;
       default:
-        return <span style={{ fontSize: "2rem", opacity: 0.7 }}>🧭</span>;
+        return <span style={{ fontSize: "2rem", opacity: 0.7 }}>?</span>;
     }
   };
 

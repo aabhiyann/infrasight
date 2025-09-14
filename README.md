@@ -1,4 +1,4 @@
-# 🌩️ InfraSight
+# InfraSight
 
 InfraSight is a cloud cost intelligence dashboard that uses AWS billing data and machine learning to help developers and teams understand, visualize, and optimize their cloud spending.
 
@@ -10,7 +10,7 @@ InfraSight is a cloud cost intelligence dashboard that uses AWS billing data and
 - Offers savings recommendations
 - Presents all insights in a sleek, interactive frontend dashboard
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer        | Tech                          |
 | ------------ | ----------------------------- |

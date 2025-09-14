@@ -102,7 +102,7 @@ const Recommendations = () => {
           aria-label="Apply Filters"
           title="Apply Filters"
         >
-          ⚙️ <span className="hide-sm-text">Apply Filters</span>
+          <span className="hide-sm-text">Apply Filters</span>
         </button>
       </div>
 

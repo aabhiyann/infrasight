@@ -148,7 +148,7 @@ curl http://localhost:8000/api/cost?source=mock
 curl http://localhost:8000/api/cost?source=real
 ```
 
-## 🔄 Migration Steps
+## Migration Steps
 
 ### Step 1: Test with Mock Data (Current State)
 
@@ -208,7 +208,7 @@ All cost-related endpoints now include data source information:
 }
 ```
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -275,7 +275,7 @@ python -c "from utils.file_loader import get_data_source; print('Data source:', 
 
 ---
 
-## 🔧 Technical Details
+## Technical Details
 
 ### File Structure Changes
 
@@ -305,4 +305,4 @@ backend/
 - `get_data_source()` - Detects current data source
 - `test_aws_connection()` - Tests AWS connectivity
 
-This integration maintains backward compatibility while adding powerful real-world data capabilities to InfraSight! 🚀
+This integration maintains backward compatibility while adding powerful real-world data capabilities to InfraSight!

@@ -13,7 +13,7 @@ sns.set_palette("husl")  # Colorful but professional palette
 print("AWS Cost Data Visualization - Professor Mode")
 print("=" * 60)
 
-# 📊 Step 1: Load the cleaned flat AWS cost data
+# Step 1: Load the cleaned flat AWS cost data
 print("\nStep 1: Loading Cleaned Data")
 print("-" * 30)
 df = load_mock_cost_data_flat()
@@ -32,7 +32,7 @@ os.makedirs(output_dir, exist_ok=True)  # won't raise error if folder exists
 print(f"Output directory: {output_dir}/")
 
 
-# 📊 Step 2: Create Pivot Table (Cost per Service per Day)
+# Step 2: Create Pivot Table (Cost per Service per Day)
 print("\nStep 2: Creating Pivot Table")
 print("-" * 30)
 
@@ -55,7 +55,7 @@ pivot_df.to_csv(pivot_csv_path)
 print(f"Saved pivot table to: {pivot_csv_path}")
 
 
-# 📈 Step 3: Time Series Line Plot (Total Cost Over Time)
+# Step 3: Time Series Line Plot (Total Cost Over Time)
 print("\nStep 3: Creating Time Series Plot")
 print("-" * 30)
 
@@ -91,7 +91,7 @@ plt.close()
 print(f"Saved time series plot to: {line_plot_path}")
 
 
-# 🔥 Step 4: Heatmap (Service Usage Over Time)
+# Step 4: Heatmap (Service Usage Over Time)
 print("\nStep 4: Creating Heatmap")
 print("-" * 30)
 
@@ -122,7 +122,7 @@ plt.savefig(heatmap_path, dpi=300, bbox_inches='tight')
 plt.close()
 print(f"Saved heatmap to: {heatmap_path}")
 
-# 📊 Step 5: Service Comparison Bar Chart
+# Step 5: Service Comparison Bar Chart
 print("\nStep 5: Creating Service Comparison")
 print("-" * 30)
 
@@ -153,7 +153,7 @@ plt.savefig(bar_chart_path, dpi=300, bbox_inches='tight')
 plt.close()
 print(f"Saved service comparison to: {bar_chart_path}")
 
-# 📈 Step 6: Multi-Service Time Series
+# Step 6: Multi-Service Time Series
 print("\nStep 6: Creating Multi-Service Time Series")
 print("-" * 30)
 

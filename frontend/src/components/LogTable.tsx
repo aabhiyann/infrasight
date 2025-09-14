@@ -228,7 +228,7 @@ const LogTable = ({
             disabled={sortedLogs.length === 0}
             title="Export filtered data to CSV"
           >
-            📥 Export CSV
+Export CSV
           </button>
         </div>
       </div>
@@ -289,14 +289,14 @@ const LogTable = ({
                           className="action-btn edit-btn"
                           title="Edit log entry"
                         >
-                          ✏️
+Edit
                         </button>
                         <button
                           onClick={() => handleDeleteLog(log)}
                           className="action-btn delete-btn"
                           title="Delete log entry"
                         >
-                          🗑️
+Delete
                         </button>
                       </div>
                     </td>

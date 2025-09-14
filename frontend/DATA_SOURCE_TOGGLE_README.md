@@ -1,32 +1,32 @@
-# 🎛️ Data Source Toggle - Frontend Feature
+# Data Source Toggle - Frontend Feature
 
-## 📋 Overview
+## Overview
 
 The Data Source Toggle is a beautiful, user-friendly interface that allows users to switch between **mock data** and **real AWS billing data** directly from the frontend. No need to restart servers or change environment variables!
 
-## 🎯 Features
+## Features
 
-### ✨ **Visual Toggle Interface**
+### **Visual Toggle Interface**
 
-- **🎭 Mock Button**: Switch to fake data for testing
-- **☁️ Real Button**: Switch to real AWS billing data
-- **🔄 Auto Button**: Use backend's default setting
+- **Mock Button**: Switch to fake data for testing
+- **Real Button**: Switch to real AWS billing data
+- **Auto Button**: Use backend's default setting
 
-### 📊 **Real-time Status Display**
+### **Real-time Status Display**
 
 - Current data source indicator
 - AWS connection status
 - Backend configuration info
 - Loading states and error handling
 
-### 🔄 **Seamless Integration**
+### **Seamless Integration**
 
 - Works with all existing API endpoints
 - Automatic URL parameter injection
 - Toast notifications for user feedback
 - Responsive design for mobile devices
 
-## 🏗️ Architecture
+## Architecture
 
 ### **Components Created**
 
@@ -50,33 +50,33 @@ frontend/src/
 3. **API Hook**: Automatically adds `?source=real` or `?source=mock` to API calls
 4. **Backend Integration**: Works with your hybrid backend system
 
-## 🎨 User Interface
+## User Interface
 
 ### **Header Integration**
 
 The toggle appears in the header next to the theme toggle:
 
 ```
-[🍔] Dashboard > Overview    [🎭 Mock] [☁️ Real] [🔄 Auto]  [🌙] [👤]
+[Menu] Dashboard > Overview    [Mock] [Real] [Auto]  [Theme] [User]
 ```
 
 ### **Status Indicators**
 
-- **☁️ Real AWS Data**: Green indicator when using real data
-- **🎭 Mock Data**: Yellow indicator when using mock data
-- **⏳ Loading**: Shows loading state during API calls
-- **❌ Error**: Shows error state if connection fails
+- **Real AWS Data**: Green indicator when using real data
+- **Mock Data**: Yellow indicator when using mock data
+- **Loading**: Shows loading state during API calls
+- **Error**: Shows error state if connection fails
 
 ### **Toast Notifications**
 
 When users switch data sources, they see helpful feedback:
 
 ```
-✅ Data Source Changed
+Data Source Changed
 Switched to Real AWS Data
 ```
 
-## 🔧 Technical Details
+## Technical Details
 
 ### **Data Source Types**
 
@@ -108,7 +108,7 @@ setDataSource("real");
 console.log(isRealData); // true/false
 ```
 
-## 🚀 Usage Examples
+## Usage Examples
 
 ### **Basic Toggle Usage**
 
@@ -146,23 +146,23 @@ function CostComponent() {
 }
 ```
 
-## 🎯 Benefits
+## Benefits
 
 ### **For Users**
 
-- ✅ **No Restart Required**: Switch data sources instantly
-- ✅ **Visual Feedback**: Clear indicators of current state
-- ✅ **Error Handling**: Graceful fallbacks if AWS is unavailable
-- ✅ **Mobile Friendly**: Responsive design works on all devices
+- **No Restart Required**: Switch data sources instantly
+- **Visual Feedback**: Clear indicators of current state
+- **Error Handling**: Graceful fallbacks if AWS is unavailable
+- **Mobile Friendly**: Responsive design works on all devices
 
 ### **For Developers**
 
-- ✅ **Type Safety**: Full TypeScript support
-- ✅ **Centralized State**: Single source of truth for data source
-- ✅ **Backward Compatible**: Existing code continues to work
-- ✅ **Easy Testing**: Switch between mock and real data easily
+- **Type Safety**: Full TypeScript support
+- **Centralized State**: Single source of truth for data source
+- **Backward Compatible**: Existing code continues to work
+- **Easy Testing**: Switch between mock and real data easily
 
-## 🔄 Integration with Backend
+## Integration with Backend
 
 The frontend toggle works seamlessly with your backend's hybrid system:
 
@@ -190,7 +190,7 @@ setDataSource("real");
 // → Backend ignores USE_REAL_DATA and uses real data
 ```
 
-## 🧪 Testing
+## Testing
 
 ### **Manual Testing**
 
@@ -217,7 +217,7 @@ test("switches to real data when clicked", () => {
 });
 ```
 
-## 🎨 Styling
+## Styling
 
 The toggle uses your existing design system:
 
@@ -226,24 +226,24 @@ The toggle uses your existing design system:
 - **Spacing**: Uses design system spacing tokens
 - **Animations**: Smooth transitions and hover effects
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 ### **Potential Features**
 
-- **📊 Data Source Analytics**: Show statistics about each data source
-- **💾 Persistence**: Remember user's preferred data source
-- **🔔 Notifications**: Alert when AWS connection is lost
-- **📈 Comparison Mode**: Side-by-side mock vs real data
-- **🎯 Smart Defaults**: Auto-detect best data source based on context
+- **Data Source Analytics**: Show statistics about each data source
+- **Persistence**: Remember user's preferred data source
+- **Notifications**: Alert when AWS connection is lost
+- **Comparison Mode**: Side-by-side mock vs real data
+- **Smart Defaults**: Auto-detect best data source based on context
 
-## 🎉 Summary
+## Summary
 
 The Data Source Toggle transforms your app from a development tool into a **production-ready** application that can:
 
-- ✅ **Switch data sources instantly** without restarts
-- ✅ **Provide clear visual feedback** about current state
-- ✅ **Handle errors gracefully** when AWS is unavailable
-- ✅ **Work seamlessly** with your existing backend
-- ✅ **Scale to production** with real AWS billing data
+- **Switch data sources instantly** without restarts
+- **Provide clear visual feedback** about current state
+- **Handle errors gracefully** when AWS is unavailable
+- **Work seamlessly** with your existing backend
+- **Scale to production** with real AWS billing data
 
-**Your users can now toggle between mock and real data with a simple click! 🎛️✨**
+**Your users can now toggle between mock and real data with a simple click!**

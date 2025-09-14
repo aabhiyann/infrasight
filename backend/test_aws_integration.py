@@ -14,14 +14,14 @@ sys.path.insert(0, str(backend_dir))
 
 def test_environment_setup():
     """Test if environment variables are properly set."""
-    print("🔧 Testing environment setup...")
+    print("Testing environment setup...")
     
     # Check for .env file
     env_file = backend_dir / ".env"
     if env_file.exists():
-        print("✅ .env file found")
+        print(".env file found")
     else:
-        print("⚠️  .env file not found - will use system environment variables")
+        print("WARNING: .env file not found - will use system environment variables")
     
     # Check for AWS credentials
     aws_keys = [
@@ -36,64 +36,64 @@ def test_environment_setup():
             missing_keys.append(key)
     
     if missing_keys:
-        print(f"❌ Missing AWS credentials: {', '.join(missing_keys)}")
+        print(f"ERROR: Missing AWS credentials: {', '.join(missing_keys)}")
         print("   Please set these environment variables or create a .env file")
         return False
     else:
-        print("✅ AWS credentials found")
+        print("AWS credentials found")
         return True
 
 def test_imports():
     """Test if required packages are installed."""
-    print("\n📦 Testing package imports...")
+    print("\nTesting package imports...")
     
     try:
         import boto3
-        print("✅ boto3 installed")
+        print("boto3 installed")
     except ImportError:
-        print("❌ boto3 not installed - run: pip install boto3")
+        print("ERROR: boto3 not installed - run: pip install boto3")
         return False
     
     try:
         from dotenv import load_dotenv
-        print("✅ python-dotenv installed")
+        print("python-dotenv installed")
     except ImportError:
-        print("❌ python-dotenv not installed - run: pip install python-dotenv")
+        print("ERROR: python-dotenv not installed - run: pip install python-dotenv")
         return False
     
     try:
         import pandas
-        print("✅ pandas installed")
+        print("pandas installed")
     except ImportError:
-        print("❌ pandas not installed - run: pip install pandas")
+        print("ERROR: pandas not installed - run: pip install pandas")
         return False
     
     return True
 
 def test_aws_connection():
     """Test AWS Cost Explorer connection."""
-    print("\n🌐 Testing AWS Cost Explorer connection...")
+    print("\nTesting AWS Cost Explorer connection...")
     
     try:
         from aws.cost_fetcher import test_aws_connection
         result = test_aws_connection()
         
         if result["status"] == "success":
-            print("✅ AWS Cost Explorer connection successful")
+            print("AWS Cost Explorer connection successful")
             print(f"   Region: {result.get('region', 'Unknown')}")
             print(f"   Available services: {result.get('available_services', 'Unknown')}")
             return True
         else:
-            print(f"❌ AWS connection failed: {result['message']}")
+            print(f"ERROR: AWS connection failed: {result['message']}")
             return False
             
     except Exception as e:
-        print(f"❌ Error testing AWS connection: {str(e)}")
+        print(f"ERROR: Error testing AWS connection: {str(e)}")
         return False
 
 def test_data_fetching():
     """Test fetching real AWS cost data."""
-    print("\n📊 Testing AWS data fetching...")
+    print("\nTesting AWS data fetching...")
     
     try:
         from aws.cost_fetcher import fetch_aws_cost_data_flat
@@ -101,7 +101,7 @@ def test_data_fetching():
         # Fetch last 7 days of data
         df = fetch_aws_cost_data_flat()
         
-        print(f"✅ Successfully fetched {len(df)} cost records")
+        print(f"Successfully fetched {len(df)} cost records")
         print(f"   Date range: {df['date'].min()} to {df['date'].max()}")
         print(f"   Services: {df['service'].nunique()} unique services")
         print(f"   Total cost: ${df['amount'].sum():.2f}")
@@ -113,12 +113,12 @@ def test_data_fetching():
         return True
         
     except Exception as e:
-        print(f"❌ Error fetching AWS data: {str(e)}")
+        print(f"ERROR: Error fetching AWS data: {str(e)}")
         return False
 
 def test_hybrid_mode():
     """Test the hybrid data loading system."""
-    print("\n🔄 Testing hybrid data loading...")
+    print("\nTesting hybrid data loading...")
     
     try:
         from utils.file_loader import get_data_source, load_cost_data, get_data_source_info
@@ -138,12 +138,12 @@ def test_hybrid_mode():
         return True
         
     except Exception as e:
-        print(f"❌ Error testing hybrid mode: {str(e)}")
+        print(f"ERROR: Error testing hybrid mode: {str(e)}")
         return False
 
 def main():
     """Run all tests."""
-    print("🧪 InfraSight AWS Integration Test")
+    print("InfraSight AWS Integration Test")
     print("=" * 50)
     
     tests = [
@@ -160,30 +160,30 @@ def main():
             result = test_func()
             results.append((test_name, result))
         except Exception as e:
-            print(f"❌ {test_name} failed with exception: {str(e)}")
+            print(f"ERROR: {test_name} failed with exception: {str(e)}")
             results.append((test_name, False))
     
     # Summary
     print("\n" + "=" * 50)
-    print("📋 Test Summary:")
+    print("Test Summary:")
     
     passed = 0
     for test_name, result in results:
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = "PASS" if result else "FAIL"
         print(f"   {test_name}: {status}")
         if result:
             passed += 1
     
-    print(f"\n🎯 {passed}/{len(results)} tests passed")
+    print(f"\n{passed}/{len(results)} tests passed")
     
     if passed == len(results):
-        print("🎉 All tests passed! AWS integration is ready.")
-        print("\n💡 Next steps:")
+        print("All tests passed! AWS integration is ready.")
+        print("\nNext steps:")
         print("   1. Set USE_REAL_DATA=true in your .env file to use real AWS data")
         print("   2. Start the FastAPI server: uvicorn main:app --reload")
         print("   3. Test the API endpoints with real data")
     else:
-        print("⚠️  Some tests failed. Please fix the issues above before proceeding.")
+        print("WARNING: Some tests failed. Please fix the issues above before proceeding.")
     
     return passed == len(results)
 

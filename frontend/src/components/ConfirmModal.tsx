@@ -28,15 +28,15 @@ const ConfirmModal = ({
 
   const typeStyles = {
     danger: {
-      icon: "⚠️",
+      icon: "!",
       confirmClass: "btn-danger",
     },
     warning: {
-      icon: "⚠️",
+      icon: "!",
       confirmClass: "btn-warning",
     },
     info: {
-      icon: "ℹ️",
+      icon: "i",
       confirmClass: "btn-info",
     },
   };

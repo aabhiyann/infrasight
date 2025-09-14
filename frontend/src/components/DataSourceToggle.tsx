@@ -36,7 +36,7 @@ const DataSourceToggle: React.FC = () => {
 
   const getCurrentIcon = () => {
     if (loading) return <RefreshCw size={16} className="animate-spin" />;
-    if (error) return "⚠️";
+    if (error) return "!";
     if (dataSource === "real") return <Cloud size={16} />;
     return <Database size={16} />;
   };

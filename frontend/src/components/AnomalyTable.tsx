@@ -107,7 +107,7 @@ const AnomalyTable = ({ anomalies }: AnomalyTableProps) => {
             disabled={anomalies.length === 0}
             title="Export anomalies to CSV"
           >
-            📥 Export CSV
+            Export CSV
           </button>
         </div>
       </div>

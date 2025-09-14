@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CostRecord } from "../api/costApi";
-import { fetchAnomalies } from "../api/anomalyApi";
+import { useAnomalyApi } from "../api/anomalyApi";
 import { fetchForecastData } from "../api/forecastApi";
 
 interface OverviewSummaryProps {
@@ -12,6 +12,7 @@ const formatCurrency = (value: number): string => {
 };
 
 const OverviewSummary = ({ costData }: OverviewSummaryProps) => {
+  const { fetchAnomalies } = useAnomalyApi();
   const [anomalyCount, setAnomalyCount] = useState<number>(0);
   const [predictedTomorrow, setPredictedTomorrow] = useState<number | null>(
     null
@@ -20,7 +21,19 @@ const OverviewSummary = ({ costData }: OverviewSummaryProps) => {
   useEffect(() => {
     async function loadAux() {
       try {
-        const anomalies = await fetchAnomalies();
+        // Calculate the same 30-day date range for anomalies as we use for costs
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 30);
+
+        // Format dates for API call
+        const startDateStr = startDate.toISOString().split("T")[0];
+        const endDateStr = endDate.toISOString().split("T")[0];
+
+        const anomalies = await fetchAnomalies(2.0, {
+          start_date: startDateStr,
+          end_date: endDateStr,
+        });
         setAnomalyCount(anomalies.length);
       } catch {
         setAnomalyCount(0);
@@ -35,28 +48,30 @@ const OverviewSummary = ({ costData }: OverviewSummaryProps) => {
       }
     }
     loadAux();
-  }, []);
+  }, [costData]); // Re-run when cost data changes (e.g., data source toggle)
 
   const { monthTotal, topService } = useMemo(() => {
     if (!costData || costData.length === 0) {
       return { monthTotal: 0, topService: "—" };
     }
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
 
-    const monthCosts = costData.filter((r) => {
+    // Calculate last 30 days date range
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 30);
+
+    const last30DaysCosts = costData.filter((r) => {
       const d = new Date(r.date);
-      return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+      return d >= startDate && d <= endDate;
     });
 
-    const monthTotalCalc = monthCosts.reduce(
+    const monthTotalCalc = last30DaysCosts.reduce(
       (sum, r) => sum + (r.amount || 0),
       0
     );
 
     const perService = new Map<string, number>();
-    for (const r of monthCosts) {
+    for (const r of last30DaysCosts) {
       const prev = perService.get(r.service) || 0;
       perService.set(r.service, prev + (r.amount || 0));
     }
@@ -76,15 +91,15 @@ const OverviewSummary = ({ costData }: OverviewSummaryProps) => {
   return (
     <div className="summary-grid">
       <div className="card">
-        <div className="card-title">Total Cost This Month</div>
+        <div className="card-title">Total Cost Last 30 Days</div>
         <div className="card-value">{formatCurrency(monthTotal)}</div>
       </div>
       <div className="card">
-        <div className="card-title">Top Service</div>
+        <div className="card-title">Top Service (Last 30 Days)</div>
         <div className="card-value">{topService}</div>
       </div>
       <div className="card">
-        <div className="card-title">Anomalies Detected</div>
+        <div className="card-title">Anomalies Detected (Last 30 Days)</div>
         <div className="card-value">{anomalyCount}</div>
       </div>
       <div className="card">

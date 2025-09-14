@@ -109,11 +109,11 @@ def test_model_accuracy():
         
         print()
     
-    print("🎯 Overall Assessment:")
+    print("Overall Assessment:")
     print("   If most services show < 20% error, linear regression is good enough!")
     print("   If many services show > 30% error, consider upgrading to ARIMA or Prophet.")
     print()
-    print("💡 Remember: For 7-day forecasts, even 20% error might be acceptable")
+    print("Remember: For 7-day forecasts, even 20% error might be acceptable")
     print("   since it's better than no prediction at all!")
 
 if __name__ == "__main__":

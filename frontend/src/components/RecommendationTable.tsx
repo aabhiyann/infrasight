@@ -109,7 +109,7 @@ const RecommendationTable = ({ recommendations }: RecommendationTableProps) => {
             disabled={recommendations.length === 0}
             title="Export recommendations to CSV"
           >
-            📥 Export CSV
+            Export CSV
           </button>
         </div>
       </div>
