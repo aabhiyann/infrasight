@@ -4,6 +4,7 @@ import { useCostApi, type CostRecord } from "../api/costApi";
 import { useDataSource } from "../contexts/DataSourceContext";
 import CostChart from "../components/CostChart";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
+import DateRangePicker, { type DateRange } from "../components/DateRangePicker";
 import ChartCard from "../components/ChartCard";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
@@ -23,6 +24,10 @@ function Overview() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string>("");
+  const [dateRange, setDateRange] = useState<DateRange>({
+    start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
+    end: new Date(),
+  });
   const location = useLocation();
   const navigate = useNavigate();
   const { notify } = useToast();
@@ -47,7 +52,10 @@ function Overview() {
     try {
       setError(null);
       setLoading(true);
-      const response = await fetchCleanedCosts();
+      const response = await fetchCleanedCosts({
+        start_date: dateRange.start.toISOString().split("T")[0],
+        end_date: dateRange.end.toISOString().split("T")[0],
+      });
       setData(response.data);
     } catch (err) {
       setError("Failed to load cost data. Please try again.");
@@ -60,7 +68,7 @@ function Overview() {
 
   useEffect(() => {
     loadData();
-  }, [dataSource]); // Reload when data source changes
+  }, [dataSource, dateRange]); // Reload when data source or date range changes
 
   return (
     <div className="container stack-lg">
@@ -72,11 +80,17 @@ function Overview() {
       </div>
       <OverviewSummary costData={data} />
       <div className="toolbar">
-        <label htmlFor="service">Service:</label>
-        <ServiceFilterDropdown
-          selected={selectedService}
-          onChange={setSelectedService}
-        />
+        <div className="d-flex items-center gap-md">
+          <label htmlFor="service">Service:</label>
+          <ServiceFilterDropdown
+            selected={selectedService}
+            onChange={setSelectedService}
+          />
+        </div>
+        <div className="d-flex items-center gap-md">
+          <label htmlFor="date-range">Date Range:</label>
+          <DateRangePicker value={dateRange} onChange={setDateRange} />
+        </div>
         <button
           onClick={loadData}
           disabled={loading}

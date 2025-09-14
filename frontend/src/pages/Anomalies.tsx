@@ -5,6 +5,7 @@ import { useDataSource } from "../contexts/DataSourceContext";
 import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
 import AnomalyTable from "../components/AnomalyTable";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
+import DateRangePicker, { type DateRange } from "../components/DateRangePicker";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
 import { usePageTitle } from "../hooks/usePageTitle";
@@ -19,6 +20,10 @@ const Anomalies = () => {
   const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
   const [zThreshold, setZThreshold] = useState<number>(2.0);
+  const [dateRange, setDateRange] = useState<DateRange>({
+    start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
+    end: new Date(),
+  });
   const location = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -29,17 +34,22 @@ const Anomalies = () => {
     async function loadData() {
       setLoading(true);
       setError(null);
-      const result = await fetchAnomalies(zThreshold);
+      const result = await fetchAnomalies(zThreshold, {
+        start_date: dateRange.start.toISOString().split("T")[0],
+        end_date: dateRange.end.toISOString().split("T")[0],
+      });
       setAnomalies(result);
       setLastRefresh(new Date());
       setLoading(false);
       if (result.length === 0) {
-        setError("No anomalies returned. Try lowering the Z-threshold.");
+        setError(
+          "No anomalies returned. Try lowering the Z-threshold or expanding the date range."
+        );
       }
       notify("Anomalies refreshed", "success", 1800);
     }
     loadData();
-  }, [zThreshold, dataSource]); // Reload when data source changes
+  }, [zThreshold, dataSource, dateRange]); // Reload when data source or date range changes
 
   useEffect(() => {
     if (!selectedService) {
@@ -77,11 +87,17 @@ const Anomalies = () => {
         </p>
       </div>
       <div className="toolbar">
-        <label htmlFor="service">Service:</label>
-        <ServiceFilterDropdown
-          selected={selectedService}
-          onChange={setSelectedService}
-        />
+        <div className="d-flex items-center gap-md">
+          <label htmlFor="service">Service:</label>
+          <ServiceFilterDropdown
+            selected={selectedService}
+            onChange={setSelectedService}
+          />
+        </div>
+        <div className="d-flex items-center gap-md">
+          <label htmlFor="date-range">Date Range:</label>
+          <DateRangePicker value={dateRange} onChange={setDateRange} />
+        </div>
         <div className="d-flex items-center gap-sm ml-auto">
           <label htmlFor="z-threshold" className="text-sm">
             Z-Threshold:

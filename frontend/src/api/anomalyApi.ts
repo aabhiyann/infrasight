@@ -36,9 +36,24 @@ export function useAnomalyApi() {
   const { apiCall } = useApiWithDataSource();
 
   const fetchAnomalies = async (
-    z_threshold: number = 2.0
+    z_threshold: number = 2.0,
+    params?: {
+      start_date?: string;
+      end_date?: string;
+      service?: string;
+    }
   ): Promise<Anomaly[]> => {
-    const endpoint = `/anomalies?z_threshold=${z_threshold}`;
+    const queryParams = new URLSearchParams();
+    queryParams.append("z_threshold", z_threshold.toString());
+
+    if (params) {
+      if (params.start_date)
+        queryParams.append("start_date", params.start_date);
+      if (params.end_date) queryParams.append("end_date", params.end_date);
+      if (params.service) queryParams.append("service", params.service);
+    }
+
+    const endpoint = `/anomalies?${queryParams.toString()}`;
     const response = await apiCall<{
       flattened_anomalies: Anomaly[];
       summary: {
