@@ -4,9 +4,7 @@
 
 This guide shows how to refactor your React components from using inline styles to a proper design system approach, improving reusability, maintainability, and consistency.
 
-
-
-### What We Have 
+### What We Have
 
 - **Comprehensive design system** with CSS custom properties
 - **Reusable UI components** with consistent APIs

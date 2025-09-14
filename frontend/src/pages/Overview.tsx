@@ -21,6 +21,7 @@ function Overview() {
   const { fetchCleanedCosts } = useCostApi();
   const { dataSource } = useDataSource();
   const [data, setData] = useState<CostRecord[]>([]);
+  const [fullData, setFullData] = useState<CostRecord[]>([]); // Store full dataset for date range calculation
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string>("");
@@ -28,6 +29,19 @@ function Overview() {
     start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
     end: new Date(),
   });
+
+  // Calculate available data range for adaptive DateRangePicker using FULL dataset
+  const availableDataRange =
+    fullData.length > 0
+      ? {
+          start: new Date(
+            Math.min(...fullData.map((d) => new Date(d.date).getTime()))
+          ),
+          end: new Date(
+            Math.max(...fullData.map((d) => new Date(d.date).getTime()))
+          ),
+        }
+      : undefined;
   const location = useLocation();
   const navigate = useNavigate();
   const { notify } = useToast();
@@ -52,11 +66,18 @@ function Overview() {
     try {
       setError(null);
       setLoading(true);
-      const response = await fetchCleanedCosts({
-        start_date: dateRange.start.toISOString().split("T")[0],
-        end_date: dateRange.end.toISOString().split("T")[0],
+      
+      // First, fetch ALL data to calculate available date range
+      const fullResponse = await fetchCleanedCosts({});
+      setFullData(fullResponse.data);
+      
+      // Then filter the full data by the selected date range
+      const filteredData = fullResponse.data.filter((record) => {
+        const recordDate = new Date(record.date);
+        return recordDate >= dateRange.start && recordDate <= dateRange.end;
       });
-      setData(response.data);
+      
+      setData(filteredData);
     } catch (err) {
       setError("Failed to load cost data. Please try again.");
       notify("Failed to load cost data", "error");
@@ -89,7 +110,11 @@ function Overview() {
         </div>
         <div className="d-flex items-center gap-md">
           <label htmlFor="date-range">Date Range:</label>
-          <DateRangePicker value={dateRange} onChange={setDateRange} />
+          <DateRangePicker
+            value={dateRange}
+            onChange={setDateRange}
+            availableDataRange={availableDataRange}
+          />
         </div>
         <button
           onClick={loadData}

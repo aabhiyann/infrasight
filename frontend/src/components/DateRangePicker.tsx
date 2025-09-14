@@ -14,6 +14,10 @@ interface DateRangePickerProps {
     range: DateRange;
   }[];
   className?: string;
+  availableDataRange?: {
+    start: Date;
+    end: Date;
+  };
 }
 
 const DateRangePicker: React.FC<DateRangePickerProps> = ({
@@ -21,53 +25,124 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   onChange,
   presets = [],
   className = "",
+  availableDataRange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [tempRange, setTempRange] = useState<DateRange>(
-    value || {
+  const [tempRange, setTempRange] = useState<DateRange>(() => {
+    if (value) return value;
+
+    if (availableDataRange) {
+      // Use the most recent 30 days of available data, or all data if less than 30 days
+      const dataStart = availableDataRange.start;
+      const dataEnd = availableDataRange.end;
+      const totalDays = Math.ceil(
+        (dataEnd.getTime() - dataStart.getTime()) / (1000 * 60 * 60 * 24)
+      );
+      const daysToShow = Math.min(30, totalDays);
+
+      return {
+        start: new Date(
+          dataEnd.getTime() - (daysToShow - 1) * 24 * 60 * 60 * 1000
+        ),
+        end: dataEnd,
+      };
+    }
+
+    // Fallback to current date
+    return {
       start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
       end: new Date(),
-    }
-  );
+    };
+  });
 
-  // Default presets
-  const defaultPresets = [
-    {
-      label: "Last 7 days",
+  // Default presets - adaptive to available data
+  const defaultPresets = React.useMemo(() => {
+    if (!availableDataRange) {
+      // Fallback to current date if no data range provided
+      return [
+        {
+          label: "Last 7 days",
+          range: {
+            start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            end: new Date(),
+          },
+        },
+        {
+          label: "Last 30 days",
+          range: {
+            start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+            end: new Date(),
+          },
+        },
+        {
+          label: "Last 90 days",
+          range: {
+            start: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
+            end: new Date(),
+          },
+        },
+      ];
+    }
+
+    const dataStart = availableDataRange.start;
+    const dataEnd = availableDataRange.end;
+    const totalDays = Math.ceil(
+      (dataEnd.getTime() - dataStart.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    const presets = [];
+
+    // Recent 7 days (or all data if less than 7 days)
+    const days7 = Math.min(7, totalDays);
+    presets.push({
+      label: `Recent ${days7} days`,
       range: {
-        start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-        end: new Date(),
+        start: new Date(dataEnd.getTime() - (days7 - 1) * 24 * 60 * 60 * 1000),
+        end: dataEnd,
       },
-    },
-    {
-      label: "Last 30 days",
-      range: {
-        start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-        end: new Date(),
-      },
-    },
-    {
-      label: "Last 90 days",
-      range: {
-        start: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
-        end: new Date(),
-      },
-    },
-    {
-      label: "This month",
-      range: {
-        start: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-        end: new Date(),
-      },
-    },
-    {
-      label: "Last month",
-      range: {
-        start: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
-        end: new Date(new Date().getFullYear(), new Date().getMonth(), 0),
-      },
-    },
-  ];
+    });
+
+    // Recent 30 days (or all data if less than 30 days)
+    if (totalDays > 7) {
+      const days30 = Math.min(30, totalDays);
+      presets.push({
+        label: `Recent ${days30} days`,
+        range: {
+          start: new Date(
+            dataEnd.getTime() - (days30 - 1) * 24 * 60 * 60 * 1000
+          ),
+          end: dataEnd,
+        },
+      });
+    }
+
+    // Recent 90 days (if we have more than 30 days)
+    if (totalDays > 30) {
+      const days90 = Math.min(90, totalDays);
+      presets.push({
+        label: `Recent ${days90} days`,
+        range: {
+          start: new Date(
+            dataEnd.getTime() - (days90 - 1) * 24 * 60 * 60 * 1000
+          ),
+          end: dataEnd,
+        },
+      });
+    }
+
+    // All available data (always show as last option if we have more than 30 days)
+    if (totalDays > 30) {
+      presets.push({
+        label: "All Available Data",
+        range: {
+          start: dataStart,
+          end: dataEnd,
+        },
+      });
+    }
+
+    return presets;
+  }, [availableDataRange]);
 
   const allPresets = [...presets, ...defaultPresets];
 

@@ -16,6 +16,7 @@ const Anomalies = () => {
   const { fetchAnomalies } = useAnomalyApi();
   const { dataSource } = useDataSource();
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
+  const [fullAnomalies, setFullAnomalies] = useState<Anomaly[]>([]); // Store full dataset for date range calculation
   const [filtered, setFiltered] = useState<Anomaly[]>([]);
   const [selectedService, setSelectedService] = useState("");
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,19 @@ const Anomalies = () => {
     start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
     end: new Date(),
   });
+
+  // Calculate available data range for adaptive DateRangePicker using FULL dataset
+  const availableDataRange =
+    fullAnomalies.length > 0
+      ? {
+          start: new Date(
+            Math.min(...fullAnomalies.map((a) => new Date(a.date).getTime()))
+          ),
+          end: new Date(
+            Math.max(...fullAnomalies.map((a) => new Date(a.date).getTime()))
+          ),
+        }
+      : undefined;
   const location = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -34,14 +48,21 @@ const Anomalies = () => {
     async function loadData() {
       setLoading(true);
       setError(null);
-      const result = await fetchAnomalies(zThreshold, {
-        start_date: dateRange.start.toISOString().split("T")[0],
-        end_date: dateRange.end.toISOString().split("T")[0],
+      
+      // First, fetch ALL anomalies to calculate available date range
+      const fullResult = await fetchAnomalies(zThreshold, {});
+      setFullAnomalies(fullResult);
+      
+      // Then filter the full anomalies by the selected date range
+      const filteredResult = fullResult.filter((anomaly) => {
+        const anomalyDate = new Date(anomaly.date);
+        return anomalyDate >= dateRange.start && anomalyDate <= dateRange.end;
       });
-      setAnomalies(result);
+      
+      setAnomalies(filteredResult);
       setLastRefresh(new Date());
       setLoading(false);
-      if (result.length === 0) {
+      if (filteredResult.length === 0) {
         setError(
           "No anomalies returned. Try lowering the Z-threshold or expanding the date range."
         );
@@ -96,7 +117,11 @@ const Anomalies = () => {
         </div>
         <div className="d-flex items-center gap-md">
           <label htmlFor="date-range">Date Range:</label>
-          <DateRangePicker value={dateRange} onChange={setDateRange} />
+          <DateRangePicker
+            value={dateRange}
+            onChange={setDateRange}
+            availableDataRange={availableDataRange}
+          />
         </div>
         <div className="d-flex items-center gap-sm ml-auto">
           <label htmlFor="z-threshold" className="text-sm">

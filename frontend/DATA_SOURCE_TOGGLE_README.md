@@ -211,7 +211,7 @@ import DataSourceToggle from "./DataSourceToggle";
 
 test("switches to real data when clicked", () => {
   render(<DataSourceToggle />);
-  const realButton = screen.getByText("☁️ Real");
+  const realButton = screen.getByText("Real");
   fireEvent.click(realButton);
   // Assert state change
 });
