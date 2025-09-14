@@ -69,7 +69,10 @@ const CostChart = ({
   );
 
   const chartData = Object.entries(dailyTotals)
-    .map(([date, total]) => ({ date, total }))
+    .map(([date, total]) => ({
+      date,
+      total,
+    }))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const filteredAnomalies = anomalies.filter((a) =>
@@ -126,6 +129,7 @@ const CostChart = ({
           stroke="var(--color-secondary)"
           strokeWidth={2}
           dot
+          connectNulls={false}
         />
         {/* High severity anomalies - red, large */}
         <Scatter
