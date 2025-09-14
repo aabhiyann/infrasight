@@ -1,69 +1,156 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDataSource } from "../contexts/DataSourceContext";
 import type { DataSource } from "../contexts/DataSourceContext";
-import { Database, Cloud, RefreshCw } from "lucide-react";
-import { Box, Flex } from "./ui";
+import { Database, Cloud, RefreshCw, ChevronDown } from "lucide-react";
 
 const DataSourceToggle: React.FC = () => {
   const { dataSource, setDataSource, loading, error } = useDataSource();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleToggle = (source: DataSource) => {
+  const handleSelect = (source: DataSource) => {
     setDataSource(source);
+    setIsOpen(false);
 
     // Simple console log for now
     const sourceLabel = source === "mock" ? "Mock Data" : "Real AWS Data";
-
     console.log(`Data Source Changed: ${sourceLabel}`);
   };
 
-  if (loading) {
-    return (
-      <Box className="btn btn-ghost d-flex items-center gap-sm px-md py-sm">
-        <RefreshCw size={16} className="animate-spin" />
-        <span className="text-small">Loading...</span>
-      </Box>
-    );
-  }
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
 
-  if (error) {
-    return (
-      <Box className="btn btn-ghost d-flex items-center gap-sm px-md py-sm">
-        <span>⚠️</span>
-        <span className="text-small">Error</span>
-      </Box>
-    );
-  }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const getCurrentIcon = () => {
+    if (loading) return <RefreshCw size={16} className="animate-spin" />;
+    if (error) return "⚠️";
+    if (dataSource === "real") return <Cloud size={16} />;
+    return <Database size={16} />;
+  };
+
+  const getCurrentLabel = () => {
+    if (loading) return "Loading...";
+    if (error) return "Error";
+    if (dataSource === "real") return "Real AWS";
+    return "Mock Data";
+  };
 
   return (
-    <Flex align="center" gap="xs" className="data-source-toggle">
+    <div
+      className="dropdown"
+      ref={dropdownRef}
+      style={{ position: "relative" }}
+    >
       <button
-        onClick={() => handleToggle("mock")}
-        className={`btn btn-sm ${
-          dataSource === "mock" ? "btn-primary" : "btn-ghost"
-        } d-flex items-center gap-xs px-sm py-xs`}
-        title="Use mock data for testing"
-        aria-label={`Mock data ${dataSource === "mock" ? "(selected)" : ""}`}
-        disabled={loading}
+        onClick={() => setIsOpen(!isOpen)}
+        className="btn btn-ghost d-flex items-center gap-sm px-md py-sm"
+        title={`Current: ${getCurrentLabel()}. Click to change data source.`}
+        aria-label={`Data source: ${getCurrentLabel()}. Click to change.`}
+        disabled={loading || !!error}
       >
-        <Database size={14} />
-        <span className="text-small">Mock</span>
+        {getCurrentIcon()}
+        <span className="text-small">{getCurrentLabel()}</span>
+        <ChevronDown
+          size={14}
+          className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
       </button>
 
-      <button
-        onClick={() => handleToggle("real")}
-        className={`btn btn-sm ${
-          dataSource === "real" ? "btn-primary" : "btn-ghost"
-        } d-flex items-center gap-xs px-sm py-xs`}
-        title="Use real AWS data"
-        aria-label={`Real AWS data ${
-          dataSource === "real" ? "(selected)" : ""
-        }`}
-        disabled={loading}
-      >
-        <Cloud size={14} />
-        <span className="text-small">Real</span>
-      </button>
-    </Flex>
+      {isOpen && (
+        <div
+          className="dropdown-menu"
+          style={{
+            position: "absolute",
+            top: "100%",
+            right: 0,
+            marginTop: "4px",
+            background: "var(--color-surface)",
+            border: "1px solid var(--color-border)",
+            borderRadius: "6px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            zIndex: 1000,
+            minWidth: "140px",
+          }}
+        >
+          <button
+            onClick={() => handleSelect("mock")}
+            className={`dropdown-item d-flex items-center gap-sm px-md py-sm ${
+              dataSource === "mock" ? "active" : ""
+            }`}
+            style={{
+              width: "100%",
+              textAlign: "left",
+              background:
+                dataSource === "mock"
+                  ? "var(--color-primary-light)"
+                  : "transparent",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "0.875rem",
+            }}
+            onMouseEnter={(e) => {
+              if (dataSource !== "mock") {
+                e.currentTarget.style.background = "var(--color-surface-hover)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (dataSource !== "mock") {
+                e.currentTarget.style.background = "transparent";
+              }
+            }}
+          >
+            <Database size={16} />
+            <span>Mock Data</span>
+            {dataSource === "mock" && <span className="text-primary">✓</span>}
+          </button>
+
+          <button
+            onClick={() => handleSelect("real")}
+            className={`dropdown-item d-flex items-center gap-sm px-md py-sm ${
+              dataSource === "real" ? "active" : ""
+            }`}
+            style={{
+              width: "100%",
+              textAlign: "left",
+              background:
+                dataSource === "real"
+                  ? "var(--color-primary-light)"
+                  : "transparent",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "0.875rem",
+            }}
+            onMouseEnter={(e) => {
+              if (dataSource !== "real") {
+                e.currentTarget.style.background = "var(--color-surface-hover)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (dataSource !== "real") {
+                e.currentTarget.style.background = "transparent";
+              }
+            }}
+          >
+            <Cloud size={16} />
+            <span>Real AWS</span>
+            {dataSource === "real" && <span className="text-primary">✓</span>}
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
