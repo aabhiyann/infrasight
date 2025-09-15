@@ -7,6 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeScale,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
 
@@ -17,7 +18,8 @@ ChartJS.register(
   PointElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale
 );
 
 interface AnomalyPoint {
@@ -46,6 +48,30 @@ function getSeverityLabel(z: number): string {
 
 const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const [viewMode, setViewMode] = useState<"cost" | "service">("cost");
+
+  // Debug logging
+  console.log("AnomalyScatterPlotChartJS - anomalies:", anomalies);
+  console.log(
+    "AnomalyScatterPlotChartJS - anomalies length:",
+    anomalies.length
+  );
+
+  // Handle empty data
+  if (!anomalies || anomalies.length === 0) {
+    return (
+      <div className="mt-2">
+        <div className="chart-header">
+          <h3>Detected Anomalies</h3>
+        </div>
+        <div
+          style={{ height: 400, width: "100%" }}
+          className="d-flex items-center justify-center"
+        >
+          <p>No anomaly data available</p>
+        </div>
+      </div>
+    );
+  }
 
   const formattedData = anomalies.map((a) => ({
     ...a,
@@ -192,7 +218,6 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       x: {
         type: "time" as const,
         time: {
-          parser: "YYYY-MM-DD",
           displayFormats: {
             day: "MMM DD",
             month: "MMM YYYY",

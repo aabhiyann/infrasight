@@ -14,7 +14,7 @@ import { useToast } from "../components/ui/Toast";
 const Anomalies = () => {
   usePageTitle("Anomalies");
   const { fetchAnomalies } = useAnomalyApi();
-  const { dataSource } = useDataSource();
+  const { dataSource, loading: dataSourceLoading } = useDataSource();
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [fullAnomalies, setFullAnomalies] = useState<Anomaly[]>([]); // Store full dataset for date range calculation
   const [filtered, setFiltered] = useState<Anomaly[]>([]);
@@ -46,31 +46,49 @@ const Anomalies = () => {
 
   useEffect(() => {
     async function loadData() {
+      // Don't load data if data source is still loading
+      if (dataSourceLoading) {
+        console.log(
+          "Anomalies page - data source still loading, skipping data fetch"
+        );
+        return;
+      }
+
       setLoading(true);
       setError(null);
 
-      // First, fetch ALL anomalies to calculate available date range
-      const fullResult = await fetchAnomalies(zThreshold, {});
-      setFullAnomalies(fullResult);
+      console.log("Anomalies page - loading data with zThreshold:", zThreshold);
+      console.log("Anomalies page - dataSource:", dataSource);
 
-      // Then filter the full anomalies by the selected date range
-      const filteredResult = fullResult.filter((anomaly) => {
-        const anomalyDate = new Date(anomaly.date);
-        return anomalyDate >= dateRange.start && anomalyDate <= dateRange.end;
-      });
+      try {
+        // First, fetch ALL anomalies to calculate available date range
+        const fullResult = await fetchAnomalies(zThreshold, {});
+        console.log("Anomalies page - fullResult:", fullResult);
+        setFullAnomalies(fullResult);
 
-      setAnomalies(filteredResult);
-      setLastRefresh(new Date());
-      setLoading(false);
-      if (filteredResult.length === 0) {
-        setError(
-          "No anomalies returned. Try lowering the Z-threshold or expanding the date range."
-        );
+        // Then filter the full anomalies by the selected date range
+        const filteredResult = fullResult.filter((anomaly) => {
+          const anomalyDate = new Date(anomaly.date);
+          return anomalyDate >= dateRange.start && anomalyDate <= dateRange.end;
+        });
+
+        setAnomalies(filteredResult);
+        setLastRefresh(new Date());
+        setLoading(false);
+        if (filteredResult.length === 0) {
+          setError(
+            "No anomalies returned. Try lowering the Z-threshold or expanding the date range."
+          );
+        }
+        notify("Anomalies refreshed", "success", 1800);
+      } catch (error) {
+        console.error("Error loading anomalies:", error);
+        setError("Failed to load anomalies. Please try again.");
+        setLoading(false);
       }
-      notify("Anomalies refreshed", "success", 1800);
     }
     loadData();
-  }, [zThreshold, dataSource, dateRange]); // Reload when data source or date range changes
+  }, [zThreshold, dataSource, dateRange, dataSourceLoading]); // Reload when data source or date range changes
 
   useEffect(() => {
     if (!selectedService) {
