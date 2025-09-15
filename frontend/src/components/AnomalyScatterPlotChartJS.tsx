@@ -156,6 +156,10 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 1200,
+      easing: "easeInOutQuart" as const,
+    },
     plugins: {
       legend: {
         display: true,
@@ -163,9 +167,12 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
-          padding: 20,
+          padding: 24,
           font: {
-            size: 12,
+            size: 13,
+            weight: "normal" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
           color: "var(--color-text)",
         },
@@ -179,14 +186,20 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         bodyColor: "var(--color-text)",
         borderColor: "var(--color-border)",
         borderWidth: 1,
-        cornerRadius: 8,
+        cornerRadius: 12,
         displayColors: true,
-        padding: 12,
+        padding: 16,
         titleFont: {
-          size: 13,
+          size: 14,
+          weight: "bold" as const,
+          family:
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
         },
         bodyFont: {
-          size: 12,
+          size: 13,
+          weight: "normal" as const,
+          family:
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
         },
         callbacks: {
           label: function (context: any) {
@@ -213,19 +226,28 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           text: "Date",
           color: "var(--color-text)",
           font: {
-            size: 12,
+            size: 13,
+            weight: "bold" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
+          padding: 16,
         },
         grid: {
           color: "var(--color-border)",
           drawBorder: false,
+          lineWidth: 1,
         },
         ticks: {
           color: "var(--color-muted)",
           font: {
-            size: 11,
+            size: 12,
+            weight: "normal" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
-          maxTicksLimit: 10,
+          maxTicksLimit: 8,
+          padding: 8,
         },
       },
       y: {
@@ -234,19 +256,28 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           text: viewMode === "cost" ? "Cost ($)" : "Service",
           color: "var(--color-text)",
           font: {
-            size: 12,
+            size: 13,
+            weight: "bold" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
+          padding: 16,
         },
         grid: {
           color: "var(--color-border)",
           drawBorder: false,
+          lineWidth: 1,
         },
         ticks: {
           color: "var(--color-muted)",
           font: {
-            size: 11,
+            size: 12,
+            weight: "normal" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
           beginAtZero: viewMode === "cost",
+          padding: 8,
           callback: function (value: any) {
             if (viewMode === "cost") {
               return `$${value.toFixed(0)}`;
@@ -258,6 +289,12 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
     },
     interaction: {
       intersect: false,
+    },
+    elements: {
+      point: {
+        hoverBorderWidth: 3,
+        hoverRadius: 12,
+      },
     },
   };
 
@@ -280,7 +317,18 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           </button>
         </div>
       </div>
-      <div style={{ height: 400, width: "100%" }}>
+      <div
+        style={{
+          height: 400,
+          width: "100%",
+          background: "var(--color-surface)",
+          borderRadius: "12px",
+          padding: "1rem",
+          boxShadow:
+            "0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1)",
+          border: "1px solid var(--color-border)",
+        }}
+      >
         <Scatter data={chartData} options={options} />
       </div>
       <div className="chart-footer">

@@ -79,10 +79,13 @@ const TopServicesBarChartChartJS = ({
         label: "Total Cost",
         data: topServices.map((item) => item.total),
         backgroundColor: "var(--brand-500)",
-        borderColor: "var(--brand-500)",
-        borderWidth: 1,
-        borderRadius: 4,
+        borderColor: "var(--brand-600)",
+        borderWidth: 2,
+        borderRadius: 6,
         borderSkipped: false,
+        hoverBackgroundColor: "var(--brand-600)",
+        hoverBorderColor: "var(--brand-700)",
+        hoverBorderWidth: 3,
       },
     ],
   };
@@ -91,6 +94,10 @@ const TopServicesBarChartChartJS = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 1000,
+      easing: "easeInOutQuart" as const,
+    },
     plugins: {
       legend: {
         display: showLegend,
@@ -98,9 +105,12 @@ const TopServicesBarChartChartJS = ({
         labels: {
           usePointStyle: true,
           pointStyle: "rect",
-          padding: 20,
+          padding: 24,
           font: {
-            size: 12,
+            size: 13,
+            weight: "normal" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
           color: "var(--color-text)",
         },
@@ -114,14 +124,20 @@ const TopServicesBarChartChartJS = ({
         bodyColor: "var(--color-text)",
         borderColor: "var(--color-border)",
         borderWidth: 1,
-        cornerRadius: 8,
+        cornerRadius: 12,
         displayColors: true,
-        padding: 12,
+        padding: 16,
         titleFont: {
-          size: 13,
+          size: 14,
+          weight: "600" as const,
+          family:
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
         },
         bodyFont: {
-          size: 12,
+          size: 13,
+          weight: "400" as const,
+          family:
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
         },
         callbacks: {
           label: function (context: any) {
@@ -141,20 +157,29 @@ const TopServicesBarChartChartJS = ({
           text: "Service",
           color: "var(--color-text)",
           font: {
-            size: 12,
+            size: 13,
+            weight: "bold" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
+          padding: 16,
         },
         grid: {
           color: "var(--color-border)",
           drawBorder: false,
+          lineWidth: 1,
         },
         ticks: {
           color: "var(--color-muted)",
           font: {
-            size: 11,
+            size: 12,
+            weight: "normal" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
           maxRotation: 30,
           minRotation: 0,
+          padding: 8,
         },
       },
       y: {
@@ -164,19 +189,28 @@ const TopServicesBarChartChartJS = ({
           text: "Cost ($)",
           color: "var(--color-text)",
           font: {
-            size: 12,
+            size: 13,
+            weight: "bold" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
+          padding: 16,
         },
         grid: {
           color: "var(--color-border)",
           drawBorder: false,
+          lineWidth: 1,
         },
         ticks: {
           color: "var(--color-muted)",
           font: {
-            size: 11,
+            size: 12,
+            weight: "normal" as const,
+            family:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
           },
           beginAtZero: true,
+          padding: 8,
           callback: function (value: any) {
             return currencyFormat ? formatCurrency(value) : value;
           },
@@ -186,12 +220,29 @@ const TopServicesBarChartChartJS = ({
     interaction: {
       intersect: false,
     },
+    elements: {
+      bar: {
+        hoverBorderWidth: 3,
+        hoverBorderRadius: 8,
+      },
+    },
   };
 
   return (
     <div>
       {!hideTitle && <h3>Top 5 Services This Month (by Total Cost)</h3>}
-      <div style={{ height: height, width: "100%" }}>
+      <div
+        style={{
+          height: height,
+          width: "100%",
+          background: "var(--color-surface)",
+          borderRadius: "12px",
+          padding: "1rem",
+          boxShadow:
+            "0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1)",
+          border: "1px solid var(--color-border)",
+        }}
+      >
         <Bar data={chartData} options={options} />
       </div>
     </div>
