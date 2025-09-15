@@ -123,48 +123,48 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       {
         label: "High Severity (Z ≥ 3.0)",
         data: highSeverityData,
-        backgroundColor: chartStyles.danger,
+        backgroundColor: "#ef4444",
         borderColor: "#ffffff",
         borderWidth: 2,
         pointRadius: 8,
         pointHoverRadius: 12,
-        pointHoverBackgroundColor: chartStyles.danger,
+        pointHoverBackgroundColor: "#ef4444",
         pointHoverBorderColor: "#ffffff",
         pointHoverBorderWidth: 3,
       },
       {
         label: "Medium-High Severity (2.5 ≤ Z < 3.0)",
         data: mediumHighData,
-        backgroundColor: chartStyles.warning,
+        backgroundColor: "#f59e0b",
         borderColor: "#ffffff",
         borderWidth: 2,
         pointRadius: 6,
         pointHoverRadius: 10,
-        pointHoverBackgroundColor: chartStyles.warning,
+        pointHoverBackgroundColor: "#f59e0b",
         pointHoverBorderColor: "#ffffff",
         pointHoverBorderWidth: 3,
       },
       {
         label: "Medium Severity (2.0 ≤ Z < 2.5)",
         data: mediumData,
-        backgroundColor: chartStyles.colorVariants.accent.main,
+        backgroundColor: "#d97706",
         borderColor: "#ffffff",
         borderWidth: 2,
         pointRadius: 5,
         pointHoverRadius: 8,
-        pointHoverBackgroundColor: chartStyles.colorVariants.accent.main,
+        pointHoverBackgroundColor: "#d97706",
         pointHoverBorderColor: "#ffffff",
         pointHoverBorderWidth: 3,
       },
       {
         label: "Low Severity (Z < 2.0)",
         data: lowData,
-        backgroundColor: chartStyles.primary,
+        backgroundColor: "#0070b8",
         borderColor: "#ffffff",
         borderWidth: 2,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointHoverBackgroundColor: chartStyles.primary,
+        pointHoverBackgroundColor: "#0070b8",
         pointHoverBorderColor: "#ffffff",
         pointHoverBorderWidth: 3,
       },
@@ -319,28 +319,28 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "var(--color-danger)" }}
+              style={{ backgroundColor: "#ef4444" }}
             ></div>
             <span>High (Z ≥ 3.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "var(--color-warning)" }}
+              style={{ backgroundColor: "#f59e0b" }}
             ></div>
             <span>Medium-High (Z ≥ 2.5)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "var(--amber-600)" }}
+              style={{ backgroundColor: "#d97706" }}
             ></div>
             <span>Medium (Z ≥ 2.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "var(--brand-400)" }}
+              style={{ backgroundColor: "#0070b8" }}
             ></div>
             <span>Low (Z &lt; 2.0)</span>
           </div>

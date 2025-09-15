@@ -130,8 +130,8 @@ const CostChartChartJSSimple = ({
             anomalies: dayAnomalies,
           };
         }),
-        borderColor: "var(--chart-1)",
-        backgroundColor: "var(--accent-10)",
+        borderColor: "#0070b8",
+        backgroundColor: "rgba(52, 163, 241, 0.1)",
         borderWidth: 3,
         fill: true,
         tension: 0.2,
@@ -151,17 +151,17 @@ const CostChartChartJSSimple = ({
         },
         pointBackgroundColor: (context: any) => {
           const dataPoint = context.parsed;
-          if (dataPoint.hasHighSeverity) return "var(--color-danger)";
-          if (dataPoint.hasMediumSeverity) return "var(--chart-3)";
-          if (dataPoint.hasLowSeverity) return "var(--chart-1)";
-          return "var(--chart-1)";
+          if (dataPoint.hasHighSeverity) return "#ef4444";
+          if (dataPoint.hasMediumSeverity) return "#d97706";
+          if (dataPoint.hasLowSeverity) return "#0070b8";
+          return "#0070b8";
         },
         pointBorderColor: (context: any) => {
           const dataPoint = context.parsed;
-          if (dataPoint.hasHighSeverity) return "var(--color-danger)";
-          if (dataPoint.hasMediumSeverity) return "var(--chart-3)";
-          if (dataPoint.hasLowSeverity) return "var(--chart-1)";
-          return "var(--chart-1)";
+          if (dataPoint.hasHighSeverity) return "#ef4444";
+          if (dataPoint.hasMediumSeverity) return "#d97706";
+          if (dataPoint.hasLowSeverity) return "#0070b8";
+          return "#0070b8";
         },
       },
     ],

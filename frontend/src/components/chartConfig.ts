@@ -25,47 +25,48 @@ export const defaultChartConfig: Required<Omit<BaseChartProps, "hideTitle">> & {
   margin: { top: 20, right: 30, left: 60, bottom: 60 }, // More space for labels
 };
 
+
 // Unified chart styling system - used by ALL chart libraries
 export const chartStyles = {
-  // Enhanced color palette - sophisticated and modern
+  // Enhanced color palette - sophisticated and modern (resolved to actual values)
   colors: [
-    "var(--brand-500)", // Primary blue
-    "var(--teal-600)", // Sophisticated teal
-    "var(--amber-600)", // Warm amber
-    "var(--rose-500)", // Elegant rose
-    "var(--slate-800)", // Professional slate
+    "#0070b8", // Primary blue
+    "#38837b", // Sophisticated teal
+    "#e19e20", // Warm amber
+    "#e778a6", // Elegant rose
+    "#3c4856", // Professional slate
   ],
 
-  // Enhanced semantic colors with depth
-  primary: "var(--brand-500)",
-  secondary: "var(--brand-600)",
-  accent: "var(--brand-400)",
-  success: "var(--color-success)",
-  warning: "var(--color-warning)",
-  danger: "var(--color-danger)",
+  // Enhanced semantic colors with depth (resolved to actual values)
+  primary: "#0070b8",
+  secondary: "#0052b6",
+  accent: "#34a3f1",
+  success: "#10b981",
+  warning: "#f59e0b",
+  danger: "#ef4444",
 
   // Gradient definitions for modern look
   gradients: {
     primary:
-      "linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%)",
-    secondary: "linear-gradient(135deg, var(--teal-600) 0%, #2d7a6b 100%)",
-    accent: "linear-gradient(135deg, var(--amber-600) 0%, #d97706 100%)",
-    danger: "linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%)",
-    success: "linear-gradient(135deg, var(--color-success) 0%, #059669 100%)",
+      "linear-gradient(135deg, #0070b8 0%, #0052b6 100%)",
+    secondary: "linear-gradient(135deg, #38837b 0%, #2d7a6b 100%)",
+    accent: "linear-gradient(135deg, #e19e20 0%, #d97706 100%)",
+    danger: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+    success: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
   },
 
   // Enhanced color variants with transparency
   colorVariants: {
     primary: {
-      light: "var(--brand-400)",
-      main: "var(--brand-500)",
-      dark: "var(--brand-600)",
+      light: "#34a3f1",
+      main: "#0070b8",
+      dark: "#0052b6",
       alpha10: "rgba(0, 112, 184, 0.1)",
       alpha20: "rgba(0, 112, 184, 0.2)",
       alpha30: "rgba(0, 112, 184, 0.3)",
     },
     secondary: {
-      light: "var(--teal-600)",
+      light: "#38837b",
       main: "#2d7a6b",
       dark: "#1f5f54",
       alpha10: "rgba(56, 131, 123, 0.1)",
@@ -73,7 +74,7 @@ export const chartStyles = {
       alpha30: "rgba(56, 131, 123, 0.3)",
     },
     accent: {
-      light: "var(--amber-600)",
+      light: "#e19e20",
       main: "#d97706",
       dark: "#b45309",
       alpha10: "rgba(225, 158, 32, 0.1)",
@@ -83,23 +84,23 @@ export const chartStyles = {
   },
 
   // Enhanced grid and borders with modern styling
-  gridColor: "var(--color-border)",
+  gridColor: "#e5e7eb",
   gridOpacity: 0.3,
   gridStyle: {
-    color: "var(--color-border)",
+    color: "#e5e7eb",
     lineWidth: 1,
     borderDash: [2, 4],
   },
 
   // Enhanced text colors with hierarchy
-  textColor: "var(--color-text)",
-  mutedTextColor: "var(--color-muted)",
-  axisTextColor: "var(--slate-600)",
-  titleColor: "var(--color-text)",
+  textColor: "#3c4856",
+  mutedTextColor: "#a0acbd",
+  axisTextColor: "#6b7280",
+  titleColor: "#3c4856",
 
   // Enhanced background colors with depth
-  backgroundColor: "var(--color-surface)",
-  tooltipBackground: "var(--color-surface)",
+  backgroundColor: "#ffffff",
+  tooltipBackground: "#ffffff",
   chartBackground: "transparent",
 
   // Enhanced typography matching project design system
@@ -132,7 +133,7 @@ export const chartStyles = {
   legendItemStyle: {
     fontSize: 12,
     fontWeight: 500,
-    color: "var(--color-text)",
+    color: "#3c4856",
     fontFamily:
       "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
     padding: 16,
@@ -142,12 +143,12 @@ export const chartStyles = {
 
   // Enhanced container styling with sophisticated shadows and borders
   containerStyle: {
-    background: "var(--color-surface)",
+    background: "#ffffff",
     borderRadius: "16px",
     padding: "1.5rem",
     boxShadow:
       "0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06)",
-    border: "1px solid var(--color-border)",
+    border: "1px solid #e5e7eb",
     backdropFilter: "blur(10px)",
     position: "relative" as const,
     overflow: "hidden" as const,
@@ -171,17 +172,17 @@ export const chartStyles = {
 
   // Enhanced focus states for accessibility
   focus: {
-    outline: "2px solid var(--brand-400)",
+    outline: "2px solid #34a3f1",
     outlineOffset: "2px",
     borderRadius: "4px",
   },
 
   // Enhanced tooltip styling with modern design
   tooltipStyle: {
-    backgroundColor: "var(--color-surface)",
-    titleColor: "var(--color-text)",
-    bodyColor: "var(--color-text)",
-    borderColor: "var(--color-border)",
+    backgroundColor: "#ffffff",
+    titleColor: "#3c4856",
+    bodyColor: "#3c4856",
+    borderColor: "#e5e7eb",
     borderWidth: 1,
     cornerRadius: 16,
     displayColors: true,
@@ -242,3 +243,61 @@ export const getChartContainerStyle = (height?: number) => ({
   width: "100%",
   ...chartStyles.containerStyle,
 });
+
+// Utility function to get a color with transparency
+export const getColorWithAlpha = (color: string, alpha: number): string => {
+  // If color is already rgba, extract the rgb values
+  if (color.startsWith('rgba')) {
+    const rgbMatch = color.match(/rgba?\(([^)]+)\)/);
+    if (rgbMatch) {
+      const values = rgbMatch[1].split(',').map(v => v.trim());
+      return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
+    }
+  }
+  
+  // If color is hex, convert to rgba
+  if (color.startsWith('#')) {
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  
+  // Fallback
+  return color;
+};
+
+// Centralized color palette - update these values to change the entire color scheme
+export const CHART_COLOR_PALETTE = {
+  // Primary brand colors
+  primary: '#0070b8',
+  primaryLight: '#34a3f1',
+  primaryDark: '#0052b6',
+  
+  // Secondary colors
+  secondary: '#38837b',
+  secondaryLight: '#4a9b91',
+  secondaryDark: '#2d7a6b',
+  
+  // Accent colors
+  accent: '#e19e20',
+  accentLight: '#f4c430',
+  accentDark: '#d97706',
+  
+  // Semantic colors
+  success: '#10b981',
+  warning: '#f59e0b',
+  danger: '#ef4444',
+  info: '#3b82f6',
+  
+  // Neutral colors
+  text: '#3c4856',
+  textMuted: '#a0acbd',
+  border: '#e5e7eb',
+  background: '#ffffff',
+  
+  // Additional chart colors
+  rose: '#e778a6',
+  slate: '#3c4856',
+} as const;
