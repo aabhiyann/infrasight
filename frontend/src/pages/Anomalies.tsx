@@ -57,13 +57,9 @@ const Anomalies = () => {
       setLoading(true);
       setError(null);
 
-      console.log("Anomalies page - loading data with zThreshold:", zThreshold);
-      console.log("Anomalies page - dataSource:", dataSource);
-
       try {
         // First, fetch ALL anomalies to calculate available date range
         const fullResult = await fetchAnomalies(zThreshold, {});
-        console.log("Anomalies page - fullResult:", fullResult);
         setFullAnomalies(fullResult);
 
         // Then filter the full anomalies by the selected date range

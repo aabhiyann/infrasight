@@ -7,7 +7,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  TimeScale,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
 
@@ -18,8 +17,7 @@ ChartJS.register(
   PointElement,
   Title,
   Tooltip,
-  Legend,
-  TimeScale
+  Legend
 );
 
 interface AnomalyPoint {
@@ -49,13 +47,6 @@ function getSeverityLabel(z: number): string {
 const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const [viewMode, setViewMode] = useState<"cost" | "service">("cost");
 
-  // Debug logging
-  console.log("AnomalyScatterPlotChartJS - anomalies:", anomalies);
-  console.log(
-    "AnomalyScatterPlotChartJS - anomalies length:",
-    anomalies.length
-  );
-
   // Handle empty data
   if (!anomalies || anomalies.length === 0) {
     return (
@@ -84,7 +75,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const highSeverityData = formattedData
     .filter((item) => item.z_score >= 3)
     .map((item) => ({
-      x: viewMode === "cost" ? item.date : item.date,
+      x: viewMode === "cost" ? item.dateLabel : item.dateLabel,
       y: viewMode === "cost" ? item.amount : item.serviceLabel,
       z_score: item.z_score,
       service: item.service,
@@ -95,7 +86,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const mediumHighData = formattedData
     .filter((item) => item.z_score >= 2.5 && item.z_score < 3)
     .map((item) => ({
-      x: viewMode === "cost" ? item.date : item.date,
+      x: viewMode === "cost" ? item.dateLabel : item.dateLabel,
       y: viewMode === "cost" ? item.amount : item.serviceLabel,
       z_score: item.z_score,
       service: item.service,
@@ -106,7 +97,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const mediumData = formattedData
     .filter((item) => item.z_score >= 2 && item.z_score < 2.5)
     .map((item) => ({
-      x: viewMode === "cost" ? item.date : item.date,
+      x: viewMode === "cost" ? item.dateLabel : item.dateLabel,
       y: viewMode === "cost" ? item.amount : item.serviceLabel,
       z_score: item.z_score,
       service: item.service,
@@ -117,7 +108,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const lowData = formattedData
     .filter((item) => item.z_score < 2)
     .map((item) => ({
-      x: viewMode === "cost" ? item.date : item.date,
+      x: viewMode === "cost" ? item.dateLabel : item.dateLabel,
       y: viewMode === "cost" ? item.amount : item.serviceLabel,
       z_score: item.z_score,
       service: item.service,
@@ -216,13 +207,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
     },
     scales: {
       x: {
-        type: "time" as const,
-        time: {
-          displayFormats: {
-            day: "MMM DD",
-            month: "MMM YYYY",
-          },
-        },
+        type: "category" as const,
         title: {
           display: true,
           text: "Date",

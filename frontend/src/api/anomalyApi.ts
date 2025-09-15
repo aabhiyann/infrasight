@@ -33,7 +33,7 @@ export async function fetchAnomalies(
 
 // New hook-based function that respects data source selection
 export function useAnomalyApi() {
-  const { apiCall, dataSource } = useApiWithDataSource();
+  const { apiCall } = useApiWithDataSource();
 
   const fetchAnomalies = async (
     z_threshold: number = 2.0,
@@ -54,8 +54,6 @@ export function useAnomalyApi() {
     }
 
     const endpoint = `/anomalies?${queryParams.toString()}`;
-    console.log("AnomalyApi - fetching from endpoint:", endpoint);
-    console.log("AnomalyApi - dataSource:", dataSource);
 
     const response = await apiCall<{
       flattened_anomalies: Anomaly[];
@@ -68,7 +66,6 @@ export function useAnomalyApi() {
       status: string;
     }>(endpoint);
 
-    console.log("AnomalyApi - response:", response);
     return response.flattened_anomalies;
   };
 
