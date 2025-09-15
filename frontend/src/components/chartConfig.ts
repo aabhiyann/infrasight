@@ -25,7 +25,6 @@ export const defaultChartConfig: Required<Omit<BaseChartProps, "hideTitle">> & {
   margin: { top: 20, right: 30, left: 60, bottom: 60 }, // More space for labels
 };
 
-
 // Unified chart styling system - used by ALL chart libraries
 export const chartStyles = {
   // Enhanced color palette - sophisticated and modern (resolved to actual values)
@@ -47,8 +46,7 @@ export const chartStyles = {
 
   // Gradient definitions for modern look
   gradients: {
-    primary:
-      "linear-gradient(135deg, #0070b8 0%, #0052b6 100%)",
+    primary: "linear-gradient(135deg, #0070b8 0%, #0052b6 100%)",
     secondary: "linear-gradient(135deg, #38837b 0%, #2d7a6b 100%)",
     accent: "linear-gradient(135deg, #e19e20 0%, #d97706 100%)",
     danger: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
@@ -247,23 +245,23 @@ export const getChartContainerStyle = (height?: number) => ({
 // Utility function to get a color with transparency
 export const getColorWithAlpha = (color: string, alpha: number): string => {
   // If color is already rgba, extract the rgb values
-  if (color.startsWith('rgba')) {
+  if (color.startsWith("rgba")) {
     const rgbMatch = color.match(/rgba?\(([^)]+)\)/);
     if (rgbMatch) {
-      const values = rgbMatch[1].split(',').map(v => v.trim());
+      const values = rgbMatch[1].split(",").map((v) => v.trim());
       return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
     }
   }
-  
+
   // If color is hex, convert to rgba
-  if (color.startsWith('#')) {
-    const hex = color.replace('#', '');
+  if (color.startsWith("#")) {
+    const hex = color.replace("#", "");
     const r = parseInt(hex.substr(0, 2), 16);
     const g = parseInt(hex.substr(2, 2), 16);
     const b = parseInt(hex.substr(4, 2), 16);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
-  
+
   // Fallback
   return color;
 };
@@ -271,33 +269,33 @@ export const getColorWithAlpha = (color: string, alpha: number): string => {
 // Centralized color palette - update these values to change the entire color scheme
 export const CHART_COLOR_PALETTE = {
   // Primary brand colors
-  primary: '#0070b8',
-  primaryLight: '#34a3f1',
-  primaryDark: '#0052b6',
-  
+  primary: "#0070b8",
+  primaryLight: "#34a3f1",
+  primaryDark: "#0052b6",
+
   // Secondary colors
-  secondary: '#38837b',
-  secondaryLight: '#4a9b91',
-  secondaryDark: '#2d7a6b',
-  
+  secondary: "#38837b",
+  secondaryLight: "#4a9b91",
+  secondaryDark: "#2d7a6b",
+
   // Accent colors
-  accent: '#e19e20',
-  accentLight: '#f4c430',
-  accentDark: '#d97706',
-  
+  accent: "#e19e20",
+  accentLight: "#f4c430",
+  accentDark: "#d97706",
+
   // Semantic colors
-  success: '#10b981',
-  warning: '#f59e0b',
-  danger: '#ef4444',
-  info: '#3b82f6',
-  
+  success: "#10b981",
+  warning: "#f59e0b",
+  danger: "#ef4444",
+  info: "#3b82f6",
+
   // Neutral colors
-  text: '#3c4856',
-  textMuted: '#a0acbd',
-  border: '#e5e7eb',
-  background: '#ffffff',
-  
+  text: "#3c4856",
+  textMuted: "#a0acbd",
+  border: "#e5e7eb",
+  background: "#ffffff",
+
   // Additional chart colors
-  rose: '#e778a6',
-  slate: '#3c4856',
+  rose: "#e778a6",
+  slate: "#3c4856",
 } as const;
