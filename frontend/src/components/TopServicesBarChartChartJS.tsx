@@ -78,8 +78,8 @@ const TopServicesBarChartChartJS = ({
       {
         label: "Total Cost",
         data: topServices.map((item) => item.total),
-        backgroundColor: "var(--color-accent)",
-        borderColor: "var(--color-accent)",
+        backgroundColor: "var(--brand-500)",
+        borderColor: "var(--brand-500)",
         borderWidth: 1,
         borderRadius: 4,
         borderSkipped: false,
@@ -87,7 +87,7 @@ const TopServicesBarChartChartJS = ({
     ],
   };
 
-  // Chart.js options
+  // Chart.js options - styled to match your design system
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -95,15 +95,40 @@ const TopServicesBarChartChartJS = ({
       legend: {
         display: showLegend,
         position: "top" as const,
+        labels: {
+          usePointStyle: true,
+          pointStyle: "rect",
+          padding: 20,
+          font: {
+            size: 12,
+          },
+          color: "var(--color-text)",
+        },
       },
       title: {
         display: false, // We'll handle titles in the parent component
       },
       tooltip: {
+        backgroundColor: "var(--color-surface)",
+        titleColor: "var(--color-text)",
+        bodyColor: "var(--color-text)",
+        borderColor: "var(--color-border)",
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: true,
+        padding: 12,
+        titleFont: {
+          size: 13,
+        },
+        bodyFont: {
+          size: 12,
+        },
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.y;
-            return `Total Cost: ${currencyFormat ? formatCurrency(value) : value}`;
+            return `Total Cost: ${
+              currencyFormat ? formatCurrency(value) : value
+            }`;
           },
         },
       },
@@ -114,8 +139,20 @@ const TopServicesBarChartChartJS = ({
         title: {
           display: true,
           text: "Service",
+          color: "var(--color-text)",
+          font: {
+            size: 12,
+          },
+        },
+        grid: {
+          color: "var(--color-border)",
+          drawBorder: false,
         },
         ticks: {
+          color: "var(--color-muted)",
+          font: {
+            size: 11,
+          },
           maxRotation: 30,
           minRotation: 0,
         },
@@ -125,9 +162,21 @@ const TopServicesBarChartChartJS = ({
         title: {
           display: true,
           text: "Cost ($)",
+          color: "var(--color-text)",
+          font: {
+            size: 12,
+          },
         },
-        beginAtZero: true,
+        grid: {
+          color: "var(--color-border)",
+          drawBorder: false,
+        },
         ticks: {
+          color: "var(--color-muted)",
+          font: {
+            size: 11,
+          },
+          beginAtZero: true,
           callback: function (value: any) {
             return currencyFormat ? formatCurrency(value) : value;
           },

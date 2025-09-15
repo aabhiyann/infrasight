@@ -104,32 +104,32 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       {
         label: "High Severity (Z ≥ 3.0)",
         data: highSeverityData,
-        backgroundColor: "#dc2626",
-        borderColor: "#dc2626",
+        backgroundColor: "var(--color-danger)",
+        borderColor: "var(--color-danger)",
         pointRadius: 8,
         pointHoverRadius: 10,
       },
       {
         label: "Medium-High Severity (2.5 ≤ Z < 3.0)",
         data: mediumHighData,
-        backgroundColor: "#ea580c",
-        borderColor: "#ea580c",
+        backgroundColor: "var(--color-warning)",
+        borderColor: "var(--color-warning)",
         pointRadius: 6,
         pointHoverRadius: 8,
       },
       {
         label: "Medium Severity (2.0 ≤ Z < 2.5)",
         data: mediumData,
-        backgroundColor: "#d97706",
-        borderColor: "#d97706",
+        backgroundColor: "var(--amber-600)",
+        borderColor: "var(--amber-600)",
         pointRadius: 4,
         pointHoverRadius: 6,
       },
       {
         label: "Low Severity (Z < 2.0)",
         data: lowData,
-        backgroundColor: "#2563eb",
-        borderColor: "#2563eb",
+        backgroundColor: "var(--brand-400)",
+        borderColor: "var(--brand-400)",
         pointRadius: 3,
         pointHoverRadius: 5,
       },
@@ -143,11 +143,34 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       legend: {
         display: true,
         position: "top" as const,
+        labels: {
+          usePointStyle: true,
+          pointStyle: "circle",
+          padding: 20,
+          font: {
+            size: 12,
+          },
+          color: "var(--color-text)",
+        },
       },
       title: {
         display: false,
       },
       tooltip: {
+        backgroundColor: "var(--color-surface)",
+        titleColor: "var(--color-text)",
+        bodyColor: "var(--color-text)",
+        borderColor: "var(--color-border)",
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: true,
+        padding: 12,
+        titleFont: {
+          size: 13,
+        },
+        bodyFont: {
+          size: 12,
+        },
         callbacks: {
           label: function (context: any) {
             const point = context.raw;
@@ -178,8 +201,20 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         title: {
           display: true,
           text: "Date",
+          color: "var(--color-text)",
+          font: {
+            size: 12,
+          },
+        },
+        grid: {
+          color: "var(--color-border)",
+          drawBorder: false,
         },
         ticks: {
+          color: "var(--color-muted)",
+          font: {
+            size: 11,
+          },
           maxTicksLimit: 10,
         },
       },
@@ -187,9 +222,21 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         title: {
           display: true,
           text: viewMode === "cost" ? "Cost ($)" : "Service",
+          color: "var(--color-text)",
+          font: {
+            size: 12,
+          },
         },
-        beginAtZero: viewMode === "cost",
+        grid: {
+          color: "var(--color-border)",
+          drawBorder: false,
+        },
         ticks: {
+          color: "var(--color-muted)",
+          font: {
+            size: 11,
+          },
+          beginAtZero: viewMode === "cost",
           callback: function (value: any) {
             if (viewMode === "cost") {
               return `$${value.toFixed(0)}`;
@@ -231,28 +278,28 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#dc2626" }}
+              style={{ backgroundColor: "var(--color-danger)" }}
             ></div>
             <span>High (Z ≥ 3.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#ea580c" }}
+              style={{ backgroundColor: "var(--color-warning)" }}
             ></div>
             <span>Medium-High (Z ≥ 2.5)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#d97706" }}
+              style={{ backgroundColor: "var(--amber-600)" }}
             ></div>
             <span>Medium (Z ≥ 2.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#2563eb" }}
+              style={{ backgroundColor: "var(--brand-400)" }}
             ></div>
             <span>Low (Z &lt; 2.0)</span>
           </div>
