@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Badge from "./Badge";
 import { Text, Flex } from "./ui";
 import { chartStyles } from "./chartConfig";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 import ChartErrorBoundary from "./ChartErrorBoundary";
 import ChartSkeleton from "./ChartSkeleton";
 import { RefreshCw, AlertCircle } from "lucide-react";
@@ -29,6 +30,7 @@ const ChartCard = ({
   onRetry,
   showSkeleton = true,
 }: ChartCardProps) => {
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
   const renderContent = () => {
     if (loading && showSkeleton) {
       return <ChartSkeleton type="line" height={300} showLegend />;
@@ -59,7 +61,13 @@ const ChartCard = ({
   };
 
   return (
-    <div className="card" style={chartStyles.containerStyle}>
+    <div
+      className="card"
+      style={{
+        ...chartStyles.containerStyle,
+        ...themeStyles.containerStyle,
+      }}
+    >
       {title ? (
         <div className="card-header">
           <Flex justify="space-between" align="center">

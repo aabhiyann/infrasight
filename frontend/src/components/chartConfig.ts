@@ -431,7 +431,13 @@ export const canvasBackgroundPlugin = {
     const { ctx } = chart;
     ctx.save();
     ctx.globalCompositeOperation = "destination-over";
-    ctx.fillStyle = options.color || "#ffffff";
+    // Default to theme-aware background when no color provided
+    try {
+      const colors = getThemeAwareColors();
+      ctx.fillStyle = options.color || colors.background || "#ffffff";
+    } catch (_e) {
+      ctx.fillStyle = options.color || "#ffffff";
+    }
     ctx.fillRect(0, 0, chart.width, chart.height);
     ctx.restore();
   },

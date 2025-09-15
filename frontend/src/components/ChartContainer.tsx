@@ -15,7 +15,13 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
   className = "",
 }) => {
   const { chartStyles: themeStyles } = useThemeAwareChartStyles();
-  const containerStyle = getChartContainerStyle(height);
+  // Base container sizing, then override visual styling with theme-aware values
+  const baseContainerStyle = getChartContainerStyle(height);
+  const containerStyle = {
+    ...themeStyles.containerStyle,
+    height: baseContainerStyle.height,
+    width: baseContainerStyle.width,
+  } as React.CSSProperties;
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = useCallback(
