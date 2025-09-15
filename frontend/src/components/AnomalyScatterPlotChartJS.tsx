@@ -1,0 +1,272 @@
+import React, { useState } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Scatter } from "react-chartjs-2";
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+interface AnomalyPoint {
+  date: string;
+  service: string;
+  amount: number;
+  z_score: number;
+}
+
+interface AnomalyScatterPlotProps {
+  anomalies: AnomalyPoint[];
+}
+
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+
+function getSeverityColor(z: number): string {
+  if (z >= 3) return "#dc2626"; // high - red
+  if (z >= 2.5) return "#ea580c"; // medium-high - orange
+  if (z >= 2) return "#d97706"; // medium - amber
+  return "#2563eb"; // low - blue
+}
+
+function getSeverityLabel(z: number): string {
+  if (z >= 3) return "High";
+  if (z >= 2.5) return "Medium-High";
+  if (z >= 2) return "Medium";
+  return "Low";
+}
+
+const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
+  const [viewMode, setViewMode] = useState<"cost" | "service">("cost");
+
+  const formattedData = anomalies.map((a) => ({
+    ...a,
+    dateLabel: formatDate(a.date),
+    serviceLabel:
+      a.service.length > 12 ? a.service.slice(0, 12) + "..." : a.service,
+  }));
+
+  // Categorize anomalies by severity for different colors
+  const highSeverityData = formattedData
+    .filter((item) => item.z_score >= 3)
+    .map((item) => ({
+      x: viewMode === "cost" ? item.date : item.date,
+      y: viewMode === "cost" ? item.amount : item.serviceLabel,
+      z_score: item.z_score,
+      service: item.service,
+      amount: item.amount,
+      dateLabel: item.dateLabel,
+    }));
+
+  const mediumHighData = formattedData
+    .filter((item) => item.z_score >= 2.5 && item.z_score < 3)
+    .map((item) => ({
+      x: viewMode === "cost" ? item.date : item.date,
+      y: viewMode === "cost" ? item.amount : item.serviceLabel,
+      z_score: item.z_score,
+      service: item.service,
+      amount: item.amount,
+      dateLabel: item.dateLabel,
+    }));
+
+  const mediumData = formattedData
+    .filter((item) => item.z_score >= 2 && item.z_score < 2.5)
+    .map((item) => ({
+      x: viewMode === "cost" ? item.date : item.date,
+      y: viewMode === "cost" ? item.amount : item.serviceLabel,
+      z_score: item.z_score,
+      service: item.service,
+      amount: item.amount,
+      dateLabel: item.dateLabel,
+    }));
+
+  const lowData = formattedData
+    .filter((item) => item.z_score < 2)
+    .map((item) => ({
+      x: viewMode === "cost" ? item.date : item.date,
+      y: viewMode === "cost" ? item.amount : item.serviceLabel,
+      z_score: item.z_score,
+      service: item.service,
+      amount: item.amount,
+      dateLabel: item.dateLabel,
+    }));
+
+  const chartData = {
+    datasets: [
+      {
+        label: "High Severity (Z ≥ 3.0)",
+        data: highSeverityData,
+        backgroundColor: "#dc2626",
+        borderColor: "#dc2626",
+        pointRadius: 8,
+        pointHoverRadius: 10,
+      },
+      {
+        label: "Medium-High Severity (2.5 ≤ Z < 3.0)",
+        data: mediumHighData,
+        backgroundColor: "#ea580c",
+        borderColor: "#ea580c",
+        pointRadius: 6,
+        pointHoverRadius: 8,
+      },
+      {
+        label: "Medium Severity (2.0 ≤ Z < 2.5)",
+        data: mediumData,
+        backgroundColor: "#d97706",
+        borderColor: "#d97706",
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+      {
+        label: "Low Severity (Z < 2.0)",
+        data: lowData,
+        backgroundColor: "#2563eb",
+        borderColor: "#2563eb",
+        pointRadius: 3,
+        pointHoverRadius: 5,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top" as const,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            const point = context.raw;
+            return [
+              `Service: ${point.service}`,
+              `Date: ${point.dateLabel}`,
+              `Cost: $${point.amount.toFixed(2)}`,
+              `Z-Score: ${point.z_score.toFixed(2)}`,
+              `Severity: ${getSeverityLabel(point.z_score)}`,
+            ];
+          },
+          title: function (context: any) {
+            return `Anomaly Details`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        type: "time" as const,
+        time: {
+          parser: "YYYY-MM-DD",
+          displayFormats: {
+            day: "MMM DD",
+            month: "MMM YYYY",
+          },
+        },
+        title: {
+          display: true,
+          text: "Date",
+        },
+        ticks: {
+          maxTicksLimit: 10,
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: viewMode === "cost" ? "Cost ($)" : "Service",
+        },
+        beginAtZero: viewMode === "cost",
+        ticks: {
+          callback: function (value: any) {
+            if (viewMode === "cost") {
+              return `$${value.toFixed(0)}`;
+            }
+            return value;
+          },
+        },
+      },
+    },
+    interaction: {
+      intersect: false,
+    },
+  };
+
+  return (
+    <div className="mt-2">
+      <div className="chart-header">
+        <h3>Detected Anomalies</h3>
+        <div className="view-toggle">
+          <button
+            className={`toggle-btn ${viewMode === "cost" ? "active" : ""}`}
+            onClick={() => setViewMode("cost")}
+          >
+            Cost vs Date
+          </button>
+          <button
+            className={`toggle-btn ${viewMode === "service" ? "active" : ""}`}
+            onClick={() => setViewMode("service")}
+          >
+            Service vs Date
+          </button>
+        </div>
+      </div>
+      <div style={{ height: 400, width: "100%" }}>
+        <Scatter data={chartData} options={options} />
+      </div>
+      <div className="chart-footer">
+        <div className="legend-items">
+          <div className="legend-item">
+            <div
+              className="legend-color"
+              style={{ backgroundColor: "#dc2626" }}
+            ></div>
+            <span>High (Z ≥ 3.0)</span>
+          </div>
+          <div className="legend-item">
+            <div
+              className="legend-color"
+              style={{ backgroundColor: "#ea580c" }}
+            ></div>
+            <span>Medium-High (Z ≥ 2.5)</span>
+          </div>
+          <div className="legend-item">
+            <div
+              className="legend-color"
+              style={{ backgroundColor: "#d97706" }}
+            ></div>
+            <span>Medium (Z ≥ 2.0)</span>
+          </div>
+          <div className="legend-item">
+            <div
+              className="legend-color"
+              style={{ backgroundColor: "#2563eb" }}
+            ></div>
+            <span>Low (Z &lt; 2.0)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AnomalyScatterPlotChartJS;

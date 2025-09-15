@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -40,12 +40,11 @@ interface CostChartProps extends BaseChartProps {
   };
 }
 
-const CostChartChartJS = ({
+const CostChartChartJSSimple = ({
   data,
   serviceFilter,
   dateRange,
   height = defaultChartConfig.height,
-  showGrid = defaultChartConfig.showGrid,
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: CostChartProps) => {
@@ -95,96 +94,74 @@ const CostChartChartJS = ({
     serviceFilter ? a.service === serviceFilter : true
   );
 
-  // Categorize anomalies by severity
-  const highSeverityAnomalies = filteredAnomalies
-    .filter((a) => a.z_score >= 3)
-    .map((a) => ({ x: a.date, y: a.amount, z_score: a.z_score }));
+  // Create a map of anomalies by date for easy lookup
+  const anomaliesByDate = new Map<string, Anomaly[]>();
+  filteredAnomalies.forEach((anomaly) => {
+    if (!anomaliesByDate.has(anomaly.date)) {
+      anomaliesByDate.set(anomaly.date, []);
+    }
+    anomaliesByDate.get(anomaly.date)!.push(anomaly);
+  });
 
-  const mediumHighAnomalies = filteredAnomalies
-    .filter((a) => a.z_score >= 2.5 && a.z_score < 3)
-    .map((a) => ({ x: a.date, y: a.amount, z_score: a.z_score }));
-
-  const mediumAnomalies = filteredAnomalies
-    .filter((a) => a.z_score >= 2 && a.z_score < 2.5)
-    .map((a) => ({ x: a.date, y: a.amount, z_score: a.z_score }));
-
-  const lowAnomalies = filteredAnomalies
-    .filter((a) => a.z_score < 2)
-    .map((a) => ({ x: a.date, y: a.amount, z_score: a.z_score }));
-
-  // Prepare Chart.js data format - we'll use a line chart for the main data
-  // and overlay scatter points for anomalies
+  // Prepare Chart.js data format
   const chartJSData = {
     labels: chartData.map((item) => item.date),
     datasets: [
-      // Main cost line
       {
         label: "Daily Cost",
-        data: chartData.map((item) => item.total),
+        data: chartData.map((item) => {
+          const dayAnomalies = anomaliesByDate.get(item.date) || [];
+          const hasHighSeverity = dayAnomalies.some((a) => a.z_score >= 3);
+          const hasMediumSeverity = dayAnomalies.some((a) => a.z_score >= 2 && a.z_score < 3);
+          const hasLowSeverity = dayAnomalies.some((a) => a.z_score < 2);
+          
+          return {
+            x: item.date,
+            y: item.total,
+            hasAnomaly: dayAnomalies.length > 0,
+            anomalyCount: dayAnomalies.length,
+            hasHighSeverity,
+            hasMediumSeverity,
+            hasLowSeverity,
+            anomalies: dayAnomalies,
+          };
+        }),
         borderColor: "var(--color-secondary)",
         backgroundColor: "rgba(54, 162, 235, 0.1)",
         borderWidth: 2,
         fill: true,
         tension: 0.1,
-        pointRadius: 3,
-        pointHoverRadius: 5,
-        type: "line" as const,
+        pointRadius: (context: any) => {
+          const dataPoint = context.parsed;
+          if (dataPoint.hasHighSeverity) return 8;
+          if (dataPoint.hasMediumSeverity) return 6;
+          if (dataPoint.hasLowSeverity) return 4;
+          return 3;
+        },
+        pointHoverRadius: (context: any) => {
+          const dataPoint = context.parsed;
+          if (dataPoint.hasHighSeverity) return 10;
+          if (dataPoint.hasMediumSeverity) return 8;
+          if (dataPoint.hasLowSeverity) return 6;
+          return 5;
+        },
+        pointBackgroundColor: (context: any) => {
+          const dataPoint = context.parsed;
+          if (dataPoint.hasHighSeverity) return "#dc2626";
+          if (dataPoint.hasMediumSeverity) return "#d97706";
+          if (dataPoint.hasLowSeverity) return "#2563eb";
+          return "var(--color-secondary)";
+        },
+        pointBorderColor: (context: any) => {
+          const dataPoint = context.parsed;
+          if (dataPoint.hasHighSeverity) return "#dc2626";
+          if (dataPoint.hasMediumSeverity) return "#d97706";
+          if (dataPoint.hasLowSeverity) return "#2563eb";
+          return "var(--color-secondary)";
+        },
       },
     ],
   };
-
-  // Add anomaly points as separate datasets
-  if (highSeverityAnomalies.length > 0) {
-    chartJSData.datasets.push({
-      label: "High Severity Anomalies",
-      data: highSeverityAnomalies.map((a) => ({ x: a.x, y: a.y })),
-      backgroundColor: "#dc2626",
-      borderColor: "#dc2626",
-      pointRadius: 8,
-      pointHoverRadius: 10,
-      showLine: false,
-      type: "scatter" as const,
-    });
-  }
-
-  if (mediumHighAnomalies.length > 0) {
-    chartJSData.datasets.push({
-      label: "Medium-High Severity Anomalies",
-      data: mediumHighAnomalies.map((a) => ({ x: a.x, y: a.y })),
-      backgroundColor: "#ea580c",
-      borderColor: "#ea580c",
-      pointRadius: 6,
-      pointHoverRadius: 8,
-      showLine: false,
-      type: "scatter" as const,
-    });
-  }
-
-  if (mediumAnomalies.length > 0) {
-    chartJSData.datasets.push({
-      label: "Medium Severity Anomalies",
-      data: mediumAnomalies.map((a) => ({ x: a.x, y: a.y })),
-      backgroundColor: "#d97706",
-      borderColor: "#d97706",
-      pointRadius: 4,
-      pointHoverRadius: 6,
-      showLine: false,
-      type: "scatter" as const,
-    });
-  }
-
-  if (lowAnomalies.length > 0) {
-    chartJSData.datasets.push({
-      label: "Low Severity Anomalies",
-      data: lowAnomalies.map((a) => ({ x: a.x, y: a.y })),
-      backgroundColor: "#2563eb",
-      borderColor: "#2563eb",
-      pointRadius: 3,
-      pointHoverRadius: 5,
-      showLine: false,
-      type: "scatter" as const,
-    });
-  }
 
   // Chart.js options
   const options = {
@@ -196,24 +173,27 @@ const CostChartChartJS = ({
         position: "top" as const,
       },
       title: {
-        display: false, // We'll handle titles in the parent component
+        display: false,
       },
       tooltip: {
         mode: "index" as const,
         intersect: false,
         callbacks: {
           label: function (context: any) {
+            const dataPoint = context.parsed;
             const label = context.dataset.label || "";
-            const value = context.parsed.y;
-
-            if (label.includes("Anomalies")) {
-              return `${label}: ${
-                currencyFormat ? formatCurrency(value) : value
-              } (Z-Score: ${context.raw.z_score?.toFixed(2) || "N/A"})`;
+            const value = dataPoint.y;
+            
+            if (dataPoint.hasAnomaly) {
+              return [
+                `${label}: ${currencyFormat ? formatCurrency(value) : value}`,
+                `⚠️ ${dataPoint.anomalyCount} anomaly(ies) detected`,
+                dataPoint.hasHighSeverity ? "🔴 High severity" : "",
+                dataPoint.hasMediumSeverity ? "🟡 Medium severity" : "",
+                dataPoint.hasLowSeverity ? "🔵 Low severity" : "",
+              ].filter(Boolean);
             }
-            return `${label}: ${
-              currencyFormat ? formatCurrency(value) : value
-            }`;
+            return `${label}: ${currencyFormat ? formatCurrency(value) : value}`;
           },
           title: function (context: any) {
             const date = new Date(context[0].label);
@@ -271,4 +251,4 @@ const CostChartChartJS = ({
   );
 };
 
-export default CostChartChartJS;
+export default CostChartChartJSSimple;

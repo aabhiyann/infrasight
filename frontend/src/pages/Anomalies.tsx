@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAnomalyApi, type Anomaly } from "../api/anomalyApi";
 import { useDataSource } from "../contexts/DataSourceContext";
-import AnomalyScatterPlot from "../components/AnomalyScatterPlot";
+import AnomalyScatterPlotChartJS from "../components/AnomalyScatterPlotChartJS";
 import AnomalyTable from "../components/AnomalyTable";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import DateRangePicker, { type DateRange } from "../components/DateRangePicker";
@@ -174,7 +174,7 @@ const Anomalies = () => {
       ) : (
         <>
           <div className="card">
-            <AnomalyScatterPlot anomalies={filtered} />
+            <AnomalyScatterPlotChartJS anomalies={filtered} />
           </div>
           <AnomalyTable anomalies={filtered} />
         </>

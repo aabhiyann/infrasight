@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCostApi, type CostRecord } from "../api/costApi";
 import { useDataSource } from "../contexts/DataSourceContext";
-import CostChartChartJS from "../components/CostChartChartJS";
+import CostChartChartJSSimple from "../components/CostChartChartJSSimple";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import DateRangePicker, { type DateRange } from "../components/DateRangePicker";
 import ChartCard from "../components/ChartCard";
 import HeatmapServiceTrends from "../components/HeatmapServiceTrends";
 import MultiServiceTimeline from "../components/MultiServiceTimeline";
-import TopServicesBarChart from "../components/TopServicesBarChart";
+import TopServicesBarChartChartJS from "../components/TopServicesBarChartChartJS";
 import OverviewSummary from "../components/OverviewSummary";
 import Skeleton from "../components/Skeleton";
 import EmptyState from "../components/EmptyState";
@@ -154,7 +154,7 @@ function Overview() {
       ) : (
         <>
           <ChartCard title="Cost Over Time">
-            <CostChartChartJS
+            <CostChartChartJSSimple
               data={data}
               serviceFilter={selectedService}
               dateRange={dateRange}
@@ -164,7 +164,7 @@ function Overview() {
             <MultiServiceTimeline data={data} />
           </ChartCard>
           <ChartCard title="Top 5 Services This Month (by Total Cost)">
-            <TopServicesBarChart costData={data} hideTitle />
+            <TopServicesBarChartChartJS costData={data} hideTitle />
           </ChartCard>
           <ChartCard title="Service Trend Heatmap">
             <HeatmapServiceTrends data={data} />
