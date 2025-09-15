@@ -14,10 +14,10 @@ import {
   defaultChartConfig,
   formatCurrency,
   formatDate,
-  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 // Register Chart.js components
 ChartJS.register(
@@ -40,6 +40,8 @@ const MultiServiceTimeline = ({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: MultiServiceTimelineProps) => {
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
+
   // Step 1: Create pivot table - dates as rows, services as columns
   const pivotData: Record<string, Record<string, number>> = {};
 
@@ -60,16 +62,16 @@ const MultiServiceTimeline = ({
 
   // Step 4: Generate enhanced colors for each service using sophisticated palette
   const serviceColors = [
-    chartStyles.primary,
-    chartStyles.colors[1], // Teal
-    chartStyles.colors[2], // Amber
-    chartStyles.colors[3], // Rose
-    chartStyles.colors[4], // Slate
-    chartStyles.secondary,
-    chartStyles.colorVariants.secondary.light,
-    chartStyles.colorVariants.accent.light,
-    chartStyles.success,
-    chartStyles.warning,
+    themeStyles.primary,
+    themeStyles.colors[1], // Teal
+    themeStyles.colors[2], // Amber
+    themeStyles.colors[3], // Rose
+    themeStyles.colors[4], // Slate
+    themeStyles.secondary,
+    themeStyles.colorVariants.secondary.light,
+    themeStyles.colorVariants.accent.light,
+    themeStyles.success,
+    themeStyles.warning,
   ];
 
   // Step 5: Transform data for Chart.js
@@ -98,30 +100,30 @@ const MultiServiceTimeline = ({
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: showLegend,
-        position: chartStyles.legendPosition,
+        position: themeStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 16,
           font: {
-            size: chartStyles.legendItemStyle.fontSize,
-            weight: chartStyles.legendItemStyle.fontWeight,
-            family: chartStyles.legendItemStyle.fontFamily,
+            size: themeStyles.legendItemStyle.fontSize,
+            weight: themeStyles.legendItemStyle.fontWeight,
+            family: themeStyles.legendItemStyle.fontFamily,
           },
-          color: chartStyles.legendItemStyle.color,
+          color: themeStyles.legendItemStyle.color,
         },
       },
       title: {
         display: false,
       },
       tooltip: {
-        ...chartStyles.tooltipStyle,
+        ...themeStyles.tooltipStyle,
         mode: "index" as const,
         intersect: false,
         callbacks: {
@@ -143,25 +145,25 @@ const MultiServiceTimeline = ({
         title: {
           display: true,
           text: "Date",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -175,26 +177,26 @@ const MultiServiceTimeline = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         beginAtZero: true,
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           padding: 8,
           callback: function (value: any) {

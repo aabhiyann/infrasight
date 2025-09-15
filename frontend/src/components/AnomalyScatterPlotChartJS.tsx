@@ -9,8 +9,8 @@ import {
   Legend,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
-import { chartStyles } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 // Register Chart.js components
 ChartJS.register(
@@ -48,6 +48,7 @@ function getSeverityLabel(z: number): string {
 
 const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
   const [viewMode, setViewMode] = useState<"cost" | "service">("cost");
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
 
   // Handle empty data
   if (!anomalies || anomalies.length === 0) {
@@ -123,49 +124,49 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       {
         label: "High Severity (Z ≥ 3.0)",
         data: highSeverityData,
-        backgroundColor: "#ef4444",
-        borderColor: "#ffffff",
+        backgroundColor: themeStyles.danger,
+        borderColor: themeStyles.backgroundColor,
         borderWidth: 2,
         pointRadius: 8,
         pointHoverRadius: 12,
-        pointHoverBackgroundColor: "#ef4444",
-        pointHoverBorderColor: "#ffffff",
+        pointHoverBackgroundColor: themeStyles.danger,
+        pointHoverBorderColor: themeStyles.backgroundColor,
         pointHoverBorderWidth: 3,
       },
       {
         label: "Medium-High Severity (2.5 ≤ Z < 3.0)",
         data: mediumHighData,
-        backgroundColor: "#f59e0b",
-        borderColor: "#ffffff",
+        backgroundColor: themeStyles.warning,
+        borderColor: themeStyles.backgroundColor,
         borderWidth: 2,
         pointRadius: 6,
         pointHoverRadius: 10,
-        pointHoverBackgroundColor: "#f59e0b",
-        pointHoverBorderColor: "#ffffff",
+        pointHoverBackgroundColor: themeStyles.warning,
+        pointHoverBorderColor: themeStyles.backgroundColor,
         pointHoverBorderWidth: 3,
       },
       {
         label: "Medium Severity (2.0 ≤ Z < 2.5)",
         data: mediumData,
-        backgroundColor: "#d97706",
-        borderColor: "#ffffff",
+        backgroundColor: themeStyles.accent,
+        borderColor: themeStyles.backgroundColor,
         borderWidth: 2,
         pointRadius: 5,
         pointHoverRadius: 8,
-        pointHoverBackgroundColor: "#d97706",
-        pointHoverBorderColor: "#ffffff",
+        pointHoverBackgroundColor: themeStyles.accent,
+        pointHoverBorderColor: themeStyles.backgroundColor,
         pointHoverBorderWidth: 3,
       },
       {
         label: "Low Severity (Z < 2.0)",
         data: lowData,
-        backgroundColor: "#0070b8",
-        borderColor: "#ffffff",
+        backgroundColor: themeStyles.primary,
+        borderColor: themeStyles.backgroundColor,
         borderWidth: 2,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointHoverBackgroundColor: "#0070b8",
-        pointHoverBorderColor: "#ffffff",
+        pointHoverBackgroundColor: themeStyles.primary,
+        pointHoverBorderColor: themeStyles.backgroundColor,
         pointHoverBorderWidth: 3,
       },
     ],
@@ -175,30 +176,30 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: true,
-        position: chartStyles.legendPosition,
+        position: themeStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 24,
           font: {
-            size: chartStyles.legendItemStyle.fontSize,
-            weight: chartStyles.legendItemStyle.fontWeight,
-            family: chartStyles.legendItemStyle.fontFamily,
+            size: themeStyles.legendItemStyle.fontSize,
+            weight: themeStyles.legendItemStyle.fontWeight,
+            family: themeStyles.legendItemStyle.fontFamily,
           },
-          color: chartStyles.legendItemStyle.color,
+          color: themeStyles.legendItemStyle.color,
         },
       },
       title: {
         display: false,
       },
       tooltip: {
-        ...chartStyles.tooltipStyle,
+        ...themeStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const point = context.raw;
@@ -222,25 +223,25 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         title: {
           display: true,
           text: "Date",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -250,25 +251,25 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         title: {
           display: true,
           text: viewMode === "cost" ? "Cost ($)" : "Service",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           beginAtZero: viewMode === "cost",
           padding: 8,
@@ -319,28 +320,28 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#ef4444" }}
+              style={{ backgroundColor: themeStyles.danger }}
             ></div>
             <span>High (Z ≥ 3.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#f59e0b" }}
+              style={{ backgroundColor: themeStyles.warning }}
             ></div>
             <span>Medium-High (Z ≥ 2.5)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#d97706" }}
+              style={{ backgroundColor: themeStyles.accent }}
             ></div>
             <span>Medium (Z ≥ 2.0)</span>
           </div>
           <div className="legend-item">
             <div
               className="legend-color"
-              style={{ backgroundColor: "#0070b8" }}
+              style={{ backgroundColor: themeStyles.primary }}
             ></div>
             <span>Low (Z &lt; 2.0)</span>
           </div>

@@ -12,10 +12,10 @@ import type { CostRecord } from "../api/costApi";
 import {
   defaultChartConfig,
   formatCurrency,
-  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 // Register Chart.js components
 ChartJS.register(
@@ -37,6 +37,8 @@ const BarChartTopServices = ({
   height = defaultChartConfig.height,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: BarChartTopServicesProps) => {
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
+
   // Step 1: Aggregate total cost per service
   const totals: Record<string, number> = {};
   data.forEach((item) => {
@@ -56,8 +58,8 @@ const BarChartTopServices = ({
       {
         label: "Total Cost",
         data: sortedData.map((item) => item.total),
-        backgroundColor: chartStyles.gradients.primary,
-        borderColor: chartStyles.primary,
+        backgroundColor: themeStyles.gradients.primary,
+        borderColor: themeStyles.primary,
         borderWidth: 0,
         borderRadius: {
           topRight: 8,
@@ -77,8 +79,8 @@ const BarChartTopServices = ({
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
     },
     plugins: {
       legend: {
@@ -88,7 +90,7 @@ const BarChartTopServices = ({
         display: false,
       },
       tooltip: {
-        ...chartStyles.tooltipStyle,
+        ...themeStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.x;
@@ -108,26 +110,26 @@ const BarChartTopServices = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         beginAtZero: true,
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           padding: 8,
           callback: function (value: any) {
@@ -140,25 +142,25 @@ const BarChartTopServices = ({
         title: {
           display: true,
           text: "Service",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           padding: 8,
           maxTicksLimit: 10,

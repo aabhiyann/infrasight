@@ -16,10 +16,10 @@ import { useAnomalyApi, type Anomaly } from "../api/anomalyApi";
 import {
   defaultChartConfig,
   formatCurrency,
-  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 // Register Chart.js components
 ChartJS.register(
@@ -52,6 +52,7 @@ const CostChartChartJSSimple = ({
 }: CostChartProps) => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const { fetchAnomalies } = useAnomalyApi();
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
 
   // Fetch anomalies when date range changes
   useEffect(() => {
@@ -130,8 +131,8 @@ const CostChartChartJSSimple = ({
             anomalies: dayAnomalies,
           };
         }),
-        borderColor: "#0070b8",
-        backgroundColor: "rgba(52, 163, 241, 0.1)",
+        borderColor: themeStyles.primary,
+        backgroundColor: themeStyles.colorVariants.primary.alpha10,
         borderWidth: 3,
         fill: true,
         tension: 0.2,
@@ -151,17 +152,17 @@ const CostChartChartJSSimple = ({
         },
         pointBackgroundColor: (context: any) => {
           const dataPoint = context.parsed;
-          if (dataPoint.hasHighSeverity) return "#ef4444";
-          if (dataPoint.hasMediumSeverity) return "#d97706";
-          if (dataPoint.hasLowSeverity) return "#0070b8";
-          return "#0070b8";
+          if (dataPoint.hasHighSeverity) return themeStyles.danger;
+          if (dataPoint.hasMediumSeverity) return themeStyles.accent;
+          if (dataPoint.hasLowSeverity) return themeStyles.primary;
+          return themeStyles.primary;
         },
         pointBorderColor: (context: any) => {
           const dataPoint = context.parsed;
-          if (dataPoint.hasHighSeverity) return "#ef4444";
-          if (dataPoint.hasMediumSeverity) return "#d97706";
-          if (dataPoint.hasLowSeverity) return "#0070b8";
-          return "#0070b8";
+          if (dataPoint.hasHighSeverity) return themeStyles.danger;
+          if (dataPoint.hasMediumSeverity) return themeStyles.accent;
+          if (dataPoint.hasLowSeverity) return themeStyles.primary;
+          return themeStyles.primary;
         },
       },
     ],
@@ -172,23 +173,23 @@ const CostChartChartJSSimple = ({
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: showLegend,
-        position: chartStyles.legendPosition,
+        position: themeStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 24,
           font: {
-            size: chartStyles.legendItemStyle.fontSize,
-            weight: chartStyles.legendItemStyle.fontWeight,
-            family: chartStyles.legendItemStyle.fontFamily,
+            size: themeStyles.legendItemStyle.fontSize,
+            weight: themeStyles.legendItemStyle.fontWeight,
+            family: themeStyles.legendItemStyle.fontFamily,
           },
-          color: chartStyles.legendItemStyle.color,
+          color: themeStyles.legendItemStyle.color,
         },
       },
       title: {
@@ -197,7 +198,7 @@ const CostChartChartJSSimple = ({
       tooltip: {
         mode: "index" as const,
         intersect: false,
-        ...chartStyles.tooltipStyle,
+        ...themeStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const dataPoint = context.parsed;
@@ -234,25 +235,25 @@ const CostChartChartJSSimple = ({
         title: {
           display: true,
           text: "Date",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -270,25 +271,25 @@ const CostChartChartJSSimple = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           beginAtZero: true,
           padding: 8,

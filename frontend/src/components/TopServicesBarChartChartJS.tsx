@@ -12,10 +12,10 @@ import type { CostRecord } from "../api/costApi";
 import {
   defaultChartConfig,
   formatCurrency,
-  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 // Register Chart.js components
 ChartJS.register(
@@ -39,6 +39,7 @@ const TopServicesBarChartChartJS = ({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: TopServicesBarChartProps) => {
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
@@ -78,13 +79,13 @@ const TopServicesBarChartChartJS = ({
       {
         label: "Total Cost",
         data: topServices.map((item) => item.total),
-        backgroundColor: "#0070b8",
-        borderColor: "#0052b6",
+        backgroundColor: themeStyles.primary,
+        borderColor: themeStyles.secondary,
         borderWidth: 2,
         borderRadius: 6,
         borderSkipped: false,
-        hoverBackgroundColor: "#0052b6",
-        hoverBorderColor: "#004486",
+        hoverBackgroundColor: themeStyles.secondary,
+        hoverBorderColor: themeStyles.secondary,
         hoverBorderWidth: 3,
       },
     ],
@@ -95,30 +96,30 @@ const TopServicesBarChartChartJS = ({
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: showLegend,
-        position: chartStyles.legendPosition,
+        position: themeStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "rect",
           padding: 24,
           font: {
-            size: chartStyles.legendItemStyle.fontSize,
-            weight: chartStyles.legendItemStyle.fontWeight,
-            family: chartStyles.legendItemStyle.fontFamily,
+            size: themeStyles.legendItemStyle.fontSize,
+            weight: themeStyles.legendItemStyle.fontWeight,
+            family: themeStyles.legendItemStyle.fontFamily,
           },
-          color: chartStyles.legendItemStyle.color,
+          color: themeStyles.legendItemStyle.color,
         },
       },
       title: {
         display: false, // We'll handle titles in the parent component
       },
       tooltip: {
-        ...chartStyles.tooltipStyle,
+        ...themeStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.y;
@@ -135,25 +136,25 @@ const TopServicesBarChartChartJS = ({
         title: {
           display: true,
           text: "Service",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           maxRotation: 30,
           minRotation: 0,
@@ -165,25 +166,25 @@ const TopServicesBarChartChartJS = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           beginAtZero: true,
           padding: 8,

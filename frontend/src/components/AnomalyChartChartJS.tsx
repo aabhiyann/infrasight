@@ -12,10 +12,10 @@ import type { Anomaly } from "../api/anomalyApi";
 import {
   defaultChartConfig,
   formatCurrency,
-  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 // Register Chart.js components
 ChartJS.register(
@@ -36,6 +36,8 @@ const AnomalyChartChartJS = ({
   height = 400,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: AnomalyChartProps) => {
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
+
   if (data.length === 0) {
     return (
       <div className="text-center p-2xl">
@@ -68,32 +70,32 @@ const AnomalyChartChartJS = ({
       {
         label: "High Severity (Z ≥ 3.0)",
         data: highSeverityData,
-        backgroundColor: "#ef4444",
-        borderColor: "#ef4444",
+        backgroundColor: themeStyles.danger,
+        borderColor: themeStyles.danger,
         pointRadius: 8,
         pointHoverRadius: 10,
       },
       {
         label: "Medium-High Severity (2.5 ≤ Z < 3.0)",
         data: mediumHighData,
-        backgroundColor: "#f59e0b",
-        borderColor: "#f59e0b",
+        backgroundColor: themeStyles.warning,
+        borderColor: themeStyles.warning,
         pointRadius: 6,
         pointHoverRadius: 8,
       },
       {
         label: "Medium Severity (2.0 ≤ Z < 2.5)",
         data: mediumData,
-        backgroundColor: "#d97706",
-        borderColor: "#d97706",
+        backgroundColor: themeStyles.accent,
+        borderColor: themeStyles.accent,
         pointRadius: 4,
         pointHoverRadius: 6,
       },
       {
         label: "Low Severity (Z < 2.0)",
         data: lowData,
-        backgroundColor: "#0070b8",
-        borderColor: "#0070b8",
+        backgroundColor: themeStyles.primary,
+        borderColor: themeStyles.primary,
         pointRadius: 3,
         pointHoverRadius: 5,
       },
@@ -104,29 +106,29 @@ const AnomalyChartChartJS = ({
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: true,
-        position: chartStyles.legendPosition,
+        position: themeStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 24,
           font: {
-            size: chartStyles.legendItemStyle.fontSize,
-            weight: chartStyles.legendItemStyle.fontWeight,
-            family: chartStyles.legendItemStyle.fontFamily,
+            size: themeStyles.legendItemStyle.fontSize,
+            weight: themeStyles.legendItemStyle.fontWeight,
+            family: themeStyles.legendItemStyle.fontFamily,
           },
-          color: chartStyles.legendItemStyle.color,
+          color: themeStyles.legendItemStyle.color,
         },
       },
       title: {
         display: false, // We'll handle titles in the parent component
       },
-      tooltip: chartStyles.tooltipStyle,
+      tooltip: themeStyles.tooltipStyle,
     },
     scales: {
       x: {
@@ -141,25 +143,25 @@ const AnomalyChartChartJS = ({
         title: {
           display: true,
           text: "Date",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -169,26 +171,26 @@ const AnomalyChartChartJS = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         beginAtZero: true,
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           padding: 8,
           callback: function (value: any) {
@@ -212,7 +214,7 @@ const AnomalyChartChartJS = ({
       {/* Summary Table */}
       <div className="mt-2xl">
         <h4>Anomaly Details</h4>
-        <div style={chartStyles.containerStyle}>
+        <div style={themeStyles.containerStyle}>
           <table className="table">
             <thead>
               <tr>
