@@ -48,17 +48,17 @@ const Anomalies = () => {
     async function loadData() {
       setLoading(true);
       setError(null);
-      
+
       // First, fetch ALL anomalies to calculate available date range
       const fullResult = await fetchAnomalies(zThreshold, {});
       setFullAnomalies(fullResult);
-      
+
       // Then filter the full anomalies by the selected date range
       const filteredResult = fullResult.filter((anomaly) => {
         const anomalyDate = new Date(anomaly.date);
         return anomalyDate >= dateRange.start && anomalyDate <= dateRange.end;
       });
-      
+
       setAnomalies(filteredResult);
       setLastRefresh(new Date());
       setLoading(false);

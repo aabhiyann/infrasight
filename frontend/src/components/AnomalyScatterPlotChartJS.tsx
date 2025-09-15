@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,13 +36,6 @@ const formatDate = (iso: string) =>
     month: "short",
     day: "numeric",
   });
-
-function getSeverityColor(z: number): string {
-  if (z >= 3) return "#dc2626"; // high - red
-  if (z >= 2.5) return "#ea580c"; // medium-high - orange
-  if (z >= 2) return "#d97706"; // medium - amber
-  return "#2563eb"; // low - blue
-}
 
 function getSeverityLabel(z: number): string {
   if (z >= 3) return "High";
@@ -166,7 +159,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
               `Severity: ${getSeverityLabel(point.z_score)}`,
             ];
           },
-          title: function (context: any) {
+          title: function () {
             return `Anomaly Details`;
           },
         },
