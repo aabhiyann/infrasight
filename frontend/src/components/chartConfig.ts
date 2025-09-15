@@ -372,7 +372,7 @@ export const getThemeAwareColors = () => {
 
   if (isDark) {
     return {
-      // Dark mode colors - vibrant and pleasant
+      // Dark mode colors - high contrast and readable
       primary: "#60a5fa", // Brighter blue for dark backgrounds
       primaryLight: "#93c5fd",
       primaryDark: "#3b82f6",
@@ -386,12 +386,12 @@ export const getThemeAwareColors = () => {
       warning: "#fbbf24",
       danger: "#f87171", // Softer red
       info: "#60a5fa",
-      text: "#f1f5f9", // Light text for dark background
-      textMuted: "#94a3b8",
-      border: "#334155",
-      background: "#1e293b",
+      text: "#f8fafc", // High contrast white text
+      textMuted: "#cbd5e1", // Much brighter muted text
+      border: "#475569", // Brighter borders for better definition
+      background: "#1e293b", // Dark background
       rose: "#fb7185", // Softer pink
-      slate: "#94a3b8",
+      slate: "#cbd5e1", // Brighter slate for better readability
     };
   }
 
@@ -588,5 +588,8 @@ export const getThemeAwareChartStyles = () => {
       drawBorder: false,
       borderDash: [] as number[],
     },
+
+    // Enhanced grid styling for better visibility
+    gridColor: colors.border,
   };
 };

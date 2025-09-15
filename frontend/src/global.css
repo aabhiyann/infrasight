@@ -53,12 +53,12 @@
 
 /* Dark mode - Professional and cohesive */
 [data-theme="dark"] {
-  /* Core background colors */
+  /* Core background colors - improved contrast */
   --color-bg: #0f172a;
   --color-surface: #1e293b;
-  --color-text: #f1f5f9;
-  --color-muted: #94a3b8;
-  --color-border: #334155;
+  --color-text: #f8fafc;
+  --color-muted: #cbd5e1;
+  --color-border: #475569;
 
   /* Surface variations */
   --surface-0: #1e293b;
@@ -139,6 +139,53 @@
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Improved readability for dark mode */
+[data-theme="dark"] .card-title {
+  color: var(--color-text) !important;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .card-subtitle {
+  color: var(--color-muted) !important;
+}
+
+[data-theme="dark"] .metric-value {
+  color: var(--color-text) !important;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .metric-label {
+  color: var(--color-muted) !important;
+  font-weight: 500;
+}
+
+/* Ensure all text in dark mode has proper contrast */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .text-muted {
+  color: var(--color-muted) !important;
+}
+
+/* Improve form controls in dark mode */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+  background-color: var(--color-surface);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+  box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
 }
 
 /* High contrast mode - Professional accessibility */
@@ -1524,11 +1571,13 @@ body {
   color: var(--color-muted);
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .card-value {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--color-text);
 }
 
 /* Card hover elevation */
