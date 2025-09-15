@@ -18,6 +18,7 @@ import {
   type BaseChartProps,
 } from "./chartConfig";
 import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
+import { canvasBackgroundPlugin } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
@@ -29,7 +30,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  TimeScale
+  TimeScale,
+  canvasBackgroundPlugin
 );
 
 interface ForecastChartProps extends BaseChartProps {
@@ -164,6 +166,9 @@ function ForecastChart({
             return `Date: ${formatDate(context[0].label)}`;
           },
         },
+      },
+      canvasBackgroundColor: {
+        color: themeStyles.backgroundColor,
       },
     },
     scales: {

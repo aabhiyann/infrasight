@@ -2,8 +2,8 @@ import React, { useCallback, useRef } from "react";
 import {
   getChartContainerStyle,
   type ChartContainerProps,
-  chartStyles,
 } from "./chartConfig";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 
 /**
  * Enhanced chart container component with modern styling and hover effects
@@ -14,15 +14,16 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
   height,
   className = "",
 }) => {
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
   const containerStyle = getChartContainerStyle(height);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       const element = e.currentTarget;
-      element.style.transform = `scale(${chartStyles.hover.scale})`;
-      element.style.boxShadow = chartStyles.hover.shadow;
-      element.style.transition = `all ${chartStyles.hover.duration}ms ${chartStyles.hover.easing}`;
+      element.style.transform = `scale(${themeStyles.hover.scale})`;
+      element.style.boxShadow = themeStyles.hover.shadow;
+      element.style.transition = `all ${themeStyles.hover.duration}ms ${themeStyles.hover.easing}`;
     },
     []
   );
@@ -31,7 +32,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
     (e: React.MouseEvent<HTMLDivElement>) => {
       const element = e.currentTarget;
       element.style.transform = "scale(1)";
-      element.style.boxShadow = chartStyles.containerStyle.boxShadow;
+      element.style.boxShadow = themeStyles.containerStyle.boxShadow;
     },
     []
   );
@@ -46,7 +47,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
       role="img"
       aria-label="Data visualization chart"
     >
-      {/* Subtle gradient overlay for modern look */}
+      {/* Theme-aware gradient overlay for modern look */}
       <div
         style={{
           position: "absolute",
@@ -55,7 +56,9 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
           right: 0,
           bottom: 0,
           background:
-            "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)",
+            themeStyles.backgroundColor === "#ffffff"
+              ? "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)"
+              : "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%)",
           pointerEvents: "none",
           borderRadius: "16px",
         }}

@@ -16,6 +16,7 @@ import {
 } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
 import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
+import { canvasBackgroundPlugin } from "./chartConfig";
 
 // Register Chart.js components
 ChartJS.register(
@@ -24,7 +25,8 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  canvasBackgroundPlugin
 );
 
 interface BarChartTopServicesProps extends BaseChartProps {
@@ -102,6 +104,9 @@ const BarChartTopServices = ({
             return `Service: ${context[0].label}`;
           },
         },
+      },
+      canvasBackgroundColor: {
+        color: themeStyles.backgroundColor,
       },
     },
     scales: {

@@ -202,6 +202,7 @@ const AnomalyChartChartJS = ({
     interaction: {
       intersect: false,
     },
+    backgroundColor: themeStyles.backgroundColor,
   };
 
   return (

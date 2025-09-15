@@ -422,6 +422,21 @@ export const getThemeAwareColors = () => {
 // Legacy static palette for backward compatibility
 export const CHART_COLOR_PALETTE = getThemeAwareColors();
 
+/**
+ * Custom Chart.js plugin to set canvas background color
+ */
+export const canvasBackgroundPlugin = {
+  id: "canvasBackgroundColor",
+  beforeDraw: (chart: any, _args: any, options: any) => {
+    const { ctx } = chart;
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.fillStyle = options.color || "#ffffff";
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  },
+};
+
 // Theme-aware chart styles function
 export const getThemeAwareChartStyles = () => {
   const colors = getThemeAwareColors();
@@ -589,7 +604,7 @@ export const getThemeAwareChartStyles = () => {
       borderDash: [] as number[],
     },
 
-    // Enhanced grid styling for better visibility
-    gridColor: colors.border,
+    // Plugin for canvas background
+    canvasBackgroundPlugin: canvasBackgroundPlugin,
   };
 };

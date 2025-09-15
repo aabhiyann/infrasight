@@ -291,6 +291,7 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         hoverRadius: 12,
       },
     },
+    backgroundColor: themeStyles.backgroundColor,
   };
 
   return (
