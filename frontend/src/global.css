@@ -51,53 +51,205 @@
   --chart-5: #f56ea8; /* Collective */
 }
 
-/* Dark mode */
+/* Dark mode - Professional and cohesive */
 [data-theme="dark"] {
+  /* Core background colors */
   --color-bg: #0f172a;
   --color-surface: #1e293b;
   --color-text: #f1f5f9;
   --color-muted: #94a3b8;
   --color-border: #334155;
-  --surface-1: #1e293b;
-  --surface-2: #334155;
-  --accent-15: rgba(52, 163, 241, 0.25);
-  --accent-10: rgba(52, 163, 241, 0.15);
+
+  /* Surface variations */
+  --surface-0: #1e293b;
+  --surface-1: #334155;
+  --surface-2: #475569;
+
+  /* Brand colors - adjusted for dark mode */
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6;
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+
+  /* Semantic colors - professional dark mode palette */
+  --color-primary: #60a5fa;
+  --color-secondary: #34d399;
+  --color-accent: #fbbf24;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+
+  /* Neutral colors */
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-400: #94a3b8;
+  --slate-200: #334155;
+
+  /* Accent companions - adjusted for dark mode */
+  --teal-600: #34d399;
+  --amber-600: #fbbf24;
+  --rose-500: #fb7185;
+
+  /* Accent transparencies */
+  --accent-15: rgba(96, 165, 250, 0.25);
+  --accent-10: rgba(96, 165, 250, 0.15);
+
+  /* Chart categorical colors */
+  --chart-1: var(--brand-500);
+  --chart-2: var(--teal-600);
+  --chart-3: var(--amber-600);
+  --chart-4: #a78bfa;
+  --chart-5: #fb7185;
+
+  /* Gradients */
+  --gradient-generic: linear-gradient(90deg, #2563eb, #60a5fa);
+  --gradient-matching: linear-gradient(180deg, #1d4ed8 0%, #3b82f6 100%);
 }
 
-/* High contrast mode */
+/* Dark mode enhancements - Professional styling */
+[data-theme="dark"] .card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .btn {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .btn:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nav-link.active {
+  background: linear-gradient(135deg, var(--color-primary), var(--brand-600));
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="dark"] .sidebar {
+  background: var(--color-bg);
+  border-right: 1px solid var(--color-border);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* High contrast mode - Professional accessibility */
 [data-theme="high-contrast"] {
+  /* Core background colors */
   --color-bg: #ffffff;
   --color-surface: #ffffff;
   --color-text: #000000;
   --color-muted: #333333;
   --color-border: #000000;
-  --color-primary: #0000ff;
-  --color-accent: #0000ff;
-  --accent-15: rgba(0, 0, 255, 0.3);
-  --accent-10: rgba(0, 0, 255, 0.2);
+
+  /* Surface variations */
+  --surface-0: #ffffff;
+  --surface-1: #f8f9fa;
+  --surface-2: #f1f3f4;
+
+  /* Brand colors - high contrast variants */
+  --brand-400: #0066cc;
+  --brand-500: #0066cc;
+  --brand-600: #004499;
+  --brand-700: #003366;
+  --brand-800: #002244;
+
+  /* Semantic colors - accessible high contrast */
+  --color-primary: #0066cc;
+  --color-secondary: #006600;
+  --color-accent: #cc6600;
+  --color-success: #006600;
+  --color-warning: #cc6600;
+  --color-danger: #cc0000;
+
+  /* Neutral colors */
+  --slate-900: #000000;
+  --slate-800: #333333;
+  --slate-400: #666666;
+  --slate-200: #cccccc;
+
+  /* Accent companions */
+  --teal-600: #006600;
+  --amber-600: #cc6600;
+  --rose-500: #cc0066;
+
+  /* Accent transparencies */
+  --accent-15: rgba(0, 102, 204, 0.3);
+  --accent-10: rgba(0, 102, 204, 0.2);
+
+  /* Chart categorical colors */
+  --chart-1: var(--brand-500);
+  --chart-2: var(--teal-600);
+  --chart-3: var(--amber-600);
+  --chart-4: #6600cc;
+  --chart-5: #cc0066;
+
+  /* Gradients */
+  --gradient-generic: linear-gradient(90deg, #004499, #0066cc);
+  --gradient-matching: linear-gradient(180deg, #003366 0%, #0066cc 100%);
 }
 
-/* High contrast mode enhancements */
+/* High contrast mode enhancements - Professional styling */
 [data-theme="high-contrast"] .btn {
   border-width: 2px;
   font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="high-contrast"] .btn:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 [data-theme="high-contrast"] .card {
   border: 2px solid var(--color-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="high-contrast"] .table th,
 [data-theme="high-contrast"] .table td {
   border-width: 2px;
+  border-color: var(--color-border);
 }
 
-/* Focus improvements for high contrast */
+/* Enhanced focus indicators for accessibility */
 [data-theme="high-contrast"] .btn:focus-visible,
 [data-theme="high-contrast"] .input:focus-visible,
-[data-theme="high-contrast"] .select:focus-visible {
-  box-shadow: 0 0 0 4px var(--color-accent);
+[data-theme="high-contrast"] .select:focus-visible,
+[data-theme="high-contrast"] .nav-link:focus-visible {
+  box-shadow: 0 0 0 4px var(--color-primary);
   border-width: 3px;
+  outline: none;
+}
+
+/* Professional navigation styling */
+[data-theme="high-contrast"] .nav-link {
+  border-radius: 6px;
+  margin: 2px 0;
+}
+
+[data-theme="high-contrast"] .nav-link.active {
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 700;
+}
+
+/* Enhanced sidebar styling */
+[data-theme="high-contrast"] .sidebar {
+  border-right: 3px solid var(--color-border);
+}
+
+/* Professional header styling */
+[data-theme="high-contrast"] .header {
+  border-bottom: 3px solid var(--color-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Design System Utility Classes */
