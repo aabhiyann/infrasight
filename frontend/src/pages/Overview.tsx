@@ -15,6 +15,8 @@ import EmptyState from "../components/EmptyState";
 import { RefreshCw } from "lucide-react";
 import { useToast } from "../components/ui/Toast";
 import { usePageTitle } from "../hooks/usePageTitle";
+import SimpleChart from "../components/SimpleChart";
+import InteractiveChart from "../components/InteractiveChart";
 
 function Overview() {
   usePageTitle("Overview");
@@ -66,17 +68,17 @@ function Overview() {
     try {
       setError(null);
       setLoading(true);
-      
+
       // First, fetch ALL data to calculate available date range
       const fullResponse = await fetchCleanedCosts({});
       setFullData(fullResponse.data);
-      
+
       // Then filter the full data by the selected date range
       const filteredData = fullResponse.data.filter((record) => {
         const recordDate = new Date(record.date);
         return recordDate >= dateRange.start && recordDate <= dateRange.end;
       });
-      
+
       setData(filteredData);
     } catch (err) {
       setError("Failed to load cost data. Please try again.");
@@ -100,6 +102,21 @@ function Overview() {
         </p>
       </div>
       <OverviewSummary costData={data} />
+
+      {/* Learning Chart - Step by Step Example */}
+      <div className="card">
+        <h3>📚 Learning Chart.js - My First Chart!</h3>
+        <p>This is a simple example to understand how Chart.js works:</p>
+        <SimpleChart />
+      </div>
+
+      {/* Interactive Chart Example */}
+      <div className="card">
+        <h3>🎯 Interactive Chart - Click and Explore!</h3>
+        <p>This chart shows multiple services and responds to clicks:</p>
+        <InteractiveChart />
+      </div>
+
       <div className="toolbar">
         <div className="d-flex items-center gap-md">
           <label htmlFor="service">Service:</label>
