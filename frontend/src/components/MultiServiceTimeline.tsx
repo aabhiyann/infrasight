@@ -1,19 +1,34 @@
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
   Tooltip,
-  ResponsiveContainer,
   Legend,
-} from "recharts";
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 import type { CostRecord } from "../api/costApi";
 import {
   defaultChartConfig,
   formatCurrency,
+  formatDate,
+  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
+import ChartContainer from "./ChartContainer";
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface MultiServiceTimelineProps extends BaseChartProps {
   data: CostRecord[];
@@ -22,10 +37,8 @@ interface MultiServiceTimelineProps extends BaseChartProps {
 const MultiServiceTimeline = ({
   data,
   height = 400,
-  showGrid = defaultChartConfig.showGrid,
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
-  dateTickAngle = -45,
 }: MultiServiceTimelineProps) => {
   // Step 1: Create pivot table - dates as rows, services as columns
   const pivotData: Record<string, Record<string, number>> = {};
@@ -37,77 +50,164 @@ const MultiServiceTimeline = ({
     pivotData[date][service] = (pivotData[date][service] || 0) + amount;
   });
 
-  // Step 2: Convert to array format for Recharts
-  const chartData = Object.entries(pivotData)
-    .map(([date, services]) => ({
-      date,
-      ...services, // Spread all services as properties
-    }))
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  // Step 2: Convert to sorted array format for Chart.js
+  const sortedData = Object.entries(pivotData).sort(
+    (a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime()
+  );
 
-  // Step 3: Get unique services for line colors
+  // Step 3: Get unique services for datasets
   const services = Array.from(new Set(data.map((item) => item.service))).sort();
 
-  // Step 4: Generate colors for each service
-  const colors = [
-    "var(--chart-1)",
-    "var(--chart-2)",
-    "var(--chart-3)",
-    "var(--chart-4)",
-    "var(--chart-5)",
-    "#b48cf2",
-    "#22d3ee",
-    "#f59e0b",
-    "#ef4444",
-    "#6366f1",
+  // Step 4: Generate colors for each service using unified chart styles
+  const serviceColors = [
+    chartStyles.colors[0], // chart-1
+    chartStyles.colors[1], // chart-2
+    chartStyles.colors[2], // chart-3
+    chartStyles.colors[3], // chart-4
+    chartStyles.colors[4], // chart-5
+    chartStyles.primary,
+    chartStyles.secondary,
+    chartStyles.accent,
+    chartStyles.success,
+    chartStyles.warning,
   ];
 
+  // Step 5: Transform data for Chart.js
+  const chartData = {
+    labels: sortedData.map(([date]) => date),
+    datasets: services.map((service, index) => ({
+      label: service,
+      data: sortedData.map(([, services]) => services[service] || 0),
+      borderColor: serviceColors[index % serviceColors.length],
+      backgroundColor: serviceColors[index % serviceColors.length] + "20", // Add transparency
+      borderWidth: 2,
+      fill: false,
+      tension: 0.2,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+    })),
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+      duration: chartStyles.animation.duration,
+      easing: chartStyles.animation.easing,
+    },
+    plugins: {
+      legend: {
+        display: showLegend,
+        position: chartStyles.legendPosition,
+        labels: {
+          usePointStyle: true,
+          pointStyle: "circle",
+          padding: 16,
+          font: {
+            size: chartStyles.legendItemStyle.fontSize,
+            weight: chartStyles.legendItemStyle.fontWeight,
+            family: chartStyles.legendItemStyle.fontFamily,
+          },
+          color: chartStyles.legendItemStyle.color,
+        },
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        ...chartStyles.tooltipStyle,
+        mode: "index" as const,
+        intersect: false,
+        callbacks: {
+          label: function (context: any) {
+            const value = context.parsed.y;
+            return `${context.dataset.label}: ${
+              currencyFormat ? formatCurrency(value) : value
+            }`;
+          },
+          title: function (context: any) {
+            return `Date: ${formatDate(context[0].label)}`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Date",
+          color: chartStyles.textColor,
+          font: {
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
+          },
+          padding: 16,
+        },
+        grid: {
+          color: chartStyles.gridColor,
+          drawBorder: false,
+          lineWidth: 1,
+        },
+        ticks: {
+          color: chartStyles.mutedTextColor,
+          font: {
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
+          },
+          maxTicksLimit: 8,
+          padding: 8,
+          callback: function (value: any) {
+            return formatDate(sortedData[value]?.[0] || value);
+          },
+        },
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: "Cost ($)",
+          color: chartStyles.textColor,
+          font: {
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
+          },
+          padding: 16,
+        },
+        grid: {
+          color: chartStyles.gridColor,
+          drawBorder: false,
+          lineWidth: 1,
+        },
+        beginAtZero: true,
+        ticks: {
+          color: chartStyles.mutedTextColor,
+          font: {
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
+          },
+          padding: 8,
+          callback: function (value: any) {
+            return currencyFormat ? formatCurrency(value) : value;
+          },
+        },
+      },
+    },
+    interaction: {
+      mode: "index" as const,
+      intersect: false,
+    },
+  };
+
   return (
-    <div>
+    <ChartContainer height={height}>
       <h3>AWS Service Costs Over Time</h3>
-      <ResponsiveContainer width="100%" height={height}>
-        <LineChart data={chartData} margin={defaultChartConfig.margin}>
-          {showGrid && <CartesianGrid strokeDasharray="3 3" />}
-          <XAxis
-            dataKey="date"
-            angle={dateTickAngle}
-            textAnchor={dateTickAngle ? "end" : "middle"}
-            height={dateTickAngle ? 60 : undefined}
-            tick={{ fontSize: 12 }}
-            tickFormatter={(value) => {
-              // Format date for better readability
-              const date = new Date(value);
-              return date.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "2-digit",
-              });
-            }}
-            interval="preserveStartEnd"
-          />
-          <YAxis />
-          <Tooltip
-            formatter={(value: number, name: string) => [
-              currencyFormat ? formatCurrency(value) : String(value),
-              name,
-            ]}
-            labelFormatter={(label) => `Date: ${label}`}
-          />
-          {showLegend && <Legend />}
-          {services.map((service, index) => (
-            <Line
-              key={service}
-              type="monotone"
-              dataKey={service}
-              stroke={colors[index % colors.length]}
-              strokeWidth={2}
-              dot={{ r: 3 }}
-              connectNulls={false}
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+      <Line data={chartData} options={options} />
+    </ChartContainer>
   );
 };
 

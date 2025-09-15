@@ -2,15 +2,16 @@
 
 ## Overview
 
-This document outlines the unified design system implemented to ensure consistent styling across all chart components in the InfraSight application, regardless of the underlying charting library (Chart.js, Recharts, etc.).
+This document outlines the unified design system implemented to ensure consistent styling across all chart components in the InfraSight application using Chart.js as the single charting library.
 
 ## Problem Solved
 
 Previously, the application had design inconsistencies between different chart libraries:
 
 - Chart.js components used CSS custom properties and consistent styling
-- Recharts components had different styling approaches
-- Inconsistent colors, fonts, spacing, and container styling
+- Recharts components had different styling approaches and inconsistent design patterns
+- Mixed chart libraries (Chart.js and Recharts) created maintenance complexity
+- Inconsistent colors, fonts, spacing, and container styling across different chart types
 - No centralized design system for charts
 
 ## Solution
@@ -70,29 +71,22 @@ A reusable `ChartContainer` component that provides consistent styling for all c
 
 ### 3. Updated Components
 
-#### Chart.js Components
+#### All Chart.js Components
 
-- `AnomalyChartChartJS.tsx`
-- `CostChartChartJSSimple.tsx`
-- `TopServicesBarChartChartJS.tsx`
-- `AnomalyScatterPlotChartJS.tsx`
+- `AnomalyChartChartJS.tsx` - Scatter plot for anomaly detection
+- `CostChartChartJSSimple.tsx` - Line chart for cost trends
+- `TopServicesBarChartChartJS.tsx` - Bar chart for top services
+- `AnomalyScatterPlotChartJS.tsx` - Interactive scatter plot
+- `ForecastChart.tsx` - Line chart for forecasts (migrated from Recharts)
+- `BarChartTopServices.tsx` - Horizontal bar chart (migrated from Recharts)
+- `MultiServiceTimeline.tsx` - Multi-line chart for service timelines (migrated from Recharts)
 
 All now use:
 
 - Unified `chartStyles` configuration
 - `ChartContainer` for consistent containers
 - Consistent typography and colors
-
-#### Recharts Components
-
-- `ForecastChart.tsx`
-- `BarChartTopServices.tsx`
-
-Now use:
-
-- Same color palette and typography
-- `ChartContainer` for consistent styling
-- Unified tooltip and legend styling
+- Single Chart.js library for all chart types
 
 ### 4. Design Principles
 
@@ -156,38 +150,6 @@ return (
 );
 ```
 
-### Recharts Implementation
-
-```typescript
-import { chartStyles } from "./chartConfig";
-import ChartContainer from "./ChartContainer";
-
-return (
-  <ChartContainer height={400}>
-    <ResponsiveContainer width="100%" height={340}>
-      <LineChart data={data}>
-        <XAxis
-          tick={{
-            fill: chartStyles.axisTextColor,
-            fontSize: chartStyles.fontSize.axis,
-            fontFamily: chartStyles.fontFamily,
-          }}
-        />
-        <YAxis
-          tick={{
-            fill: chartStyles.axisTextColor,
-            fontSize: chartStyles.fontSize.axis,
-            fontFamily: chartStyles.fontFamily,
-          }}
-        />
-        <Tooltip contentStyle={chartStyles.tooltipStyle} />
-        <Line stroke={chartStyles.primary} />
-      </LineChart>
-    </ResponsiveContainer>
-  </ChartContainer>
-);
-```
-
 ## Benefits
 
 1. **Visual Consistency**: All charts now have the same look and feel
@@ -195,6 +157,8 @@ return (
 3. **Developer Experience**: Easy to implement new charts with consistent styling
 4. **Brand Cohesion**: Charts align with the overall application design
 5. **Accessibility**: Consistent accessibility standards across all charts
+6. **Library Consolidation**: Single Chart.js library reduces bundle size and complexity
+7. **Performance**: Consistent rendering engine across all chart types
 
 ## Future Enhancements
 
