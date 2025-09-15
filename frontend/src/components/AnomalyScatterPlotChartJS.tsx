@@ -9,9 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
-import {
-  chartStyles,
-} from "./chartConfig";
+import { chartStyles } from "./chartConfig";
 import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
@@ -183,7 +181,8 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       title: {
         display: false,
       },
-      tooltip: chartStyles.tooltipStyle,
+      tooltip: {
+        ...chartStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const point = context.raw;

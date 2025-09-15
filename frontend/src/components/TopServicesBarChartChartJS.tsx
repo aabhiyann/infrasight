@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -37,7 +36,6 @@ const TopServicesBarChartChartJS = ({
   costData,
   hideTitle,
   height = defaultChartConfig.height,
-  showGrid = defaultChartConfig.showGrid,
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: TopServicesBarChartProps) => {
@@ -119,7 +117,8 @@ const TopServicesBarChartChartJS = ({
       title: {
         display: false, // We'll handle titles in the parent component
       },
-      tooltip: chartStyles.tooltipStyle,
+      tooltip: {
+        ...chartStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.y;
