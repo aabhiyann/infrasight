@@ -15,9 +15,9 @@ import {
   defaultChartConfig,
   formatCurrency,
   formatDate,
-  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
+import { useThemeAwareChartStyles } from "../hooks/useThemeAwareChartStyles";
 import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
@@ -45,6 +45,9 @@ function ForecastChart({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: ForecastChartProps) {
+  // Get theme-aware chart styles
+  const { chartStyles: themeStyles } = useThemeAwareChartStyles();
+
   // Transform data for Chart.js with enhanced styling
   const chartData = {
     labels: data.map((point) => point.date),
@@ -52,49 +55,55 @@ function ForecastChart({
       {
         label: "Predicted Cost",
         data: data.map((point) => point.predicted_cost),
-        borderColor: chartStyles.primary,
-        backgroundColor: chartStyles.colorVariants.primary.alpha20,
-        borderWidth: 3,
-        fill: true,
+        borderColor: themeStyles.primary,
+        backgroundColor: themeStyles.colorVariants.primary.alpha20,
+        borderWidth: 4,
+        fill: false,
         tension: 0.3,
-        pointRadius: 5,
-        pointHoverRadius: 8,
-        pointBackgroundColor: chartStyles.primary,
-        pointBorderColor: "#ffffff",
-        pointBorderWidth: 2,
-        pointHoverBackgroundColor: chartStyles.primary,
-        pointHoverBorderColor: "#ffffff",
-        pointHoverBorderWidth: 3,
+        pointRadius: 6,
+        pointHoverRadius: 10,
+        pointBackgroundColor: themeStyles.primary,
+        pointBorderColor: themeStyles.backgroundColor,
+        pointBorderWidth: 3,
+        pointHoverBackgroundColor: themeStyles.primary,
+        pointHoverBorderColor: themeStyles.backgroundColor,
+        pointHoverBorderWidth: 4,
       },
       {
         label: "Upper Bound",
         data: data.map((point) => point.upper_bound),
-        borderColor: chartStyles.warning,
-        backgroundColor: chartStyles.colorVariants.accent.alpha10,
-        borderWidth: 2,
-        borderDash: [8, 4],
+        borderColor: themeStyles.warning,
+        backgroundColor: themeStyles.colorVariants.accent.alpha10,
+        borderWidth: 3,
+        borderDash: [6, 3],
         fill: false,
         tension: 0.3,
-        pointRadius: 0,
-        pointHoverRadius: 4,
-        pointBackgroundColor: chartStyles.warning,
-        pointBorderColor: "#ffffff",
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        pointBackgroundColor: themeStyles.warning,
+        pointBorderColor: themeStyles.backgroundColor,
         pointBorderWidth: 2,
+        pointHoverBackgroundColor: themeStyles.warning,
+        pointHoverBorderColor: themeStyles.backgroundColor,
+        pointHoverBorderWidth: 3,
       },
       {
         label: "Lower Bound",
         data: data.map((point) => point.lower_bound),
-        borderColor: chartStyles.success,
-        backgroundColor: chartStyles.colorVariants.secondary.alpha10,
-        borderWidth: 2,
-        borderDash: [8, 4],
+        borderColor: themeStyles.success,
+        backgroundColor: themeStyles.colorVariants.secondary.alpha10,
+        borderWidth: 3,
+        borderDash: [6, 3],
         fill: false,
         tension: 0.3,
-        pointRadius: 0,
-        pointHoverRadius: 4,
-        pointBackgroundColor: chartStyles.success,
-        pointBorderColor: "#ffffff",
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        pointBackgroundColor: themeStyles.success,
+        pointBorderColor: themeStyles.backgroundColor,
         pointBorderWidth: 2,
+        pointHoverBackgroundColor: themeStyles.success,
+        pointHoverBorderColor: themeStyles.backgroundColor,
+        pointHoverBorderWidth: 3,
       },
     ],
   };
@@ -103,9 +112,9 @@ function ForecastChart({
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: chartStyles.animation.duration,
-      easing: chartStyles.animation.easing,
-      delay: chartStyles.animation.delay,
+      duration: themeStyles.animation.duration,
+      easing: themeStyles.animation.easing,
+      delay: themeStyles.animation.delay,
     },
     interaction: {
       intersect: false,
@@ -114,24 +123,36 @@ function ForecastChart({
     plugins: {
       legend: {
         display: showLegend,
-        position: chartStyles.legendPosition,
+        position: themeStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 24,
           font: {
-            size: chartStyles.legendItemStyle.fontSize,
-            weight: chartStyles.legendItemStyle.fontWeight,
-            family: chartStyles.legendItemStyle.fontFamily,
+            size: themeStyles.legendItemStyle.fontSize,
+            weight: themeStyles.legendItemStyle.fontWeight,
+            family: themeStyles.legendItemStyle.fontFamily,
           },
-          color: chartStyles.legendItemStyle.color,
+          color: themeStyles.legendItemStyle.color,
+          generateLabels: function (chart: any) {
+            const datasets = chart.data.datasets;
+            return datasets.map((dataset: any, index: number) => ({
+              text: dataset.label,
+              fillStyle: dataset.borderColor,
+              strokeStyle: dataset.borderColor,
+              lineWidth: dataset.borderWidth,
+              pointStyle: index === 0 ? "circle" : "line", // Solid circle for main line, line for bounds
+              hidden: !chart.isDatasetVisible(index),
+              datasetIndex: index,
+            }));
+          },
         },
       },
       title: {
         display: false,
       },
       tooltip: {
-        ...chartStyles.tooltipStyle,
+        ...themeStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.y;
@@ -151,26 +172,26 @@ function ForecastChart({
         title: {
           display: true,
           text: "Date",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
-          borderDash: chartStyles.gridStyle.borderDash,
+          borderDash: themeStyles.gridStyle.borderDash,
         },
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -184,27 +205,27 @@ function ForecastChart({
         title: {
           display: true,
           text: "Cost ($)",
-          color: chartStyles.textColor,
+          color: themeStyles.textColor,
           font: {
-            size: chartStyles.fontSize.title,
-            weight: chartStyles.fontWeight.semibold,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.title,
+            weight: themeStyles.fontWeight.semibold,
+            family: themeStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: chartStyles.gridColor,
+          color: themeStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
-          borderDash: chartStyles.gridStyle.borderDash,
+          borderDash: themeStyles.gridStyle.borderDash,
         },
         beginAtZero: true,
         ticks: {
-          color: chartStyles.mutedTextColor,
+          color: themeStyles.mutedTextColor,
           font: {
-            size: chartStyles.fontSize.axis,
-            weight: chartStyles.fontWeight.normal,
-            family: chartStyles.fontFamily,
+            size: themeStyles.fontSize.axis,
+            weight: themeStyles.fontWeight.normal,
+            family: themeStyles.fontFamily,
           },
           padding: 8,
           callback: function (value: any) {

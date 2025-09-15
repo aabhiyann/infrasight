@@ -160,6 +160,17 @@ export const chartStyles = {
     loop: false,
   },
 
+  // Performance optimization settings
+  performance: {
+    // Disable animations on low-end devices
+    reducedMotion: window.matchMedia?.("(prefers-reduced-motion: reduce)")
+      .matches,
+    // Use canvas rendering for better performance
+    useCanvas: true,
+    // Optimize for large datasets
+    dataLimit: 1000,
+  },
+
   // Modern hover effects
   hover: {
     duration: 200,
@@ -266,36 +277,316 @@ export const getColorWithAlpha = (color: string, alpha: number): string => {
   return color;
 };
 
-// Centralized color palette - update these values to change the entire color scheme
-export const CHART_COLOR_PALETTE = {
-  // Primary brand colors
-  primary: "#0070b8",
-  primaryLight: "#34a3f1",
-  primaryDark: "#0052b6",
+// Utility function to generate chart colors dynamically
+export const generateChartColors = (count: number): string[] => {
+  const baseColors = getThemeAwareColors();
+  const colors: string[] = [];
 
-  // Secondary colors
-  secondary: "#38837b",
-  secondaryLight: "#4a9b91",
-  secondaryDark: "#2d7a6b",
+  for (let i = 0; i < count; i++) {
+    if (i < 5) {
+      // Use predefined colors first
+      const colorKeys = [
+        "primary",
+        "secondary",
+        "accent",
+        "success",
+        "warning",
+      ] as const;
+      colors.push(baseColors[colorKeys[i]]);
+    } else {
+      // Generate variations for additional colors
+      const hue = (i * 137.5) % 360; // Golden angle for good distribution
+      const isDark =
+        document.documentElement.getAttribute("data-theme") === "dark";
+      const saturation = isDark ? 60 : 70; // Lower saturation for dark mode
+      const lightness = isDark ? 60 : 50; // Higher lightness for dark mode
+      colors.push(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
+    }
+  }
 
-  // Accent colors
-  accent: "#e19e20",
-  accentLight: "#f4c430",
-  accentDark: "#d97706",
+  return colors;
+};
 
-  // Semantic colors
-  success: "#10b981",
-  warning: "#f59e0b",
-  danger: "#ef4444",
-  info: "#3b82f6",
+// Utility function to format large numbers for better readability
+export const formatLargeNumber = (value: number): string => {
+  if (value >= 1e9) {
+    return `$${(value / 1e9).toFixed(1)}B`;
+  }
+  if (value >= 1e6) {
+    return `$${(value / 1e6).toFixed(1)}M`;
+  }
+  if (value >= 1e3) {
+    return `$${(value / 1e3).toFixed(1)}K`;
+  }
+  return `$${value.toFixed(2)}`;
+};
 
-  // Neutral colors
-  text: "#3c4856",
-  textMuted: "#a0acbd",
-  border: "#e5e7eb",
-  background: "#ffffff",
+// Utility function to check if device prefers reduced motion
+export const prefersReducedMotion = (): boolean => {
+  return (
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false
+  );
+};
 
-  // Additional chart colors
-  rose: "#e778a6",
-  slate: "#3c4856",
-} as const;
+// Utility function to optimize chart data for performance
+export const optimizeChartData = (data: any[], limit: number = 1000): any[] => {
+  if (data.length <= limit) {
+    return data;
+  }
+
+  // Sample data points evenly
+  const step = Math.ceil(data.length / limit);
+  return data.filter((_, index) => index % step === 0);
+};
+
+// Theme-aware color palette system
+export const getThemeAwareColors = () => {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const isHighContrast =
+    document.documentElement.getAttribute("data-theme") === "high-contrast";
+
+  if (isHighContrast) {
+    return {
+      // High contrast colors - bold and accessible
+      primary: "#0000ff",
+      primaryLight: "#4d4dff",
+      primaryDark: "#0000cc",
+      secondary: "#006600",
+      secondaryLight: "#00cc00",
+      secondaryDark: "#004400",
+      accent: "#ff6600",
+      accentLight: "#ff9933",
+      accentDark: "#cc4400",
+      success: "#006600",
+      warning: "#ff6600",
+      danger: "#cc0000",
+      info: "#0000ff",
+      text: "#000000",
+      textMuted: "#333333",
+      border: "#000000",
+      background: "#ffffff",
+      rose: "#ff0066",
+      slate: "#333333",
+    };
+  }
+
+  if (isDark) {
+    return {
+      // Dark mode colors - vibrant and pleasant
+      primary: "#60a5fa", // Brighter blue for dark backgrounds
+      primaryLight: "#93c5fd",
+      primaryDark: "#3b82f6",
+      secondary: "#34d399", // Brighter teal
+      secondaryLight: "#6ee7b7",
+      secondaryDark: "#10b981",
+      accent: "#fbbf24", // Warmer yellow
+      accentLight: "#fcd34d",
+      accentDark: "#f59e0b",
+      success: "#34d399",
+      warning: "#fbbf24",
+      danger: "#f87171", // Softer red
+      info: "#60a5fa",
+      text: "#f1f5f9", // Light text for dark background
+      textMuted: "#94a3b8",
+      border: "#334155",
+      background: "#1e293b",
+      rose: "#fb7185", // Softer pink
+      slate: "#94a3b8",
+    };
+  }
+
+  // Light mode colors (default)
+  return {
+    primary: "#0070b8",
+    primaryLight: "#34a3f1",
+    primaryDark: "#0052b6",
+    secondary: "#38837b",
+    secondaryLight: "#4a9b91",
+    secondaryDark: "#2d7a6b",
+    accent: "#e19e20",
+    accentLight: "#f4c430",
+    accentDark: "#d97706",
+    success: "#10b981",
+    warning: "#f59e0b",
+    danger: "#ef4444",
+    info: "#3b82f6",
+    text: "#3c4856",
+    textMuted: "#a0acbd",
+    border: "#e5e7eb",
+    background: "#ffffff",
+    rose: "#e778a6",
+    slate: "#3c4856",
+  };
+};
+
+// Legacy static palette for backward compatibility
+export const CHART_COLOR_PALETTE = getThemeAwareColors();
+
+// Theme-aware chart styles function
+export const getThemeAwareChartStyles = () => {
+  const colors = getThemeAwareColors();
+
+  return {
+    // Modern color palette with professional hues
+    colors: [
+      colors.primary,
+      colors.secondary,
+      colors.accent,
+      colors.rose,
+      colors.slate,
+    ],
+
+    // Primary colors
+    primary: colors.primary,
+    secondary: colors.primaryDark,
+    accent: colors.primaryLight,
+
+    // Semantic colors
+    success: colors.success,
+    warning: colors.warning,
+    danger: colors.danger,
+
+    // Gradient definitions for modern look
+    gradients: {
+      primary: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)`,
+      secondary: `linear-gradient(135deg, ${colors.secondary} 0%, ${colors.secondaryDark} 100%)`,
+      accent: `linear-gradient(135deg, ${colors.accent} 0%, ${colors.accentDark} 100%)`,
+      danger: `linear-gradient(135deg, ${colors.danger} 0%, #dc2626 100%)`,
+      success: `linear-gradient(135deg, ${colors.success} 0%, #059669 100%)`,
+    },
+
+    // Enhanced color variants with transparency
+    colorVariants: {
+      primary: {
+        light: colors.primaryLight,
+        main: colors.primary,
+        dark: colors.primaryDark,
+        alpha10: getColorWithAlpha(colors.primary, 0.1),
+        alpha20: getColorWithAlpha(colors.primary, 0.2),
+        alpha30: getColorWithAlpha(colors.primary, 0.3),
+      },
+      secondary: {
+        light: colors.secondaryLight,
+        main: colors.secondary,
+        dark: colors.secondaryDark,
+        alpha10: getColorWithAlpha(colors.secondary, 0.1),
+        alpha20: getColorWithAlpha(colors.secondary, 0.2),
+        alpha30: getColorWithAlpha(colors.secondary, 0.3),
+      },
+      accent: {
+        light: colors.accentLight,
+        main: colors.accent,
+        dark: colors.accentDark,
+        alpha10: getColorWithAlpha(colors.accent, 0.1),
+        alpha20: getColorWithAlpha(colors.accent, 0.2),
+        alpha30: getColorWithAlpha(colors.accent, 0.3),
+      },
+    },
+
+    // Grid and axis styling
+    gridColor: colors.border,
+
+    // Text colors
+    textColor: colors.text,
+    mutedTextColor: colors.textMuted,
+    axisTextColor: colors.textMuted,
+    titleColor: colors.text,
+
+    // Background colors
+    backgroundColor: colors.background,
+    tooltipBackground: colors.background,
+
+    // Focus and interaction
+    focus: {
+      outline: `2px solid ${colors.primaryLight}`,
+    },
+
+    // Tooltip styling
+    tooltipStyle: {
+      backgroundColor: colors.background,
+      titleColor: colors.text,
+      bodyColor: colors.text,
+      borderColor: colors.border,
+      borderWidth: 1,
+      cornerRadius: 8,
+      displayColors: true,
+      titleFont: {
+        size: 14,
+        weight: "bold" as const,
+      },
+      bodyFont: {
+        size: 13,
+        weight: "normal" as const,
+      },
+    },
+
+    // Animation settings
+    animation: {
+      duration: prefersReducedMotion() ? 0 : 1500,
+      easing: "easeInOutQuart" as const,
+      delay: prefersReducedMotion() ? 0 : 100,
+      loop: false,
+    },
+
+    // Performance optimization settings
+    performance: {
+      reducedMotion: prefersReducedMotion(),
+      useCanvas: true,
+      dataLimit: 1000,
+    },
+
+    // Modern hover effects
+    hover: {
+      duration: prefersReducedMotion() ? 0 : 200,
+      easing: "ease-out",
+      scale: 1.02,
+      shadow: `0 20px 40px rgba(0, 0, 0, ${
+        colors.text === "#000000" ? "0.1" : "0.3"
+      })`,
+    },
+
+    // Container styling
+    containerStyle: {
+      background: colors.background,
+      border: `1px solid ${colors.border}`,
+      borderRadius: "16px",
+      boxShadow: `0 4px 20px rgba(0, 0, 0, ${
+        colors.text === "#000000" ? "0.05" : "0.15"
+      })`,
+      padding: "24px",
+      backdropFilter: "blur(10px)",
+      position: "relative" as const,
+      overflow: "hidden" as const,
+    },
+
+    // Legend styling
+    legendPosition: "bottom" as const,
+    legendItemStyle: {
+      fontSize: 13,
+      fontWeight: "normal" as const,
+      fontFamily: "Inter, system-ui, sans-serif",
+      color: colors.text,
+    },
+
+    // Typography
+    fontSize: {
+      title: 14,
+      axis: 12,
+      legend: 13,
+    },
+    fontWeight: {
+      normal: "normal" as const,
+      semibold: "bold" as const,
+      bold: "bold" as const,
+    },
+    fontFamily: "Inter, system-ui, sans-serif",
+
+    // Grid styling
+    gridStyle: {
+      color: colors.border,
+      lineWidth: 1,
+      drawBorder: false,
+      borderDash: [] as number[],
+    },
+  };
+};

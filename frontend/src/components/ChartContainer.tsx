@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import {
   getChartContainerStyle,
   type ChartContainerProps,
@@ -15,20 +15,36 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
   className = "",
 }) => {
   const containerStyle = getChartContainerStyle(height);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseEnter = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const element = e.currentTarget;
+      element.style.transform = `scale(${chartStyles.hover.scale})`;
+      element.style.boxShadow = chartStyles.hover.shadow;
+      element.style.transition = `all ${chartStyles.hover.duration}ms ${chartStyles.hover.easing}`;
+    },
+    []
+  );
+
+  const handleMouseLeave = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const element = e.currentTarget;
+      element.style.transform = "scale(1)";
+      element.style.boxShadow = chartStyles.containerStyle.boxShadow;
+    },
+    []
+  );
 
   return (
     <div
+      ref={containerRef}
       className={`chart-container ${className}`}
       style={containerStyle}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = `scale(${chartStyles.hover.scale})`;
-        e.currentTarget.style.boxShadow = chartStyles.hover.shadow;
-        e.currentTarget.style.transition = `all ${chartStyles.hover.duration}ms ${chartStyles.hover.easing}`;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "scale(1)";
-        e.currentTarget.style.boxShadow = chartStyles.containerStyle.boxShadow;
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      role="img"
+      aria-label="Data visualization chart"
     >
       {/* Subtle gradient overlay for modern look */}
       <div
