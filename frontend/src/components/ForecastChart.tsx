@@ -12,9 +12,11 @@ import type { ForecastPoint } from "../api/forecastApi";
 import {
   defaultChartConfig,
   formatCurrency,
+  formatDate,
   chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
+import ChartContainer from "./ChartContainer";
 
 interface ForecastChartProps extends BaseChartProps {
   data: ForecastPoint[];
@@ -32,14 +34,17 @@ function ForecastChart({
   dateTickAngle = defaultChartConfig.dateTickAngle,
 }: ForecastChartProps) {
   return (
-    <div>
+    <ChartContainer height={height}>
       {!hideTitle && <h3>{service}</h3>}
-      <ResponsiveContainer width="100%" height={height}>
+      <ResponsiveContainer width="100%" height={height - 60}>
+        {" "}
+        {/* Account for container padding */}
         <LineChart data={data} margin={defaultChartConfig.margin}>
           {showGrid && (
             <CartesianGrid
               strokeDasharray="3 3"
               stroke={chartStyles.gridColor}
+              strokeOpacity={chartStyles.gridOpacity}
             />
           )}
           <XAxis
@@ -47,33 +52,28 @@ function ForecastChart({
             angle={dateTickAngle}
             textAnchor={dateTickAngle ? "end" : "middle"}
             height={dateTickAngle ? 60 : undefined}
-            tick={{ fill: chartStyles.textColor, fontSize: 12 }}
-            tickFormatter={(value) => {
-              // Format date for better readability
-              const date = new Date(value);
-              return date.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "2-digit",
-              });
+            tick={{
+              fill: chartStyles.axisTextColor,
+              fontSize: chartStyles.fontSize.axis,
+              fontFamily: chartStyles.fontFamily,
             }}
+            tickFormatter={(value: any) => formatDate(value)}
             interval="preserveStartEnd"
           />
           <YAxis
-            tick={{ fill: chartStyles.textColor, fontSize: 12 }}
+            tick={{
+              fill: chartStyles.axisTextColor,
+              fontSize: chartStyles.fontSize.axis,
+              fontFamily: chartStyles.fontFamily,
+            }}
             tickFormatter={currencyFormat ? formatCurrency : undefined}
           />
           <Tooltip
             formatter={(value: number) =>
               currencyFormat ? formatCurrency(value) : String(value)
             }
-            labelFormatter={(label) => `Date: ${label}`}
-            contentStyle={{
-              backgroundColor: "var(--color-surface)",
-              border: "1px solid var(--color-border)",
-              borderRadius: "8px",
-              color: "var(--color-text)",
-            }}
+            labelFormatter={(label: any) => `Date: ${formatDate(label)}`}
+            contentStyle={chartStyles.tooltipStyle}
           />
           {showLegend && (
             <Legend
@@ -85,26 +85,33 @@ function ForecastChart({
           <Line
             type="monotone"
             dataKey="predicted_cost"
-            stroke="var(--color-secondary)"
+            stroke={chartStyles.primary}
+            strokeWidth={3}
             name="Predicted"
+            dot={{ fill: chartStyles.primary, strokeWidth: 2, r: 4 }}
+            activeDot={{ r: 6, stroke: chartStyles.primary, strokeWidth: 2 }}
           />
           <Line
             type="monotone"
             dataKey="upper_bound"
-            stroke="var(--color-accent)"
+            stroke={chartStyles.warning}
+            strokeWidth={2}
             name="Upper Bound"
             strokeDasharray="5 5"
+            dot={false}
           />
           <Line
             type="monotone"
             dataKey="lower_bound"
-            stroke="var(--color-success)"
+            stroke={chartStyles.success}
+            strokeWidth={2}
             name="Lower Bound"
             strokeDasharray="5 5"
+            dot={false}
           />
         </LineChart>
       </ResponsiveContainer>
-    </div>
+    </ChartContainer>
   );
 }
 

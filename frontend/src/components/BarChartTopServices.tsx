@@ -8,12 +8,25 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import type { CostRecord } from "../api/costApi";
+import {
+  defaultChartConfig,
+  formatCurrency,
+  chartStyles,
+  type BaseChartProps,
+} from "./chartConfig";
+import ChartContainer from "./ChartContainer";
 
-interface BarChartTopServicesProps {
+interface BarChartTopServicesProps extends BaseChartProps {
   data: CostRecord[];
 }
 
-const BarChartTopServices = ({ data }: BarChartTopServicesProps) => {
+const BarChartTopServices = ({
+  data,
+  hideTitle,
+  height = defaultChartConfig.height,
+  showGrid = defaultChartConfig.showGrid,
+  currencyFormat = defaultChartConfig.currencyFormat,
+}: BarChartTopServicesProps) => {
   // Step 1: Aggregate total cost per service
   const totals: Record<string, number> = {};
   data.forEach((item) => {
@@ -27,18 +40,58 @@ const BarChartTopServices = ({ data }: BarChartTopServicesProps) => {
     .slice(0, 10); // Top 10 services
 
   return (
-    <div>
-      <h3>Top 10 Services by Total Cost</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData} layout="vertical">
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis type="category" dataKey="service" width={150} />
-          <Tooltip />
-          <Bar dataKey="total" fill="var(--color-success)" />
+    <ChartContainer height={height}>
+      {!hideTitle && <h3>Top 10 Services by Total Cost</h3>}
+      <ResponsiveContainer width="100%" height={height - 60}>
+        {" "}
+        {/* Account for container padding */}
+        <BarChart
+          data={chartData}
+          layout="vertical"
+          margin={defaultChartConfig.margin}
+        >
+          {showGrid && (
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke={chartStyles.gridColor}
+              strokeOpacity={chartStyles.gridOpacity}
+            />
+          )}
+          <XAxis
+            type="number"
+            tick={{
+              fill: chartStyles.axisTextColor,
+              fontSize: chartStyles.fontSize.axis,
+              fontFamily: chartStyles.fontFamily,
+            }}
+            tickFormatter={currencyFormat ? formatCurrency : undefined}
+          />
+          <YAxis
+            type="category"
+            dataKey="service"
+            width={150}
+            tick={{
+              fill: chartStyles.axisTextColor,
+              fontSize: chartStyles.fontSize.axis,
+              fontFamily: chartStyles.fontFamily,
+            }}
+          />
+          <Tooltip
+            formatter={(value: number) => [
+              currencyFormat ? formatCurrency(value) : value,
+              "Total Cost",
+            ]}
+            labelFormatter={(label) => `Service: ${label}`}
+            contentStyle={chartStyles.tooltipStyle}
+          />
+          <Bar
+            dataKey="total"
+            fill={chartStyles.primary}
+            radius={[0, 4, 4, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </ChartContainer>
   );
 };
 

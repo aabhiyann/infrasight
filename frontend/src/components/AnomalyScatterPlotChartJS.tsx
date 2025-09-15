@@ -9,6 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
+import {
+  chartStyles,
+} from "./chartConfig";
+import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
 ChartJS.register(
@@ -137,16 +141,16 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       {
         label: "Medium Severity (2.0 ≤ Z < 2.5)",
         data: mediumData,
-        backgroundColor: "var(--amber-600)",
-        borderColor: "var(--amber-600)",
+        backgroundColor: "var(--chart-3)",
+        borderColor: "var(--chart-3)",
         pointRadius: 4,
         pointHoverRadius: 6,
       },
       {
         label: "Low Severity (Z < 2.0)",
         data: lowData,
-        backgroundColor: "var(--brand-400)",
-        borderColor: "var(--brand-400)",
+        backgroundColor: "var(--chart-1)",
+        borderColor: "var(--chart-1)",
         pointRadius: 3,
         pointHoverRadius: 5,
       },
@@ -157,50 +161,29 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: 1200,
-      easing: "easeInOutQuart" as const,
+      duration: chartStyles.animation.duration,
+      easing: chartStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: true,
-        position: "top" as const,
+        position: chartStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 24,
           font: {
-            size: 13,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.legendItemStyle.fontSize,
+            weight: chartStyles.legendItemStyle.fontWeight,
+            family: chartStyles.legendItemStyle.fontFamily,
           },
-          color: "var(--color-text)",
+          color: chartStyles.legendItemStyle.color,
         },
       },
       title: {
         display: false,
       },
-      tooltip: {
-        backgroundColor: "var(--color-surface)",
-        titleColor: "var(--color-text)",
-        bodyColor: "var(--color-text)",
-        borderColor: "var(--color-border)",
-        borderWidth: 1,
-        cornerRadius: 12,
-        displayColors: true,
-        padding: 16,
-        titleFont: {
-          size: 14,
-          weight: "bold" as const,
-          family:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-        },
-        bodyFont: {
-          size: 13,
-          weight: "normal" as const,
-          family:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-        },
+      tooltip: chartStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const point = context.raw;
@@ -224,27 +207,25 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         title: {
           display: true,
           text: "Date",
-          color: "var(--color-text)",
+          color: chartStyles.textColor,
           font: {
-            size: 13,
-            weight: "bold" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: "var(--color-border)",
+          color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: "var(--color-muted)",
+          color: chartStyles.mutedTextColor,
           font: {
-            size: 12,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -254,27 +235,25 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
         title: {
           display: true,
           text: viewMode === "cost" ? "Cost ($)" : "Service",
-          color: "var(--color-text)",
+          color: chartStyles.textColor,
           font: {
-            size: 13,
-            weight: "bold" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: "var(--color-border)",
+          color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: "var(--color-muted)",
+          color: chartStyles.mutedTextColor,
           font: {
-            size: 12,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
           },
           beginAtZero: viewMode === "cost",
           padding: 8,
@@ -317,20 +296,9 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
           </button>
         </div>
       </div>
-      <div
-        style={{
-          height: 400,
-          width: "100%",
-          background: "var(--color-surface)",
-          borderRadius: "12px",
-          padding: "1rem",
-          boxShadow:
-            "0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1)",
-          border: "1px solid var(--color-border)",
-        }}
-      >
+      <ChartContainer height={400}>
         <Scatter data={chartData} options={options} />
-      </div>
+      </ChartContainer>
       <div className="chart-footer">
         <div className="legend-items">
           <div className="legend-item">

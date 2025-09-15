@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Badge from "./Badge";
 import { Text, Flex } from "./ui";
+import { chartStyles } from "./chartConfig";
 
 interface ChartCardProps {
   title?: string;
@@ -18,7 +19,7 @@ const ChartCard = ({
   children,
 }: ChartCardProps) => {
   return (
-    <div className="card">
+    <div className="card" style={chartStyles.containerStyle}>
       {title ? (
         <div className="card-header">
           <Flex justify="space-between" align="center">

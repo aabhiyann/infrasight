@@ -12,8 +12,10 @@ import type { Anomaly } from "../api/anomalyApi";
 import {
   defaultChartConfig,
   formatCurrency,
+  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
+import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
 ChartJS.register(
@@ -32,7 +34,6 @@ interface AnomalyChartProps extends BaseChartProps {
 const AnomalyChartChartJS = ({
   data,
   height = 400,
-  showGrid = defaultChartConfig.showGrid,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: AnomalyChartProps) => {
   if (data.length === 0) {
@@ -67,32 +68,32 @@ const AnomalyChartChartJS = ({
       {
         label: "High Severity (Z ≥ 3.0)",
         data: highSeverityData,
-        backgroundColor: "#dc2626",
-        borderColor: "#dc2626",
+        backgroundColor: "var(--color-danger)",
+        borderColor: "var(--color-danger)",
         pointRadius: 8,
         pointHoverRadius: 10,
       },
       {
         label: "Medium-High Severity (2.5 ≤ Z < 3.0)",
         data: mediumHighData,
-        backgroundColor: "#ea580c",
-        borderColor: "#ea580c",
+        backgroundColor: "var(--color-warning)",
+        borderColor: "var(--color-warning)",
         pointRadius: 6,
         pointHoverRadius: 8,
       },
       {
         label: "Medium Severity (2.0 ≤ Z < 2.5)",
         data: mediumData,
-        backgroundColor: "#d97706",
-        borderColor: "#d97706",
+        backgroundColor: "var(--chart-3)",
+        borderColor: "var(--chart-3)",
         pointRadius: 4,
         pointHoverRadius: 6,
       },
       {
         label: "Low Severity (Z < 2.0)",
         data: lowData,
-        backgroundColor: "#2563eb",
-        borderColor: "#2563eb",
+        backgroundColor: "var(--chart-1)",
+        borderColor: "var(--chart-1)",
         pointRadius: 3,
         pointHoverRadius: 5,
       },
@@ -102,34 +103,30 @@ const AnomalyChartChartJS = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: chartStyles.animation.duration,
+      easing: chartStyles.animation.easing,
+    },
     plugins: {
       legend: {
         display: true,
-        position: "top" as const,
+        position: chartStyles.legendPosition,
+        labels: {
+          usePointStyle: true,
+          pointStyle: "circle",
+          padding: 24,
+          font: {
+            size: chartStyles.legendItemStyle.fontSize,
+            weight: chartStyles.legendItemStyle.fontWeight,
+            family: chartStyles.legendItemStyle.fontFamily,
+          },
+          color: chartStyles.legendItemStyle.color,
+        },
       },
       title: {
         display: false, // We'll handle titles in the parent component
       },
-      tooltip: {
-        callbacks: {
-          label: function (context: any) {
-            const point = context.raw;
-            return [
-              `Service: ${point.service}`,
-              `Amount: ${currencyFormat ? formatCurrency(point.y) : point.y}`,
-              `Z-Score: ${point.z_score.toFixed(2)}`,
-            ];
-          },
-          title: function (context: any) {
-            const date = new Date(context[0].raw.x);
-            return date.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "2-digit",
-            });
-          },
-        },
-      },
+      tooltip: chartStyles.tooltipStyle,
     },
     scales: {
       x: {
@@ -144,18 +141,56 @@ const AnomalyChartChartJS = ({
         title: {
           display: true,
           text: "Date",
+          color: chartStyles.textColor,
+          font: {
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
+          },
+          padding: 16,
+        },
+        grid: {
+          color: chartStyles.gridColor,
+          drawBorder: false,
+          lineWidth: 1,
         },
         ticks: {
-          maxTicksLimit: 10,
+          color: chartStyles.mutedTextColor,
+          font: {
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
+          },
+          maxTicksLimit: 8,
+          padding: 8,
         },
       },
       y: {
         title: {
           display: true,
           text: "Cost ($)",
+          color: chartStyles.textColor,
+          font: {
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
+          },
+          padding: 16,
+        },
+        grid: {
+          color: chartStyles.gridColor,
+          drawBorder: false,
+          lineWidth: 1,
         },
         beginAtZero: true,
         ticks: {
+          color: chartStyles.mutedTextColor,
+          font: {
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
+          },
+          padding: 8,
           callback: function (value: any) {
             return currencyFormat ? formatCurrency(value) : value;
           },
@@ -170,33 +205,35 @@ const AnomalyChartChartJS = ({
   return (
     <div>
       <h3>Cost Anomalies Detected ({data.length} total)</h3>
-      <div style={{ height: height, width: "100%" }}>
+      <ChartContainer height={height}>
         <Scatter data={chartData} options={options} />
-      </div>
+      </ChartContainer>
 
       {/* Summary Table */}
       <div className="mt-2xl">
         <h4>Anomaly Details</h4>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Service</th>
-              <th>Amount</th>
-              <th>Z-Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((anomaly, index) => (
-              <tr key={index}>
-                <td>{anomaly.date}</td>
-                <td>{anomaly.service}</td>
-                <td>${anomaly.amount.toFixed(2)}</td>
-                <td>{anomaly.z_score.toFixed(2)}</td>
+        <div style={chartStyles.containerStyle}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Z-Score</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((anomaly, index) => (
+                <tr key={index}>
+                  <td>{anomaly.date}</td>
+                  <td>{anomaly.service}</td>
+                  <td>${anomaly.amount.toFixed(2)}</td>
+                  <td>{anomaly.z_score.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

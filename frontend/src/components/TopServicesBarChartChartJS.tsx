@@ -13,8 +13,10 @@ import type { CostRecord } from "../api/costApi";
 import {
   defaultChartConfig,
   formatCurrency,
+  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
+import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
 ChartJS.register(
@@ -78,7 +80,7 @@ const TopServicesBarChartChartJS = ({
       {
         label: "Total Cost",
         data: topServices.map((item) => item.total),
-        backgroundColor: "var(--brand-500)",
+        backgroundColor: "var(--chart-1)",
         borderColor: "var(--brand-600)",
         borderWidth: 2,
         borderRadius: 6,
@@ -90,55 +92,34 @@ const TopServicesBarChartChartJS = ({
     ],
   };
 
-  // Chart.js options - styled to match your design system
+  // Chart.js options - styled to match unified design system
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: 1000,
-      easing: "easeInOutQuart" as const,
+      duration: chartStyles.animation.duration,
+      easing: chartStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: showLegend,
-        position: "top" as const,
+        position: chartStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "rect",
           padding: 24,
           font: {
-            size: 13,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.legendItemStyle.fontSize,
+            weight: chartStyles.legendItemStyle.fontWeight,
+            family: chartStyles.legendItemStyle.fontFamily,
           },
-          color: "var(--color-text)",
+          color: chartStyles.legendItemStyle.color,
         },
       },
       title: {
         display: false, // We'll handle titles in the parent component
       },
-      tooltip: {
-        backgroundColor: "var(--color-surface)",
-        titleColor: "var(--color-text)",
-        bodyColor: "var(--color-text)",
-        borderColor: "var(--color-border)",
-        borderWidth: 1,
-        cornerRadius: 12,
-        displayColors: true,
-        padding: 16,
-        titleFont: {
-          size: 14,
-          weight: "600" as const,
-          family:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-        },
-        bodyFont: {
-          size: 13,
-          weight: "400" as const,
-          family:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-        },
+      tooltip: chartStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.y;
@@ -155,27 +136,25 @@ const TopServicesBarChartChartJS = ({
         title: {
           display: true,
           text: "Service",
-          color: "var(--color-text)",
+          color: chartStyles.textColor,
           font: {
-            size: 13,
-            weight: "bold" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: "var(--color-border)",
+          color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: "var(--color-muted)",
+          color: chartStyles.mutedTextColor,
           font: {
-            size: 12,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
           },
           maxRotation: 30,
           minRotation: 0,
@@ -187,27 +166,25 @@ const TopServicesBarChartChartJS = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: "var(--color-text)",
+          color: chartStyles.textColor,
           font: {
-            size: 13,
-            weight: "bold" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: "var(--color-border)",
+          color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: "var(--color-muted)",
+          color: chartStyles.mutedTextColor,
           font: {
-            size: 12,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
           },
           beginAtZero: true,
           padding: 8,
@@ -231,20 +208,9 @@ const TopServicesBarChartChartJS = ({
   return (
     <div>
       {!hideTitle && <h3>Top 5 Services This Month (by Total Cost)</h3>}
-      <div
-        style={{
-          height: height,
-          width: "100%",
-          background: "var(--color-surface)",
-          borderRadius: "12px",
-          padding: "1rem",
-          boxShadow:
-            "0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1)",
-          border: "1px solid var(--color-border)",
-        }}
-      >
+      <ChartContainer height={height}>
         <Bar data={chartData} options={options} />
-      </div>
+      </ChartContainer>
     </div>
   );
 };

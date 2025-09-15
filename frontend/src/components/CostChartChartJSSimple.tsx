@@ -16,8 +16,10 @@ import { useAnomalyApi, type Anomaly } from "../api/anomalyApi";
 import {
   defaultChartConfig,
   formatCurrency,
+  chartStyles,
   type BaseChartProps,
 } from "./chartConfig";
+import ChartContainer from "./ChartContainer";
 
 // Register Chart.js components
 ChartJS.register(
@@ -128,7 +130,7 @@ const CostChartChartJSSimple = ({
             anomalies: dayAnomalies,
           };
         }),
-        borderColor: "var(--brand-500)",
+        borderColor: "var(--chart-1)",
         backgroundColor: "var(--accent-10)",
         borderWidth: 3,
         fill: true,
@@ -150,44 +152,43 @@ const CostChartChartJSSimple = ({
         pointBackgroundColor: (context: any) => {
           const dataPoint = context.parsed;
           if (dataPoint.hasHighSeverity) return "var(--color-danger)";
-          if (dataPoint.hasMediumSeverity) return "var(--amber-600)";
-          if (dataPoint.hasLowSeverity) return "var(--brand-400)";
-          return "var(--brand-500)";
+          if (dataPoint.hasMediumSeverity) return "var(--chart-3)";
+          if (dataPoint.hasLowSeverity) return "var(--chart-1)";
+          return "var(--chart-1)";
         },
         pointBorderColor: (context: any) => {
           const dataPoint = context.parsed;
           if (dataPoint.hasHighSeverity) return "var(--color-danger)";
-          if (dataPoint.hasMediumSeverity) return "var(--amber-600)";
-          if (dataPoint.hasLowSeverity) return "var(--brand-400)";
-          return "var(--brand-500)";
+          if (dataPoint.hasMediumSeverity) return "var(--chart-3)";
+          if (dataPoint.hasLowSeverity) return "var(--chart-1)";
+          return "var(--chart-1)";
         },
       },
     ],
   };
 
-  // Chart.js options - styled to match your design system
+  // Chart.js options - styled to match unified design system
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     animation: {
-      duration: 1000,
-      easing: "easeInOutQuart" as const,
+      duration: chartStyles.animation.duration,
+      easing: chartStyles.animation.easing,
     },
     plugins: {
       legend: {
         display: showLegend,
-        position: "top" as const,
+        position: chartStyles.legendPosition,
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
           padding: 24,
           font: {
-            size: 13,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.legendItemStyle.fontSize,
+            weight: chartStyles.legendItemStyle.fontWeight,
+            family: chartStyles.legendItemStyle.fontFamily,
           },
-          color: "var(--color-text)",
+          color: chartStyles.legendItemStyle.color,
         },
       },
       title: {
@@ -196,26 +197,7 @@ const CostChartChartJSSimple = ({
       tooltip: {
         mode: "index" as const,
         intersect: false,
-        backgroundColor: "var(--color-surface)",
-        titleColor: "var(--color-text)",
-        bodyColor: "var(--color-text)",
-        borderColor: "var(--color-border)",
-        borderWidth: 1,
-        cornerRadius: 12,
-        displayColors: true,
-        padding: 16,
-        titleFont: {
-          size: 14,
-          weight: "600" as const,
-          family:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-        },
-        bodyFont: {
-          size: 13,
-          weight: "400" as const,
-          family:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-        },
+        ...chartStyles.tooltipStyle,
         callbacks: {
           label: function (context: any) {
             const dataPoint = context.parsed;
@@ -252,27 +234,25 @@ const CostChartChartJSSimple = ({
         title: {
           display: true,
           text: "Date",
-          color: "var(--color-text)",
+          color: chartStyles.textColor,
           font: {
-            size: 13,
-            weight: "bold" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: "var(--color-border)",
+          color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: "var(--color-muted)",
+          color: chartStyles.mutedTextColor,
           font: {
-            size: 12,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
           },
           maxTicksLimit: 8,
           padding: 8,
@@ -290,27 +270,25 @@ const CostChartChartJSSimple = ({
         title: {
           display: true,
           text: "Cost ($)",
-          color: "var(--color-text)",
+          color: chartStyles.textColor,
           font: {
-            size: 13,
-            weight: "bold" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.title,
+            weight: chartStyles.fontWeight.semibold,
+            family: chartStyles.fontFamily,
           },
           padding: 16,
         },
         grid: {
-          color: "var(--color-border)",
+          color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
         },
         ticks: {
-          color: "var(--color-muted)",
+          color: chartStyles.mutedTextColor,
           font: {
-            size: 12,
-            weight: "normal" as const,
-            family:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+            size: chartStyles.fontSize.axis,
+            weight: chartStyles.fontWeight.normal,
+            family: chartStyles.fontFamily,
           },
           beginAtZero: true,
           padding: 8,
@@ -336,20 +314,9 @@ const CostChartChartJSSimple = ({
   };
 
   return (
-    <div
-      style={{
-        height: height,
-        width: "100%",
-        background: "var(--color-surface)",
-        borderRadius: "12px",
-        padding: "1rem",
-        boxShadow:
-          "0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1)",
-        border: "1px solid var(--color-border)",
-      }}
-    >
+    <ChartContainer height={height}>
       <Line data={chartJSData} options={options} />
-    </div>
+    </ChartContainer>
   );
 };
 
