@@ -180,20 +180,9 @@ const AnomalyScatterPlotChartJS = ({ anomalies }: AnomalyScatterPlotProps) => {
       easing: themeStyles.animation.easing,
     },
     plugins: {
+      // Disable built-in legend to avoid duplication with custom footer legend
       legend: {
-        display: true,
-        position: themeStyles.legendPosition,
-        labels: {
-          usePointStyle: true,
-          pointStyle: "circle",
-          padding: 24,
-          font: {
-            size: themeStyles.legendItemStyle.fontSize,
-            weight: themeStyles.legendItemStyle.fontWeight,
-            family: themeStyles.legendItemStyle.fontFamily,
-          },
-          color: themeStyles.legendItemStyle.color,
-        },
+        display: false,
       },
       title: {
         display: false,
