@@ -58,16 +58,16 @@ const MultiServiceTimeline = ({
   // Step 3: Get unique services for datasets
   const services = Array.from(new Set(data.map((item) => item.service))).sort();
 
-  // Step 4: Generate colors for each service using unified chart styles
+  // Step 4: Generate enhanced colors for each service using sophisticated palette
   const serviceColors = [
-    chartStyles.colors[0], // chart-1
-    chartStyles.colors[1], // chart-2
-    chartStyles.colors[2], // chart-3
-    chartStyles.colors[3], // chart-4
-    chartStyles.colors[4], // chart-5
     chartStyles.primary,
+    chartStyles.colors[1], // Teal
+    chartStyles.colors[2], // Amber
+    chartStyles.colors[3], // Rose
+    chartStyles.colors[4], // Slate
     chartStyles.secondary,
-    chartStyles.accent,
+    chartStyles.colorVariants.secondary.light,
+    chartStyles.colorVariants.accent.light,
     chartStyles.success,
     chartStyles.warning,
   ];
@@ -79,12 +79,18 @@ const MultiServiceTimeline = ({
       label: service,
       data: sortedData.map(([, services]) => services[service] || 0),
       borderColor: serviceColors[index % serviceColors.length],
-      backgroundColor: serviceColors[index % serviceColors.length] + "20", // Add transparency
-      borderWidth: 2,
+      backgroundColor: serviceColors[index % serviceColors.length] + "30", // Enhanced transparency
+      borderWidth: 3,
       fill: false,
-      tension: 0.2,
-      pointRadius: 3,
-      pointHoverRadius: 5,
+      tension: 0.3,
+      pointRadius: 4,
+      pointHoverRadius: 7,
+      pointBackgroundColor: serviceColors[index % serviceColors.length],
+      pointBorderColor: "#ffffff",
+      pointBorderWidth: 2,
+      pointHoverBackgroundColor: serviceColors[index % serviceColors.length],
+      pointHoverBorderColor: "#ffffff",
+      pointHoverBorderWidth: 3,
     })),
   };
 

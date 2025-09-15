@@ -49,18 +49,25 @@ const BarChartTopServices = ({
     .sort((a, b) => b.total - a.total)
     .slice(0, 10); // Top 10 services
 
-  // Transform data for Chart.js horizontal bar chart
+  // Transform data for Chart.js horizontal bar chart with enhanced styling
   const chartData = {
     labels: sortedData.map((item) => item.service),
     datasets: [
       {
         label: "Total Cost",
         data: sortedData.map((item) => item.total),
-        backgroundColor: chartStyles.primary,
+        backgroundColor: chartStyles.gradients.primary,
         borderColor: chartStyles.primary,
-        borderWidth: 1,
-        borderRadius: 4,
+        borderWidth: 0,
+        borderRadius: {
+          topRight: 8,
+          bottomRight: 8,
+          topLeft: 4,
+          bottomLeft: 4,
+        },
         borderSkipped: false,
+        barThickness: 24,
+        maxBarThickness: 32,
       },
     ],
   };

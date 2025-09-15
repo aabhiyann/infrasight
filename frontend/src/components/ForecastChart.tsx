@@ -45,7 +45,7 @@ function ForecastChart({
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: ForecastChartProps) {
-  // Transform data for Chart.js
+  // Transform data for Chart.js with enhanced styling
   const chartData = {
     labels: data.map((point) => point.date),
     datasets: [
@@ -53,34 +53,48 @@ function ForecastChart({
         label: "Predicted Cost",
         data: data.map((point) => point.predicted_cost),
         borderColor: chartStyles.primary,
-        backgroundColor: chartStyles.primary + "20", // Add transparency
+        backgroundColor: chartStyles.colorVariants.primary.alpha20,
         borderWidth: 3,
-        fill: false,
-        tension: 0.2,
-        pointRadius: 4,
-        pointHoverRadius: 6,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        pointBackgroundColor: chartStyles.primary,
+        pointBorderColor: "#ffffff",
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: chartStyles.primary,
+        pointHoverBorderColor: "#ffffff",
+        pointHoverBorderWidth: 3,
       },
       {
         label: "Upper Bound",
         data: data.map((point) => point.upper_bound),
         borderColor: chartStyles.warning,
-        backgroundColor: chartStyles.warning + "20",
+        backgroundColor: chartStyles.colorVariants.accent.alpha10,
         borderWidth: 2,
-        borderDash: [5, 5],
+        borderDash: [8, 4],
         fill: false,
-        tension: 0.2,
+        tension: 0.3,
         pointRadius: 0,
+        pointHoverRadius: 4,
+        pointBackgroundColor: chartStyles.warning,
+        pointBorderColor: "#ffffff",
+        pointBorderWidth: 2,
       },
       {
         label: "Lower Bound",
         data: data.map((point) => point.lower_bound),
         borderColor: chartStyles.success,
-        backgroundColor: chartStyles.success + "20",
+        backgroundColor: chartStyles.colorVariants.secondary.alpha10,
         borderWidth: 2,
-        borderDash: [5, 5],
+        borderDash: [8, 4],
         fill: false,
-        tension: 0.2,
+        tension: 0.3,
         pointRadius: 0,
+        pointHoverRadius: 4,
+        pointBackgroundColor: chartStyles.success,
+        pointBorderColor: "#ffffff",
+        pointBorderWidth: 2,
       },
     ],
   };
@@ -91,6 +105,11 @@ function ForecastChart({
     animation: {
       duration: chartStyles.animation.duration,
       easing: chartStyles.animation.easing,
+      delay: chartStyles.animation.delay,
+    },
+    interaction: {
+      intersect: false,
+      mode: "index" as const,
     },
     plugins: {
       legend: {
@@ -144,6 +163,7 @@ function ForecastChart({
           color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
+          borderDash: chartStyles.gridStyle.borderDash,
         },
         ticks: {
           color: chartStyles.mutedTextColor,
@@ -176,6 +196,7 @@ function ForecastChart({
           color: chartStyles.gridColor,
           drawBorder: false,
           lineWidth: 1,
+          borderDash: chartStyles.gridStyle.borderDash,
         },
         beginAtZero: true,
         ticks: {
@@ -191,9 +212,6 @@ function ForecastChart({
           },
         },
       },
-    },
-    interaction: {
-      intersect: false,
     },
   };
 
