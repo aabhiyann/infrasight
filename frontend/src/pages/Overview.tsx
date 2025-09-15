@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCostApi, type CostRecord } from "../api/costApi";
 import { useDataSource } from "../contexts/DataSourceContext";
-import CostChart from "../components/CostChart";
+import CostChartChartJS from "../components/CostChartChartJS";
 import ServiceFilterDropdown from "../components/ServiceFilterDropdown";
 import DateRangePicker, { type DateRange } from "../components/DateRangePicker";
 import ChartCard from "../components/ChartCard";
@@ -15,8 +15,6 @@ import EmptyState from "../components/EmptyState";
 import { RefreshCw } from "lucide-react";
 import { useToast } from "../components/ui/Toast";
 import { usePageTitle } from "../hooks/usePageTitle";
-import SimpleChart from "../components/SimpleChart";
-import InteractiveChart from "../components/InteractiveChart";
 
 function Overview() {
   usePageTitle("Overview");
@@ -102,21 +100,6 @@ function Overview() {
         </p>
       </div>
       <OverviewSummary costData={data} />
-
-      {/* Learning Chart - Step by Step Example */}
-      <div className="card">
-        <h3>📚 Learning Chart.js - My First Chart!</h3>
-        <p>This is a simple example to understand how Chart.js works:</p>
-        <SimpleChart />
-      </div>
-
-      {/* Interactive Chart Example */}
-      <div className="card">
-        <h3>🎯 Interactive Chart - Click and Explore!</h3>
-        <p>This chart shows multiple services and responds to clicks:</p>
-        <InteractiveChart />
-      </div>
-
       <div className="toolbar">
         <div className="d-flex items-center gap-md">
           <label htmlFor="service">Service:</label>
@@ -171,7 +154,7 @@ function Overview() {
       ) : (
         <>
           <ChartCard title="Cost Over Time">
-            <CostChart
+            <CostChartChartJS
               data={data}
               serviceFilter={selectedService}
               dateRange={dateRange}
