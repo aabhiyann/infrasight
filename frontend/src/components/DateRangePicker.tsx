@@ -203,6 +203,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className="btn btn-outline d-flex items-center gap-sm"
         aria-label="Select date range"
+        id="date-range"
+        name="date-range"
       >
         <Calendar size={16} />
         <span>{getDisplayText()}</span>

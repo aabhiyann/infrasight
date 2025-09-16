@@ -25,6 +25,8 @@ const ServiceFilterDropdown = ({
   return (
     <select
       className="select"
+      id="service"
+      name="service"
       value={selected}
       onChange={(e) => onChange(e.target.value)}
     >

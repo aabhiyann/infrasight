@@ -35,8 +35,10 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({
     setError(null);
     try {
       // Use the full backend URL
-      const backendUrl =
-        import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+      const raw = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const backendUrl = `${raw.replace(/\/+$/, "")}`.endsWith("/api")
+        ? `${raw.replace(/\/+$/, "")}`
+        : `${raw.replace(/\/+$/, "")}/api`;
       const response = await fetch(`${backendUrl}/data-source/status`);
       if (!response.ok) {
         throw new Error("Failed to fetch data source status");

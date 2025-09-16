@@ -21,7 +21,10 @@ export interface ForecastResponse {
   status: string;
 }
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+const RAW_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const BASE_URL = `${RAW_BASE.replace(/\/+$/, "")}`.endsWith("/api")
+  ? `${RAW_BASE.replace(/\/+$/, "")}`
+  : `${RAW_BASE.replace(/\/+$/, "")}/api`;
 
 export async function fetchForecastData(
   n_days: number = 7,

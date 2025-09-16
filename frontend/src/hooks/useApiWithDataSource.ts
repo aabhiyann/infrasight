@@ -1,9 +1,12 @@
-import { useDataSource, buildApiUrl } from '../contexts/DataSourceContext';
-import axios from 'axios';
-import type { AxiosRequestConfig } from 'axios';
+import { useDataSource, buildApiUrl } from "../contexts/DataSourceContext";
+import axios from "axios";
+import type { AxiosRequestConfig } from "axios";
 
-// Base URL - flexible for different environments
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+// Base URL - normalize so it ALWAYS ends with /api
+const RAW_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const BASE_URL = `${RAW_BASE.replace(/\/+$/, "")}`.endsWith("/api")
+  ? `${RAW_BASE.replace(/\/+$/, "")}`
+  : `${RAW_BASE.replace(/\/+$/, "")}/api`;
 
 export const useApiWithDataSource = () => {
   const { dataSource } = useDataSource();

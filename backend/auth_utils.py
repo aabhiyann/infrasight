@@ -36,6 +36,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+# Fail-fast safety: ensure strong secret in production
+ENVIRONMENT = os.getenv("ENV", os.getenv("ENVIRONMENT", "development")).lower()
+if ENVIRONMENT == "production" and SECRET_KEY == "your-secret-key-change-in-production":
+    raise RuntimeError("SECURITY: SECRET_KEY must be set in production")
+
 def verify_token(token: str) -> Optional[dict]:
     """Verify and decode a JWT token."""
     try:
