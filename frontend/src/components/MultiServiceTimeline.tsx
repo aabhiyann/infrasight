@@ -38,7 +38,7 @@ interface MultiServiceTimelineProps extends BaseChartProps {
 
 const MultiServiceTimeline = ({
   data,
-  height = 460,
+  height = 400,
   showLegend = defaultChartConfig.showLegend,
   currencyFormat = defaultChartConfig.currencyFormat,
 }: MultiServiceTimelineProps) => {
@@ -101,18 +101,9 @@ const MultiServiceTimeline = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    resizeDelay: 100,
     animation: {
       duration: themeStyles.animation.duration,
       easing: themeStyles.animation.easing,
-    },
-    layout: {
-      padding: {
-        top: 8,
-        right: 12,
-        bottom: 56,
-        left: 12,
-      },
     },
     plugins: {
       legend: {
@@ -121,7 +112,7 @@ const MultiServiceTimeline = ({
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
-          padding: 20,
+          padding: 16,
           font: {
             size: themeStyles.legendItemStyle.fontSize,
             weight: themeStyles.legendItemStyle.fontWeight,
@@ -179,11 +170,7 @@ const MultiServiceTimeline = ({
             weight: themeStyles.fontWeight.normal,
             family: themeStyles.fontFamily,
           },
-          autoSkip: true,
-          autoSkipPadding: 12,
           maxTicksLimit: 8,
-          maxRotation: 0,
-          minRotation: 0,
           padding: 8,
           callback: function (value: any) {
             return formatDate(sortedData[value]?.[0] || value);
