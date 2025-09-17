@@ -59,7 +59,7 @@ const Logs = () => {
           aria-label="Add New Log"
           title="Add New Log"
         >
-          ➕ <span className="hide-sm-text">Add New Log</span>
+          + <span className="hide-sm-text">Add New Log</span>
         </button>
       </div>
       {loading ? (

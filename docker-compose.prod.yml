@@ -1,0 +1,73 @@
+# Production Docker Compose Configuration
+# This file is for reference - most cloud platforms deploy containers individually
+version: "3.9"
+
+services:
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: infrasight-backend-prod
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Use external database URL in production
+      DATABASE_URL: ${DATABASE_URL}
+
+      # Security
+      SECRET_KEY: ${SECRET_KEY}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+
+      # CORS - restrict to your frontend domain
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+
+      # Production settings
+      DEBUG: false
+      ENVIRONMENT: production
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import requests; requests.get('http://localhost:8000/health')",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # React Frontend (Optional - usually deployed separately)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: infrasight-frontend-prod
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost/health",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+# Note: In production, consider using:
+# - External managed database (Neon, Supabase, etc.)
+# - Separate frontend deployment (Netlify, Vercel)
+# - Container orchestration (Kubernetes, Docker Swarm)
+# - Load balancers and reverse proxies
+# - SSL/TLS termination
+# - Monitoring and logging solutions

@@ -360,17 +360,17 @@ const ChartCard = ({ title, subtitle, children }) => {
 
 ### Phase 1: Create Design System
 
-- ✅ Set up CSS custom properties
-- ✅ Create utility classes
-- ✅ Build reusable components
-- ✅ Add TypeScript types
+- Set up CSS custom properties
+- Create utility classes
+- Build reusable components
+- Add TypeScript types
 
 ### Phase 2: Refactor High-Impact Components
 
-- ✅ ChartCard
-- ✅ Breadcrumb
-- ✅ EmptyState
-- ✅ AnomalyChart
+- ChartCard
+- Breadcrumb
+- EmptyState
+- AnomalyChart
 
 ### Phase 3: Refactor Remaining Components
 
@@ -422,12 +422,12 @@ const ChartCard = ({ title, subtitle, children }) => {
 ### 1. Use Design System Props First
 
 ```tsx
-// ✅ Good
+// Good
 <Box p="lg" m="md" className="custom-specific-styles">
   Content
 </Box>
 
-// ❌ Avoid
+// Avoid
 <Box style={{ padding: "1rem", margin: "0.5rem" }} className="custom-specific-styles">
   Content
 </Box>
@@ -436,7 +436,7 @@ const ChartCard = ({ title, subtitle, children }) => {
 ### 2. Compose Components
 
 ```tsx
-// ✅ Good - Composable
+// Good - Composable
 <Stack spacing="lg">
   <Card>
     <Text as="h3" fontSize="lg" fontWeight="semibold">
@@ -448,7 +448,7 @@ const ChartCard = ({ title, subtitle, children }) => {
   </Card>
 </Stack>
 
-// ❌ Avoid - Monolithic
+// Avoid - Monolithic
 <div className="complex-layout-with-many-styles">
   <div className="card-with-inline-styles">
     <h3 style={{ fontSize: "1.125rem", fontWeight: "600" }}>
@@ -464,12 +464,12 @@ const ChartCard = ({ title, subtitle, children }) => {
 ### 3. Keep Components Focused
 
 ```tsx
-// ✅ Good - Single responsibility
+// Good - Single responsibility
 <Text as="h2" fontSize="xl" fontWeight="semibold">
   Section Title
 </Text>
 
-// ❌ Avoid - Too many responsibilities
+// Avoid - Too many responsibilities
 <Text as="h2" fontSize="xl" fontWeight="semibold" p="lg" m="md" className="border rounded shadow">
   Section Title
 </Text>

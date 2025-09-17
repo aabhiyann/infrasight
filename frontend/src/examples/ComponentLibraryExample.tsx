@@ -218,7 +218,7 @@ const ComponentLibraryExample = () => {
           <Flex gap="lg" direction="column">
             <Box>
               <Text fontSize="lg" fontWeight="medium" mb="md" color="danger">
-                ❌ Before (Inline Styles)
+                Before (Inline Styles)
               </Text>
               <Box
                 p="md"
@@ -249,7 +249,7 @@ const ComponentLibraryExample = () => {
 
             <Box>
               <Text fontSize="lg" fontWeight="medium" mb="md" color="success">
-                ✅ After (Design System)
+                After (Design System)
               </Text>
               <Box
                 p="md"

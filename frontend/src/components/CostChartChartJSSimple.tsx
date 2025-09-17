@@ -208,10 +208,10 @@ const CostChartChartJSSimple = ({
             if (dataPoint.hasAnomaly) {
               return [
                 `${label}: ${currencyFormat ? formatCurrency(value) : value}`,
-                `⚠️ ${dataPoint.anomalyCount} anomaly(ies) detected`,
-                dataPoint.hasHighSeverity ? "🔴 High severity" : "",
+                `Warning: ${dataPoint.anomalyCount} anomaly(ies) detected`,
+                dataPoint.hasHighSeverity ? "High severity" : "",
                 dataPoint.hasMediumSeverity ? "🟡 Medium severity" : "",
-                dataPoint.hasLowSeverity ? "🔵 Low severity" : "",
+                dataPoint.hasLowSeverity ? "Low severity" : "",
               ].filter(Boolean);
             }
             return `${label}: ${

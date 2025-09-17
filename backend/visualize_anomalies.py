@@ -20,7 +20,7 @@ def plot_anomalies(z_threshold: float = 2.0):
             })
 
     if not records:
-        print("✅ No anomalies detected at z-threshold:", z_threshold)
+        print("No anomalies detected at z-threshold:", z_threshold)
         return
 
     df = pd.DataFrame(records)
