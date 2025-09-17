@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 export interface User {
   id: number;
@@ -33,7 +34,7 @@ export interface TokenVerificationResponse {
 }
 
 class AuthApi {
-  private baseURL = `${API_BASE_URL}/api/auth`;
+  private baseURL = `${API_BASE_URL}/auth`;
 
   // Set token in localStorage and axios headers
   setToken(token: string) {
