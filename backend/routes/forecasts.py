@@ -82,6 +82,36 @@ async def get_cost_forecast(
         )
 
 
+@router.get("/services")
+async def get_available_services_shortcut(
+    source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")
+) -> Dict[str, Any]:
+    """
+    Get list of available services (shortcut endpoint for frontend compatibility).
+    """
+    try:
+        raw_data = load_cost_data(source)
+        data = convert_aws_data_to_flat_format(raw_data)
+        services = list(set(record.get('service') for record in data if record.get('service')))
+        services.sort()
+        
+        # Add data source info
+        data_source_info = get_data_source_info()
+        
+        return {
+            "services": services,
+            "total_services": len(services),
+            "data_source": data_source_info["current_source"],
+            "data_source_info": data_source_info,
+            "status": "success"
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error getting services: {str(e)}"
+        )
+
 @router.get("/forecast/services")
 async def get_available_services(
     source: Optional[str] = Query(None, description="Data source: 'mock', 'real', or None for auto-detect")

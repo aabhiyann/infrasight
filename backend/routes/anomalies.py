@@ -123,7 +123,7 @@ async def get_anomalies_summary():
     Get a summary of anomalies across different threshold levels.
     """
     try:
-        data = load_mock_cost_data()
+        data = load_cost_data()
         thresholds = [0.5, 1.0, 1.5, 2.0, 2.5]
         
         summary = {}

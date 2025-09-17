@@ -28,7 +28,7 @@ async def create_log(entry: LogCreate, session: AsyncSession = Depends(get_sessi
             "message": "Log created",
             "id": new_log.id
         }
-    except SQLAlechemyError as e:
+    except SQLAlchemyError as e:
         await session.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
