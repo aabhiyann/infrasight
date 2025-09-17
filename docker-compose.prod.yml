@@ -1,6 +1,5 @@
 # Production Docker Compose Configuration
 # This file is for reference - most cloud platforms deploy containers individually
-version: "3.9"
 
 services:
   # FastAPI Backend

@@ -57,7 +57,20 @@ The application is now running and accessible.
 - **API Docs**: http://localhost:8000/docs
 - **Database**: localhost:5432
 
-### 3. Stop Services
+### 3. Initialize Database & Demo Users
+
+```bash
+# Create database tables and demo users
+docker compose -f docker-compose.local.yml exec backend python seed_demo_data.py
+```
+
+**Demo Accounts:**
+
+- **Regular User**: `demo@infrasight.com` / `password123`
+- **Admin User**: `admin@infrasight.com` / `admin123`
+- **Test User**: `test@infrasight.com` / `test123`
+
+### 4. Stop Services
 
 ```bash
 # Stop all services
