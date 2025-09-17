@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import Dict, Any
 from utils.file_loader import get_data_source_info, load_cost_data, load_cost_data_flat
-from aws.cost_fetcher import test_aws_connection
+# REMOVED: from aws.cost_fetcher import test_aws_connection  # SECURITY: Removed to prevent AWS charges
 
 router = APIRouter()
 
@@ -36,31 +36,15 @@ def test_data_source_connection() -> Dict[str, Any]:
     }
     
     if current_source == "real":
-        # Test AWS connection
-        aws_test = test_aws_connection()
-        result["test_results"]["aws"] = aws_test
-        
-        if aws_test["status"] == "success":
-            # Test data fetching
-            try:
-                test_data = load_cost_data("real")
-                result["test_results"]["data_fetch"] = {
-                    "status": "success",
-                    "message": f"Successfully fetched {len(test_data.get('ResultsByTime', []))} days of data",
-                    "sample_services": []
-                }
-                
-                # Get sample services from first day
-                if test_data.get("ResultsByTime"):
-                    first_day = test_data["ResultsByTime"][0]
-                    services = [group["Keys"][0] for group in first_day.get("Groups", [])]
-                    result["test_results"]["data_fetch"]["sample_services"] = services[:5]
-                    
-            except Exception as e:
-                result["test_results"]["data_fetch"] = {
-                    "status": "error",
-                    "message": f"Failed to fetch data: {str(e)}"
-                }
+        # SECURITY: AWS access completely disabled to prevent charges
+        result["test_results"]["aws"] = {
+            "status": "disabled",
+            "message": "AWS access disabled to prevent billing charges"
+        }
+        result["test_results"]["data_fetch"] = {
+            "status": "blocked",
+            "message": "Real AWS data access blocked for security - using mock data only"
+        }
     else:
         # Test mock data
         try:
@@ -103,18 +87,12 @@ def get_sample_data(days: int = 1) -> Dict[str, Any]:
     current_source = data_source_info["current_source"]
     
     try:
+        # SECURITY: Always use mock data regardless of source to prevent AWS charges
         if current_source == "real":
-            # For real data, limit to last 7 days for sample
-            from datetime import datetime, timedelta
-            end_date = datetime.now().strftime('%Y-%m-%d')
-            start_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
-            
-            from aws.cost_fetcher import fetch_aws_cost_data
-            raw_data = fetch_aws_cost_data(start_date, end_date)
-            df = load_cost_data_flat("real")
-        else:
-            raw_data = load_cost_data("mock")
-            df = load_cost_data_flat("mock")
+            print("WARNING: Real AWS data requested but blocked to prevent charges. Using mock data.")
+        
+        raw_data = load_cost_data("mock")
+        df = load_cost_data_flat("mock")
         
         # Get summary statistics
         summary = {
