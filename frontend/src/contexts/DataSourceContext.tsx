@@ -63,7 +63,7 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({
   };
 
   // Force mock data only - no real AWS data allowed
-  const setDataSource = (source: DataSource) => {
+  const setDataSource = (_source: DataSource) => {
     // Always force mock data to prevent AWS charges
     setDataSourceState("mock");
     console.warn(

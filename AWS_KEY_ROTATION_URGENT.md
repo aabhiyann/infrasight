@@ -2,7 +2,7 @@
 
 ## **IMMEDIATE ACTION NEEDED**
 
-Your AWS access key `AKIAXYHSZFAUJIKU26VM` was found in local backup files and **MUST BE ROTATED IMMEDIATELY** for security.
+Your AWS access key `dsfdfs` was found in local backup files and **MUST BE ROTATED IMMEDIATELY** for security.
 
 ---
 
