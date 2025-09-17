@@ -2,7 +2,9 @@
 
 ## Overview
 
-The Data Source Toggle is a beautiful, user-friendly interface that allows users to switch between **mock data** and **real AWS billing data** directly from the frontend. No need to restart servers or change environment variables!
+⚠️ **WARNING**: The Data Source Toggle has been **DISABLED** to prevent AWS charges.
+
+This component previously allowed users to switch between mock data and real AWS billing data, but AWS access has been completely removed due to unexpected billing charges reaching $120.
 
 ## Features
 

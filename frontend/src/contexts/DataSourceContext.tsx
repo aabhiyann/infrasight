@@ -62,11 +62,13 @@ export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({
     await fetchDataSourceInfo();
   };
 
-  // Set data source and update backend if needed
+  // Force mock data only - no real AWS data allowed
   const setDataSource = (source: DataSource) => {
-    setDataSourceState(source);
-    // Note: We don't need to update backend here since we'll use URL parameters
-    // The backend will use the URL parameter to override the environment setting
+    // Always force mock data to prevent AWS charges
+    setDataSourceState("mock");
+    console.warn(
+      "Real AWS data has been disabled to prevent charges. Using mock data only."
+    );
   };
 
   // Calculate if we're using real data

@@ -46,95 +46,50 @@ def convert_aws_data_to_flat_format(raw_data: dict) -> pd.DataFrame:
     return pd.DataFrame(records)
 
 def get_data_source() -> str:
-    """Determine whether to use real or mock data based on environment variable."""
-    use_real_data = os.getenv("USE_REAL_DATA", "false").lower() in ("true", "1", "yes")
-    return "real" if use_real_data else "mock"
+    """Force mock data only to prevent AWS charges."""
+    # Always return mock to prevent any AWS API calls
+    return "mock"
 
 def load_cost_data(source: str = None) -> dict:
     """
-    Load cost data from specified source or auto-detect based on environment.
+    Load cost data - ALWAYS uses mock data to prevent AWS charges.
     
     Args:
-        source: "mock", "real", or None (auto-detect from USE_REAL_DATA env var)
+        source: Ignored - always uses mock data for safety
         
     Returns:
-        Raw cost data in AWS Cost Explorer format
+        Mock cost data in AWS Cost Explorer format
     """
-    if source is None:
-        source = get_data_source()
-    
+    # Always use mock data regardless of source parameter to prevent AWS charges
     if source == "real":
-        try:
-            # Import here to avoid circular imports and handle missing boto3 gracefully
-            from aws.cost_fetcher import fetch_aws_cost_data
-            return fetch_aws_cost_data()
-        except ImportError:
-            raise HTTPException(
-                status_code=500, 
-                detail="boto3 not installed. Install with: pip install boto3"
-            )
-        except Exception as e:
-            raise HTTPException(
-                status_code=500, 
-                detail=f"Failed to fetch real AWS data: {str(e)}"
-            )
-    else:
-        return load_mock_cost_data()
+        print("WARNING: Real AWS data requested but blocked to prevent charges. Using mock data.")
+    
+    return load_mock_cost_data()
 
 def load_cost_data_flat(source: str = None) -> pd.DataFrame:
     """
-    Load cost data in flat DataFrame format from specified source.
+    Load cost data in flat DataFrame format - ALWAYS uses mock data to prevent AWS charges.
     
     Args:
-        source: "mock", "real", or None (auto-detect from USE_REAL_DATA env var)
+        source: Ignored - always uses mock data for safety
         
     Returns:
-        DataFrame with columns: date, service, amount
+        DataFrame with columns: date, service, amount (from mock data)
     """
-    if source is None:
-        source = get_data_source()
-    
+    # Always use mock data regardless of source parameter to prevent AWS charges
     if source == "real":
-        try:
-            from aws.cost_fetcher import fetch_aws_cost_data_flat
-            return fetch_aws_cost_data_flat()
-        except ImportError:
-            raise HTTPException(
-                status_code=500, 
-                detail="boto3 not installed. Install with: pip install boto3"
-            )
-        except Exception as e:
-            raise HTTPException(
-                status_code=500, 
-                detail=f"Failed to fetch real AWS data: {str(e)}"
-            )
-    else:
-        return load_mock_cost_data_flat()
+        print("WARNING: Real AWS data requested but blocked to prevent charges. Using mock data.")
+    
+    return load_mock_cost_data_flat()
 
 def get_data_source_info() -> Dict:
     """Get information about the current data source configuration."""
-    current_source = get_data_source()
-    
-    info = {
-        "current_source": current_source,
-        "use_real_data_env": os.getenv("USE_REAL_DATA", "false"),
-        "available_sources": ["mock", "real"]
+    return {
+        "current_source": "mock",
+        "use_real_data_env": "false",
+        "available_sources": ["mock"],
+        "aws_connection": {
+            "status": "disabled",
+            "message": "AWS access disabled to prevent charges"
+        }
     }
-    
-    if current_source == "real":
-        try:
-            from aws.cost_fetcher import test_aws_connection
-            connection_info = test_aws_connection()
-            info["aws_connection"] = connection_info
-        except ImportError:
-            info["aws_connection"] = {
-                "status": "error",
-                "message": "boto3 not installed"
-            }
-        except Exception as e:
-            info["aws_connection"] = {
-                "status": "error", 
-                "message": str(e)
-            }
-    
-    return info
