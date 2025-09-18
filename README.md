@@ -7,11 +7,13 @@ InfraSight is a cloud cost intelligence dashboard that uses mock billing data an
 ## 🚀 Live Demo
 
 **Experience InfraSight in action:**
+
 - **Frontend:** [https://infrasight.netlify.app](https://infrasight.netlify.app)
 - **Backend API:** [https://infrasight-rs1b.onrender.com](https://infrasight-rs1b.onrender.com)
 - **API Documentation:** [https://infrasight-rs1b.onrender.com/docs](https://infrasight-rs1b.onrender.com/docs)
 
 **Demo Credentials:**
+
 - Email: `demo@infrasight.com` | Password: `password123`
 - Email: `admin@infrasight.com` | Password: `admin123`
 - Email: `test@infrasight.com` | Password: `test123`
@@ -26,15 +28,15 @@ InfraSight is a cloud cost intelligence dashboard that uses mock billing data an
 
 ## Tech Stack
 
-| Layer        | Tech                          |
-| ------------ | ----------------------------- |
-| Frontend     | React 19, Vite, TypeScript    |
-| Backend      | FastAPI, Python 3.11          |
-| Cloud Access | Mock Data Only (AWS disabled) |
-| ML Engine    | pandas, scikit-learn          |
-| Database     | PostgreSQL (Neon.tech)        |
-| Deployment   | Docker, Netlify, Render       |
-| Infrastructure | Cloud-native, Auto-scaling   |
+| Layer          | Tech                          |
+| -------------- | ----------------------------- |
+| Frontend       | React 19, Vite, TypeScript    |
+| Backend        | FastAPI, Python 3.11          |
+| Cloud Access   | Mock Data Only (AWS disabled) |
+| ML Engine      | pandas, scikit-learn          |
+| Database       | PostgreSQL (Neon.tech)        |
+| Deployment     | Docker, Netlify, Render       |
+| Infrastructure | Cloud-native, Auto-scaling    |
 
 ## Quick Start with Docker
 
@@ -148,12 +150,13 @@ docker run --name infrasight-db \
 ### Option 2: Separate Service Deployment (✅ CURRENTLY DEPLOYED)
 
 - **Frontend**: [Netlify](https://netlify.com) - Static site hosting with CDN
-- **Backend**: [Render](https://render.com) - Docker container hosting  
+- **Backend**: [Render](https://render.com) - Docker container hosting
 - **Database**: [Neon.tech](https://neon.tech) - Managed PostgreSQL
 
 ### 🌐 Live Production Infrastructure
 
 **Current Deployment Status:**
+
 - ✅ **Auto-deployment** from Git pushes
 - ✅ **HTTPS/SSL** certificates (automatic)
 - ✅ **CDN** for global performance
