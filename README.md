@@ -31,24 +31,50 @@ A comprehensive cloud cost intelligence platform that leverages machine learning
 
 ### Authentication & User Management
 
-![Signup Page](screenshots/Signup.png)
-_Clean, professional signup interface with form validation_
+![Signup Page](Screenshots/Signup.png)
+_Professional signup interface with form validation and clean design_
 
 ### Dashboard & Analytics
 
-![Dashboard Overview](screenshots/Overview%20page%20showing%20Cost%20graph%20for%20each%20service.png)
-_Comprehensive cost overview with key metrics and service breakdown_
+![Dashboard Overview - Light Mode](Screenshots/Light%20Mode.png)
+_Comprehensive cost overview with key metrics and service breakdown in light theme_
 
-![Top Services](screenshots/Top%205%20services.png)
+![Dashboard Overview - Dark Mode](Screenshots/Dark%20Mode.png)
+_Dark theme interface showing cost analytics and service timelines_
+
+![Dashboard Overview - High Contrast](Screenshots/High%20Contrast%20mode.png)
+_High contrast accessibility mode for better visibility_
+
+![Cost Over Time Graph](Screenshots/Cost%20Over%20Time%20Graph.png)
+_Interactive line chart showing daily cost trends and fluctuations_
+
+![Top 5 Services](Screenshots/Top%205%20services.png)
 _Visual representation of highest-cost services with interactive tooltips_
+
+![Service Cost Breakdown](Screenshots/Overview%20page%20showing%20Cost%20graph%20for%20each%20service.png)
+_Detailed service-by-service cost analysis with timeline visualization_
 
 ### Advanced Analytics
 
-![Anomaly Detection](screenshots/Anomalies%20Detected%20Scatter%20Plot.png)
+![Anomaly Detection Scatter Plot](Screenshots/Anomalies%20Detected%20Scatter%20Plot.png)
 _Machine learning-powered anomaly detection with severity classification_
 
-![AI Recommendations](screenshots/Recommendations.png)
+![Anomaly Details Table](Screenshots/Anomaly%20details%20table.png)
+_Detailed anomaly table with Z-scores, costs, and severity levels_
+
+![AI Recommendations](Screenshots/Recommendations.png)
 _Intelligent cost optimization recommendations with priority levels_
+
+### User Experience Features
+
+![Loading State](<Screenshots/Loading%20State%20(takes%20a%20few%20seconds).png>)
+_Professional loading states during data processing_
+
+![Date Range Picker](Screenshots/Date%20range%20picker.png)
+_Intuitive date range selection with quick preset options_
+
+![Mobile View](Screenshots/Mobile%20View%20side%20menu.png)
+_Responsive mobile interface with collapsible navigation menu_
 
 ## ⚡ Quick Demo (30 seconds)
 
@@ -60,7 +86,7 @@ _Intelligent cost optimization recommendations with priority levels_
 
 ## 🏗️ System Architecture
 
-![InfraSight Architecture](screenshots/infrasight_architecture.png)
+![InfraSight Architecture](Screenshots/infrasight_architecture.png)
 
 **Architecture Overview:**
 
@@ -72,6 +98,29 @@ _Intelligent cost optimization recommendations with priority levels_
 ## Overview
 
 InfraSight is a full-stack web application designed to help organizations monitor, analyze, and optimize their cloud infrastructure costs. The platform processes billing data, applies machine learning algorithms for pattern recognition, and provides intuitive visualizations to help teams make informed decisions about their cloud spending.
+
+## Business Value
+
+### Cost Optimization
+
+- **Identify waste** through automated anomaly detection
+- **Forecast spending** to improve budget planning
+- **Service analysis** to optimize resource allocation
+- **Trend analysis** for long-term cost management
+
+### Operational Efficiency
+
+- **Automated insights** reduce manual analysis time
+- **Real-time monitoring** enables quick response to issues
+- **Historical analysis** provides context for decision-making
+- **User-friendly interface** reduces learning curve
+
+### Scalability
+
+- **Cloud-native architecture** supports growth
+- **Microservices design** enables independent scaling
+- **Containerized deployment** ensures consistency
+- **API-first approach** supports integration
 
 ## Key Features
 
@@ -293,29 +342,6 @@ The application is deployed using a microservices architecture:
    - Managed PostgreSQL on Neon.tech
    - Automatic backups and scaling
    - Connection pooling for performance
-
-## Business Value
-
-### Cost Optimization
-
-- **Identify waste** through automated anomaly detection
-- **Forecast spending** to improve budget planning
-- **Service analysis** to optimize resource allocation
-- **Trend analysis** for long-term cost management
-
-### Operational Efficiency
-
-- **Automated insights** reduce manual analysis time
-- **Real-time monitoring** enables quick response to issues
-- **Historical analysis** provides context for decision-making
-- **User-friendly interface** reduces learning curve
-
-### Scalability
-
-- **Cloud-native architecture** supports growth
-- **Microservices design** enables independent scaling
-- **Containerized deployment** ensures consistency
-- **API-first approach** supports integration
 
 ## Future Enhancements
 
