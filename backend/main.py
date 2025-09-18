@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 import os
 import asyncio
 from routes import log, insights, mock_data, clusters, anomalies, forecasts, recommendations, ml_data, debug_visuals, auth, data_source
@@ -28,6 +29,9 @@ async def lifespan(app: FastAPI):
     pass
 
 app = FastAPI(lifespan=lifespan)
+
+# Add GZip compression for better performance
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # CORS configuration - flexible for development and production
 ALLOWED_ORIGINS = os.getenv(
@@ -62,6 +66,11 @@ app.include_router(data_source.router, prefix="/api")
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "message": "InfraSight API is running"}
+
+# Keep-alive endpoint to prevent cold starts
+@app.get("/ping")
+def ping():
+    return {"status": "pong", "message": "Server is awake"}
 
 @app.get("/")
 def root():

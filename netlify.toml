@@ -1,0 +1,33 @@
+[build]
+  publish = "frontend/dist"
+  command = "cd frontend && npm ci && npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  VITE_API_URL = "https://infrasight-rs1b.onrender.com/api"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache static assets for better performance
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[dev]
+  command = "cd frontend && npm run dev"
+  port = 5173
+  publish = "frontend/dist"
