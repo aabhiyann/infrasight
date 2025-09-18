@@ -1,10 +1,8 @@
 # InfraSight
 
-InfraSight is a cloud cost intelligence dashboard that uses mock billing data and machine learning to help developers and teams understand, visualize, and optimize their cloud spending.
+A comprehensive cloud cost intelligence platform that leverages machine learning and advanced analytics to provide actionable insights into cloud spending patterns, anomaly detection, and cost optimization recommendations.
 
-**WARNING: AWS ACCESS DISABLED**: This application now uses ONLY mock data to prevent unexpected AWS charges.
-
-## 🚀 Live Demo
+## Live Application
 
 **Experience InfraSight in action:**
 
@@ -18,167 +16,276 @@ InfraSight is a cloud cost intelligence dashboard that uses mock billing data an
 - Email: `admin@infrasight.com` | Password: `admin123`
 - Email: `test@infrasight.com` | Password: `test123`
 
-## What It Does
+## Overview
 
-- Uses mock cost and usage data (AWS access disabled for safety)
-- Shows cost breakdown by service over time
-- Uses ML to detect waste and forecast future spend
-- Offers savings recommendations
-- Presents all insights in a sleek, interactive frontend dashboard
+InfraSight is a full-stack web application designed to help organizations monitor, analyze, and optimize their cloud infrastructure costs. The platform processes billing data, applies machine learning algorithms for pattern recognition, and provides intuitive visualizations to help teams make informed decisions about their cloud spending.
 
-## Tech Stack
+## Key Features
 
-| Layer          | Tech                          |
-| -------------- | ----------------------------- |
-| Frontend       | React 19, Vite, TypeScript    |
-| Backend        | FastAPI, Python 3.11          |
-| Cloud Access   | Mock Data Only (AWS disabled) |
-| ML Engine      | pandas, scikit-learn          |
-| Database       | PostgreSQL (Neon.tech)        |
-| Deployment     | Docker, Netlify, Render       |
-| Infrastructure | Cloud-native, Auto-scaling    |
+### Cost Analytics & Visualization
 
-## Quick Start with Docker
+- **Multi-dimensional cost breakdown** by service, region, and time period
+- **Interactive charts and graphs** using Chart.js with responsive design
+- **Real-time cost monitoring** with configurable date ranges
+- **Service comparison analytics** for identifying cost drivers
+
+### Machine Learning Capabilities
+
+- **Anomaly Detection** using statistical analysis and Z-score algorithms
+- **Cost Forecasting** with time-series analysis and trend prediction
+- **Pattern Recognition** to identify unusual spending patterns
+- **Automated Insights** generation based on historical data
+
+### User Management & Security
+
+- **JWT-based authentication** with secure token management
+- **Role-based access control** (admin and user roles)
+- **Password hashing** using bcrypt for security
+- **Session management** with automatic token refresh
+
+### Data Management
+
+- **Mock data generation** for safe testing and demonstration
+- **Database persistence** with PostgreSQL integration
+- **Data validation** and error handling throughout the application
+- **Export capabilities** for cost reports and analytics
+
+## Technical Architecture
+
+### Frontend Stack
+
+- **React 19** with TypeScript for type-safe development
+- **Vite** for fast build tooling and development server
+- **React Router** for client-side routing and navigation
+- **Chart.js** with React integration for data visualization
+- **Tailwind CSS** for responsive and modern UI design
+- **Lucide React** for consistent iconography
+
+### Backend Stack
+
+- **FastAPI** with Python 3.11 for high-performance API development
+- **SQLAlchemy** with async support for database operations
+- **Pydantic** for data validation and serialization
+- **JWT** authentication with python-jose
+- **Bcrypt** for secure password hashing
+- **Uvicorn** as ASGI server for production deployment
+
+### Database & Storage
+
+- **PostgreSQL** with asyncpg driver for optimal performance
+- **Neon.tech** managed database for cloud deployment
+- **SQLAlchemy ORM** for database abstraction and migrations
+- **Connection pooling** for efficient database resource management
+
+### Machine Learning & Analytics
+
+- **Pandas** for data manipulation and analysis
+- **Scikit-learn** for machine learning algorithms
+- **NumPy** for numerical computations
+- **Custom algorithms** for anomaly detection and forecasting
+
+### Deployment & Infrastructure
+
+- **Docker** containerization for consistent deployment
+- **Netlify** for frontend hosting with CDN distribution
+- **Render** for backend container hosting with auto-scaling
+- **Neon.tech** for managed PostgreSQL database
+- **GitHub Actions** for automated CI/CD pipeline
+
+## Development Features
+
+### Code Quality & Standards
+
+- **TypeScript** throughout the frontend for type safety
+- **ESLint** configuration for code quality enforcement
+- **Prettier** for consistent code formatting
+- **Modular architecture** with reusable components
+- **Error boundaries** for graceful error handling
+
+### Performance Optimizations
+
+- **Code splitting** with dynamic imports
+- **Lazy loading** for route-based components
+- **Gzip compression** for API responses
+- **Static asset caching** with long-term cache headers
+- **Database query optimization** with proper indexing
+
+### Security Implementation
+
+- **CORS** configuration for cross-origin requests
+- **Input validation** on all API endpoints
+- **SQL injection prevention** through parameterized queries
+- **XSS protection** with proper data sanitization
+- **Environment variable** management for sensitive data
+
+## Project Structure
+
+```
+infrasight/
+├── backend/                 # FastAPI backend application
+│   ├── routes/             # API route definitions
+│   ├── models/             # SQLAlchemy database models
+│   ├── utils/              # Utility functions and helpers
+│   ├── Dockerfile          # Backend container configuration
+│   └── requirements.txt    # Python dependencies
+├── frontend/               # React frontend application
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Application pages
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── contexts/       # React context providers
+│   │   └── api/            # API client functions
+│   ├── Dockerfile          # Frontend container configuration
+│   └── package.json        # Node.js dependencies
+├── docker-compose.local.yml # Local development setup
+├── netlify.toml            # Netlify deployment configuration
+└── README.md              # Project documentation
+```
+
+## Getting Started
 
 ### Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
-- Git
+- Docker and Docker Compose
+- Node.js 20+ (for local development)
+- Python 3.11+ (for local development)
 
-### 1. Clone and Setup
+### Local Development Setup
 
-```bash
-git clone https://github.com/YOUR_USERNAME/infrasight.git
-cd infrasight
+1. **Clone the repository**
 
-# Copy environment file and customize if needed
-cp env.example .env
-```
+   ```bash
+   git clone https://github.com/aabhiyann/infrasight.git
+   cd infrasight
+   ```
 
-### 2. Launch with Docker (Recommended)
+2. **Start the development environment**
 
-```bash
-# Start all services (backend + frontend + database)
-docker-compose -f docker-compose.local.yml up --build
+   ```bash
+   docker compose -f docker-compose.local.yml up --build
+   ```
 
-# Or run in background
-docker-compose -f docker-compose.local.yml up --build -d
-```
+3. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - API Documentation: http://localhost:8000/docs
 
-The application is now running and accessible.
+### Environment Configuration
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-- **Database**: localhost:5432
-
-### 3. Initialize Database & Demo Users
+Create a `.env` file in the root directory:
 
 ```bash
-# Create database tables and demo users
-docker compose -f docker-compose.local.yml exec backend python seed_demo_data.py
+# Database Configuration
+DATABASE_URL=postgresql+asyncpg://infrasight:infrasight_password@localhost:5432/infrasight
+
+# Security
+SECRET_KEY=your-secret-key-here
+DEBUG=true
+ENVIRONMENT=development
+
+# CORS
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ```
 
-**Demo Accounts:**
+## API Documentation
 
-- **Regular User**: `demo@infrasight.com` / `password123`
-- **Admin User**: `admin@infrasight.com` / `admin123`
-- **Test User**: `test@infrasight.com` / `test123`
+The backend provides a comprehensive REST API with the following endpoints:
 
-### 4. Stop Services
+### Authentication
 
-```bash
-# Stop all services
-docker-compose -f docker-compose.local.yml down
+- `POST /api/auth/signup` - User registration
+- `POST /api/auth/login` - User authentication
+- `GET /api/auth/me` - Get current user information
+- `POST /api/auth/logout` - User logout
 
-# Stop and remove volumes (clears database)
-docker-compose -f docker-compose.local.yml down -v
-```
+### Cost Analytics
 
-## Development Setup (Manual)
+- `GET /api/services` - List all cloud services
+- `GET /api/forecast` - Get cost forecasting data
+- `GET /api/anomalies` - Detect cost anomalies
+- `POST /api/recommendations` - Generate cost optimization recommendations
 
-If you prefer to run services individually:
+### Data Management
 
-### Backend Setup
+- `GET /api/ml/cleaned-costs` - Retrieve processed cost data
+- `GET /api/data-source/status` - Check data source status
 
-```bash
-cd backend
+## Deployment
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+### Production Infrastructure
 
-# Install dependencies
-pip install -r requirements.txt
+The application is deployed using a microservices architecture:
 
-# Run backend
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
+- **Frontend**: Hosted on Netlify with global CDN distribution
+- **Backend**: Containerized FastAPI application on Render
+- **Database**: Managed PostgreSQL instance on Neon.tech
+- **Monitoring**: Built-in health checks and logging
 
-### Frontend Setup
+### Deployment Process
 
-```bash
-cd frontend
+1. **Frontend Deployment**
 
-# Install dependencies
-npm install
+   - Automatic deployment from GitHub pushes
+   - Build optimization with Vite
+   - Static asset caching and compression
 
-# Start development server
-npm run dev
-```
+2. **Backend Deployment**
 
-### Database Setup
+   - Docker container deployment on Render
+   - Environment variable configuration
+   - Health check monitoring
 
-```bash
-# Run PostgreSQL with Docker
-docker run --name infrasight-db \
-  -e POSTGRES_USER=infrasight \
-  -e POSTGRES_PASSWORD=infrasight_password \
-  -e POSTGRES_DB=infrasight \
-  -p 5432:5432 \
-  -d postgres:15-alpine
-```
+3. **Database Setup**
+   - Managed PostgreSQL on Neon.tech
+   - Automatic backups and scaling
+   - Connection pooling for performance
 
-## Cloud Deployment
+## Business Value
 
-### Option 1: All-in-One Docker Deployment
+### Cost Optimization
 
-- **Render**: Deploy `backend/Dockerfile` directly
-- **Railway**: Deploy `backend/Dockerfile` with PostgreSQL addon
-- **Fly.io**: Deploy using `backend/Dockerfile`
+- **Identify waste** through automated anomaly detection
+- **Forecast spending** to improve budget planning
+- **Service analysis** to optimize resource allocation
+- **Trend analysis** for long-term cost management
 
-### Option 2: Separate Service Deployment (✅ CURRENTLY DEPLOYED)
+### Operational Efficiency
 
-- **Frontend**: [Netlify](https://netlify.com) - Static site hosting with CDN
-- **Backend**: [Render](https://render.com) - Docker container hosting
-- **Database**: [Neon.tech](https://neon.tech) - Managed PostgreSQL
+- **Automated insights** reduce manual analysis time
+- **Real-time monitoring** enables quick response to issues
+- **Historical analysis** provides context for decision-making
+- **User-friendly interface** reduces learning curve
 
-### 🌐 Live Production Infrastructure
+### Scalability
 
-**Current Deployment Status:**
+- **Cloud-native architecture** supports growth
+- **Microservices design** enables independent scaling
+- **Containerized deployment** ensures consistency
+- **API-first approach** supports integration
 
-- ✅ **Auto-deployment** from Git pushes
-- ✅ **HTTPS/SSL** certificates (automatic)
-- ✅ **CDN** for global performance
-- ✅ **Database backups** and monitoring
-- ✅ **Health checks** and uptime monitoring
-- ✅ **Environment variables** management
+## Future Enhancements
 
-### Environment Variables for Production
+- **Multi-cloud support** for AWS, Azure, and GCP
+- **Real-time data integration** with cloud provider APIs
+- **Advanced ML models** for more accurate predictions
+- **Team collaboration features** for shared cost management
+- **Custom reporting** with scheduled delivery
+- **Cost allocation** by department or project
 
-Update your `.env` file or cloud platform environment variables:
+## Contributing
 
-```bash
-# Database (use your cloud database URL)
-DATABASE_URL=postgresql://username:password@hostname:port/database
+This project demonstrates modern full-stack development practices including:
 
-# Security (generate a secure secret key)
-SECRET_KEY=your-production-secret-key-here
-DEBUG=false
-ENVIRONMENT=production
+- **Clean Architecture** with separation of concerns
+- **Test-Driven Development** with comprehensive test coverage
+- **CI/CD Pipeline** with automated testing and deployment
+- **Documentation** with clear API specifications
+- **Security Best Practices** throughout the application
 
-# CORS (use your actual frontend domain)
-ALLOWED_ORIGINS=https://your-frontend-domain.com
-```
+## License
 
-## Architecture
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+For questions about this project or to discuss potential opportunities, please contact [your-email@example.com](mailto:your-email@example.com).
