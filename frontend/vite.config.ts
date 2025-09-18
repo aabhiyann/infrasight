@@ -4,6 +4,10 @@ import react from "@vitejs/plugin-react";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // Set production API URL
+    'import.meta.env.VITE_API_URL': JSON.stringify('https://infrasight-rs1b.onrender.com/api'),
+  },
   build: {
     // Optimize chunk sizes for deployment
     rollupOptions: {
