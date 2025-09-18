@@ -1,8 +1,17 @@
 # InfraSight
 
+[![React](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
+[![Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-00C7B7.svg)](https://netlify.com)
+[![Render](https://img.shields.io/badge/Backend%20on-Render-46E3B7.svg)](https://render.com)
+[![Neon](https://img.shields.io/badge/Database-Neon.tech-00D9FF.svg)](https://neon.tech)
+
 A comprehensive cloud cost intelligence platform that leverages machine learning and advanced analytics to provide actionable insights into cloud spending patterns, anomaly detection, and cost optimization recommendations.
 
-## Live Application
+## 🚀 Live Application
 
 **Experience InfraSight in action:**
 
@@ -15,6 +24,50 @@ A comprehensive cloud cost intelligence platform that leverages machine learning
 - Email: `demo@infrasight.com` | Password: `password123`
 - Email: `admin@infrasight.com` | Password: `admin123`
 - Email: `test@infrasight.com` | Password: `test123`
+
+> **Note:** The backend may take 10-15 seconds to start on first load (cold start). This is normal for free-tier hosting.
+
+## 📊 Screenshots
+
+### Authentication & User Management
+
+![Signup Page](screenshots/Signup.png)
+_Clean, professional signup interface with form validation_
+
+### Dashboard & Analytics
+
+![Dashboard Overview](screenshots/Overview%20page%20showing%20Cost%20graph%20for%20each%20service.png)
+_Comprehensive cost overview with key metrics and service breakdown_
+
+![Top Services](screenshots/Top%205%20services.png)
+_Visual representation of highest-cost services with interactive tooltips_
+
+### Advanced Analytics
+
+![Anomaly Detection](screenshots/Anomalies%20Detected%20Scatter%20Plot.png)
+_Machine learning-powered anomaly detection with severity classification_
+
+![AI Recommendations](screenshots/Recommendations.png)
+_Intelligent cost optimization recommendations with priority levels_
+
+## ⚡ Quick Demo (30 seconds)
+
+1. **Visit:** [https://infrasight.netlify.app](https://infrasight.netlify.app)
+2. **Sign up** with any email or use demo credentials above
+3. **Explore** the dashboard, anomaly detection, and recommendations
+4. **Try** different date ranges and service filters
+5. **Export** data as CSV for further analysis
+
+## 🏗️ System Architecture
+
+![InfraSight Architecture](screenshots/infrasight_architecture.png)
+
+**Architecture Overview:**
+
+- **Frontend:** React/TypeScript on Netlify with global CDN
+- **Backend:** FastAPI containerized on Render with auto-scaling
+- **Database:** Managed PostgreSQL on Neon.tech with connection pooling
+- **ML Engine:** Pandas, Scikit-learn, and custom algorithms for analytics
 
 ## Overview
 
@@ -137,6 +190,7 @@ infrasight/
 │   │   └── api/            # API client functions
 │   ├── Dockerfile          # Frontend container configuration
 │   └── package.json        # Node.js dependencies
+├── screenshots/            # Application screenshots
 ├── docker-compose.local.yml # Local development setup
 ├── netlify.toml            # Netlify deployment configuration
 └── README.md              # Project documentation
@@ -271,6 +325,8 @@ The application is deployed using a microservices architecture:
 - **Team collaboration features** for shared cost management
 - **Custom reporting** with scheduled delivery
 - **Cost allocation** by department or project
+- **Budget alerts** and automated notifications
+- **Cost optimization** recommendations with ROI calculations
 
 ## Contributing
 
@@ -288,4 +344,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For questions about this project or to discuss potential opportunities, please contact [your-email@example.com](mailto:your-email@example.com).
+For questions about this project or to discuss potential opportunities, please contact [sainjuabhiyan321@gmail.com](mailto:sainjuabhiyan321@gmail.com).
+
+---
+
+**Built with ❤️ using modern web technologies and best practices.**
