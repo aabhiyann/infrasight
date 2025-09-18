@@ -370,7 +370,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For questions about this project or to discuss potential opportunities, please contact [sainjuabhiyan321@gmail.com](mailto:sainjuabhiyan321@gmail.com).
+For questions about this project or to discuss potential opportunities, feel free to connect:
+
+- **Email:** [sainjuabhiyan321@gmail.com](mailto:sainjuabhiyan321@gmail.com)  
+- **LinkedIn:** [https://www.linkedin.com/in/abhiyansainju](https://www.linkedin.com/in/abhiyansainju)  
+- **GitHub:** [https://github.com/aabhiyann](https://github.com/aabhiyann)
 
 ---
 
