@@ -1,18 +1,24 @@
 # InfraSight
 
-[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-orange.svg)](https://pandas.pydata.org/)
-[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-orange.svg)](https://scikit-learn.org/)
-[![React](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
-[![Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-00C7B7.svg)](https://netlify.com)
-[![Render](https://img.shields.io/badge/Backend%20on-Render-46E3B7.svg)](https://render.com)
-[![Neon](https://img.shields.io/badge/Database-Neon.tech-00D9FF.svg)](https://neon.tech)
+### Cloud Cost Intelligence Platform
 
-A comprehensive cloud cost intelligence platform that leverages machine learning and advanced analytics to provide actionable insights into cloud spending patterns, anomaly detection, and cost optimization recommendations.
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)](https://infrasight.netlify.app/)
+[![API Docs](https://img.shields.io/badge/API-docs-blue?style=for-the-badge)](https://infrasight-rs1b.onrender.com/docs)
+
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Netlify](https://img.shields.io/badge/Netlify-00C7B7?logo=netlify&logoColor=white)](https://netlify.com)
+[![Render](https://img.shields.io/badge/Render-46E3B7?logo=render&logoColor=white)](https://render.com)
+
+A full-stack ML-powered platform for cloud cost analytics—featuring anomaly detection, cost forecasting, service clustering, and optimization recommendations.
+
+![Dashboard Preview](Screenshots/Dark%20Mode.png)
+
+---
 
 ## 🚀 Live Application
 
@@ -26,83 +32,18 @@ A comprehensive cloud cost intelligence platform that leverages machine learning
 
 - Email: `demo@infrasight.com` | Password: `password123`
 - Email: `admin@infrasight.com` | Password: `admin123`
-- Email: `test@infrasight.com` | Password: `test123`
 
 > **Note:** The backend may take 10-15 seconds to start on first load (cold start). This is normal for free-tier hosting.
 
-## Screenshots
+---
 
-### Authentication & User Management
-
-![Signup Page](Screenshots/Signup.png)
-_Professional signup interface with form validation and clean design_
-
-### Dashboard & Analytics
-
-![Dashboard Overview - Light Mode](Screenshots/Light%20Mode.png)
-_Comprehensive cost overview with key metrics and service breakdown in light theme_
-
-![Dashboard Overview - Dark Mode](Screenshots/Dark%20Mode.png)
-_Dark theme interface showing cost analytics and service timelines_
-
-![Dashboard Overview - High Contrast](Screenshots/High%20Contrast%20mode.png)
-_High contrast accessibility mode for better visibility_
-
-![Cost Over Time Graph](Screenshots/Cost%20Over%20Time%20Graph.png)
-_Interactive line chart showing daily cost trends and fluctuations_
-
-![Top 5 Services](Screenshots/Top%205%20services.png)
-_Visual representation of highest-cost services with interactive tooltips_
-
-![Service Cost Breakdown](Screenshots/Overview%20page%20showing%20Cost%20graph%20for%20each%20service.png)
-_Detailed service-by-service cost analysis with timeline visualization_
-
-### Advanced Analytics
-
-![Anomaly Detection Scatter Plot](Screenshots/Anomalies%20Detected%20Scatter%20Plot.png)
-_Machine learning-powered anomaly detection with severity classification_
-
-![Anomaly Details Table](Screenshots/Anomaly%20details%20table.png)
-_Detailed anomaly table with Z-scores, costs, and severity levels_
-
-![AI Recommendations](Screenshots/Recommendations.png)
-_Intelligent cost optimization recommendations with priority levels_
-
-### User Experience Features
-
-![Loading State](<Screenshots/Loading%20State%20(takes%20a%20few%20seconds).png>)
-_Professional loading states during data processing_
-
-![Date Range Picker](Screenshots/Date%20range%20picker.png)
-_Intuitive date range selection with quick preset options_
-
-![Mobile View](Screenshots/Mobile%20View%20side%20menu.png)
-_Responsive mobile interface with collapsible navigation menu_
-
-## ⚡ Quick Demo (30 seconds)
-
-1. **Visit:** [https://infrasight.netlify.app](https://infrasight.netlify.app)
-2. **Sign up** with any email or use demo credentials above
-3. **Explore** the dashboard, anomaly detection, and recommendations
-4. **Try** different date ranges and service filters
-5. **Export** data as CSV for further analysis
-
-## System Architecture
-
-![InfraSight Architecture](Screenshots/infrasight_architecture.png)
-
-**Architecture Overview:**
-
-- **Frontend:** React/TypeScript on Netlify with global CDN
-- **Backend:** FastAPI containerized on Render with auto-scaling
-- **Database:** Managed PostgreSQL on Neon.tech with connection pooling
-- **ML Engine:** Pandas, Scikit-learn, and custom algorithms for analytics
-
-## Overview
+## 📖 Overview
 
 InfraSight is a full-stack web application designed to help organizations monitor, analyze, and optimize their cloud infrastructure costs. The platform processes billing data, applies machine learning algorithms for pattern recognition, and provides intuitive visualizations to help teams make informed decisions about their cloud spending.
 
-## Business Value
+---
+
+## 💼 Business Value
 
 ### Cost Optimization
 
@@ -125,58 +66,110 @@ InfraSight is a full-stack web application designed to help organizations monito
 - **Containerized deployment** ensures consistency
 - **API-first approach** supports integration
 
-## Key Achievements
+---
 
-- **Full-Stack Development:** Built end-to-end application with React frontend and Python FastAPI backend
-- **Machine Learning Integration:** Implemented anomaly detection and cost forecasting using pandas and scikit-learn
-- **Cloud-Native Architecture:** Deployed using Docker containers on Render and Netlify with managed PostgreSQL
-- **Modern Tech Stack:** Utilized latest versions of React 19, TypeScript 5.0, Python 3.11, and FastAPI
-- **Production-Ready:** Implemented authentication, error handling, performance optimizations, and security best practices
-- **Responsive Design:** Created mobile-first UI with dark/light/high-contrast themes for accessibility
-- **API-First Design:** RESTful API with comprehensive documentation and OpenAPI/Swagger integration
+## ✨ Features
 
-## Key Features
+| Feature                   | Description                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------- |
+| 📊 **Cost Forecasting**   | Linear Regression with temporal features for predicting future spending with confidence intervals |
+| 🚨 **Anomaly Detection**  | Z-score statistical analysis to flag unusual spending patterns with configurable thresholds       |
+| 🔬 **Service Clustering** | K-means clustering to group services by spending behavior                                         |
+| 💡 **Recommendations**    | Rule-based engine combining anomaly flags and budget thresholds                                   |
+| 📈 **Interactive Charts** | Chart.js visualizations with date range filtering and service comparison                          |
+| 🔐 **Authentication**     | JWT-based auth with role-based access control (admin/user)                                        |
+| 🎨 **Accessibility**      | Dark, light, and high-contrast themes                                                             |
+| 📤 **Data Export**        | CSV export for further analysis                                                                   |
 
-### Cost Analytics & Visualization
+---
 
-- **Multi-dimensional cost breakdown** by service, region, and time period
-- **Interactive charts and graphs** using Chart.js with responsive design
-- **Real-time cost monitoring** with configurable date ranges
-- **Service comparison analytics** for identifying cost drivers
+## 🏗️ System Architecture
 
-### Machine Learning Capabilities
+![InfraSight Architecture](Screenshots/infrasight_architecture.png)
 
-- **Anomaly Detection** using statistical analysis and Z-score algorithms
-- **Cost Forecasting** with time-series analysis and trend prediction
-- **Pattern Recognition** to identify unusual spending patterns
-- **Automated Insights** generation based on historical data
+**Architecture Overview:**
 
-### User Management & Security
+- **Frontend:** React/TypeScript on Netlify with global CDN
+- **Backend:** FastAPI containerized on Render with auto-scaling
+- **Database:** Managed PostgreSQL on Neon.tech with connection pooling
+- **ML Engine:** Pandas, Scikit-learn for analytics
 
-- **JWT-based authentication** with secure token management
-- **Role-based access control** (admin and user roles)
-- **Password hashing** using bcrypt for security
-- **Session management** with automatic token refresh
+```
+┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐
+│                 │  REST   │                 │   SQL   │                 │
+│  React + TS     │◄───────►│    FastAPI      │◄───────►│   PostgreSQL    │
+│  (Netlify CDN)  │   API   │    (Render)     │         │   (Neon.tech)   │
+│                 │         │                 │         │                 │
+└─────────────────┘         └────────┬────────┘         └─────────────────┘
+                                     │
+                            ┌────────┴────────┐
+                            │   ML Pipeline   │
+                            │  ─────────────  │
+                            │ • Z-score       │
+                            │ • Linear Reg    │
+                            │ • K-means       │
+                            └─────────────────┘
+```
 
-### Data Management
+---
 
-- **Mock data generation** for safe testing and demonstration
-- **Database persistence** with PostgreSQL integration
-- **Data validation** and error handling throughout the application
-- **Export capabilities** for cost reports and analytics
+## 📸 Screenshots
 
-## Technical Architecture
+### Authentication & User Management
 
-### Frontend Stack
+![Signup Page](Screenshots/Signup.png)
+_Professional signup interface with form validation and clean design_
+
+### Dashboard & Analytics
+
+| Light Mode                             | Dark Mode                            | High Contrast                                            |
+| -------------------------------------- | ------------------------------------ | -------------------------------------------------------- |
+| ![Light](Screenshots/Light%20Mode.png) | ![Dark](Screenshots/Dark%20Mode.png) | ![High Contrast](Screenshots/High%20Contrast%20mode.png) |
+
+_Comprehensive cost overview with key metrics and service breakdown across three accessibility themes_
+
+![Cost Over Time Graph](Screenshots/Cost%20Over%20Time%20Graph.png)
+_Interactive line chart showing daily cost trends and fluctuations_
+
+![Top 5 Services](Screenshots/Top%205%20services.png)
+_Visual representation of highest-cost services with interactive tooltips_
+
+![Service Cost Breakdown](Screenshots/Overview%20page%20showing%20Cost%20graph%20for%20each%20service.png)
+_Detailed service-by-service cost analysis with timeline visualization_
+
+### Advanced Analytics
+
+![Anomaly Detection Scatter Plot](Screenshots/Anomalies%20Detected%20Scatter%20Plot.png)
+_Anomaly detection with Z-score severity classification_
+
+![Anomaly Details Table](Screenshots/Anomaly%20details%20table.png)
+_Detailed anomaly table with Z-scores, costs, and severity levels_
+
+![AI Recommendations](Screenshots/Recommendations.png)
+_Intelligent cost optimization recommendations with priority levels_
+
+### User Experience Features
+
+| Date Range Picker                              | Mobile View                                            |
+| ---------------------------------------------- | ------------------------------------------------------ |
+| ![Date](Screenshots/Date%20range%20picker.png) | ![Mobile](Screenshots/Mobile%20View%20side%20menu.png) |
+
+_Intuitive date range selection and responsive mobile interface_
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
 
 - **React 19** with TypeScript for type-safe development
 - **Vite** for fast build tooling and development server
 - **React Router** for client-side routing and navigation
 - **Chart.js** with React integration for data visualization
-- **Tailwind CSS** for responsive and modern UI design
+- **Custom CSS** with utility classes for responsive and modern UI design
 - **Lucide React** for consistent iconography
 
-### Backend Stack
+### Backend
 
 - **FastAPI** with Python 3.11 for high-performance API development
 - **SQLAlchemy** with async support for database operations
@@ -189,102 +182,84 @@ InfraSight is a full-stack web application designed to help organizations monito
 
 - **PostgreSQL** with asyncpg driver for optimal performance
 - **Neon.tech** managed database for cloud deployment
-- **SQLAlchemy ORM** for database abstraction and migrations
+- **SQLAlchemy ORM** for database abstraction
 - **Connection pooling** for efficient database resource management
 
 ### Machine Learning & Analytics
 
 - **Pandas** for data manipulation and analysis
-- **Scikit-learn** for machine learning algorithms
+- **Scikit-learn** for machine learning algorithms (K-means clustering, Linear Regression)
 - **NumPy** for numerical computations
-- **Custom algorithms** for anomaly detection and forecasting
+- **Z-score analysis** for statistical anomaly detection
 
 ### Deployment & Infrastructure
 
 - **Docker** containerization for consistent deployment
 - **Netlify** for frontend hosting with CDN distribution
-- **Render** for backend container hosting with auto-scaling
+- **Render** for backend container hosting
 - **Neon.tech** for managed PostgreSQL database
 - **GitHub Actions** for automated CI/CD pipeline
 
-## Testing & Quality Assurance
+---
 
-### Test Coverage
+## 🎯 Key Achievements
 
-- **Backend Testing:** Unit tests for API endpoints and business logic
-- **Frontend Testing:** Component testing with React Testing Library
-- **Integration Testing:** End-to-end API and database integration tests
-- **Performance Testing:** Load testing for API endpoints and database queries
-- **Security Testing:** Authentication, authorization, and input validation tests
+- **Full-Stack Development:** Built end-to-end application with React frontend and Python FastAPI backend
+- **Machine Learning Integration:** Implemented anomaly detection (Z-score), forecasting (Linear Regression), and clustering (K-means)
+- **Cloud-Native Architecture:** Deployed using Docker containers on Render and Netlify with managed PostgreSQL
+- **Modern Tech Stack:** Utilized latest versions of React 19, TypeScript 5.8, Python 3.11, and FastAPI
+- **Production-Ready:** Implemented authentication, error handling, and security best practices
+- **Responsive Design:** Created mobile-first UI with dark/light/high-contrast themes for accessibility
+- **API-First Design:** RESTful API with comprehensive documentation and OpenAPI/Swagger integration
 
-### Quality Metrics
+---
 
-- **Type Safety:** 100% TypeScript coverage in frontend
-- **Code Quality:** ESLint and Prettier for consistent code standards
-- **API Documentation:** 100% endpoint coverage with OpenAPI/Swagger
-- **Error Handling:** Comprehensive error boundaries and graceful degradation
-- **Accessibility:** WCAG 2.1 compliance with high contrast and keyboard navigation
+## 🔌 API Endpoints
 
-## Development Features
+| Method | Endpoint               | Description              |
+| ------ | ---------------------- | ------------------------ |
+| POST   | `/api/auth/signup`     | User registration        |
+| POST   | `/api/auth/login`      | Authentication           |
+| GET    | `/api/auth/me`         | Current user info        |
+| GET    | `/api/services`        | List cloud services      |
+| GET    | `/api/forecast`        | Cost predictions         |
+| GET    | `/api/anomalies`       | Anomaly detection        |
+| POST   | `/api/recommendations` | Optimization suggestions |
+| GET    | `/api/clusters`        | Service clustering       |
 
-### Code Quality & Standards
+Full API documentation: [infrasight-rs1b.onrender.com/docs](https://infrasight-rs1b.onrender.com/docs)
 
-- **TypeScript** throughout the frontend for type safety
-- **ESLint** configuration for code quality enforcement
-- **Prettier** for consistent code formatting
-- **Modular architecture** with reusable components
-- **Error boundaries** for graceful error handling
+---
 
-### Performance Optimizations
-
-- **Code splitting** with dynamic imports
-- **Lazy loading** for route-based components
-- **Gzip compression** for API responses
-- **Static asset caching** with long-term cache headers
-- **Database query optimization** with proper indexing
-
-### Performance Metrics
-
-- **Frontend Bundle Size:** Optimized to ~600KB with code splitting
-- **API Response Time:** <200ms average response time for most endpoints
-- **Database Queries:** Optimized with connection pooling and async operations
-- **Build Time:** <2 minutes for full application build
-- **Cold Start:** <15 seconds for backend container initialization
-
-### Security Implementation
-
-- **CORS** configuration for cross-origin requests
-- **Input validation** on all API endpoints
-- **SQL injection prevention** through parameterized queries
-- **XSS protection** with proper data sanitization
-- **Environment variable** management for sensitive data
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 infrasight/
 ├── backend/                 # FastAPI backend application
-│   ├── routes/             # API route definitions
-│   ├── models/             # SQLAlchemy database models
-│   ├── utils/              # Utility functions and helpers
-│   ├── Dockerfile          # Backend container configuration
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # React frontend application
+│   ├── routes/              # API route definitions
+│   ├── models.py            # SQLAlchemy database models
+│   ├── ml_utils.py          # ML algorithms
+│   ├── auth_utils.py        # JWT authentication
+│   ├── Dockerfile           # Backend container configuration
+│   └── requirements.txt     # Python dependencies
+├── frontend/                # React frontend application
 │   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Application pages
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── contexts/       # React context providers
-│   │   └── api/            # API client functions
-│   ├── Dockerfile          # Frontend container configuration
-│   └── package.json        # Node.js dependencies
-├── screenshots/            # Application screenshots
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Application pages
+│   │   ├── hooks/           # Custom React hooks
+│   │   ├── contexts/        # React context providers
+│   │   └── api/             # API client functions
+│   ├── Dockerfile           # Frontend container configuration
+│   └── package.json         # Node.js dependencies
+├── Screenshots/             # Application screenshots
 ├── docker-compose.local.yml # Local development setup
-├── netlify.toml            # Netlify deployment configuration
-└── README.md              # Project documentation
+├── netlify.toml             # Netlify deployment configuration
+└── README.md                # Project documentation
 ```
 
-## Getting Started
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -292,25 +267,21 @@ infrasight/
 - Node.js 20+ (for local development)
 - Python 3.11+ (for local development)
 
-### Local Development Setup
+### Quick Start with Docker
 
-1. **Clone the repository**
+```bash
+# Clone the repository
+git clone https://github.com/aabhiyann/infrasight.git
+cd infrasight
 
-   ```bash
-   git clone https://github.com/aabhiyann/infrasight.git
-   cd infrasight
-   ```
+# Start the development environment
+docker compose -f docker-compose.local.yml up --build
 
-2. **Start the development environment**
-
-   ```bash
-   docker compose -f docker-compose.local.yml up --build
-   ```
-
-3. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
+# Access the application
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:8000
+# API Documentation: http://localhost:8000/docs
+```
 
 ### Environment Configuration
 
@@ -329,92 +300,48 @@ ENVIRONMENT=development
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ```
 
-## API Documentation
+---
 
-The backend provides a comprehensive REST API with the following endpoints:
+## 🔒 Security Implementation
 
-### Authentication
-
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/login` - User authentication
-- `GET /api/auth/me` - Get current user information
-- `POST /api/auth/logout` - User logout
-
-### Cost Analytics
-
-- `GET /api/services` - List all cloud services
-- `GET /api/forecast` - Get cost forecasting data
-- `GET /api/anomalies` - Detect cost anomalies
-- `POST /api/recommendations` - Generate cost optimization recommendations
-
-### Data Management
-
-- `GET /api/ml/cleaned-costs` - Retrieve processed cost data
-- `GET /api/data-source/status` - Check data source status
-
-## Deployment
-
-### Production Infrastructure
-
-The application is deployed using a microservices architecture:
-
-- **Frontend**: Hosted on Netlify with global CDN distribution
-- **Backend**: Containerized FastAPI application on Render
-- **Database**: Managed PostgreSQL instance on Neon.tech
-- **Monitoring**: Built-in health checks and logging
-
-### Deployment Process
-
-1. **Frontend Deployment**
-
-   - Automatic deployment from GitHub pushes
-   - Build optimization with Vite
-   - Static asset caching and compression
-
-2. **Backend Deployment**
-
-   - Docker container deployment on Render
-   - Environment variable configuration
-   - Health check monitoring
-
-3. **Database Setup**
-   - Managed PostgreSQL on Neon.tech
-   - Automatic backups and scaling
-   - Connection pooling for performance
-
-## Future Enhancements
-
-- **Multi-cloud support** for AWS, Azure, and GCP
-- **Real-time data integration** with cloud provider APIs
-- **Advanced ML models** for more accurate predictions
-- **Team collaboration features** for shared cost management
-- **Custom reporting** with scheduled delivery
-- **Cost allocation** by department or project
-- **Budget alerts** and automated notifications
-- **Cost optimization** recommendations with ROI calculations
-
-## Contributing
-
-This project demonstrates modern full-stack development practices including:
-
-- **Clean Architecture** with separation of concerns
-- **Test-Driven Development** with comprehensive test coverage
-- **CI/CD Pipeline** with automated testing and deployment
-- **Documentation** with clear API specifications
-- **Security Best Practices** throughout the application
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-For questions about this project or to discuss potential opportunities, feel free to connect:
-
-- **Email:** [sainjuabhiyan321@gmail.com](mailto:sainjuabhiyan321@gmail.com)
-- **LinkedIn:** [https://www.linkedin.com/in/abhiyansainju](https://www.linkedin.com/in/abhiyansainju)
-- **GitHub:** [https://github.com/aabhiyann](https://github.com/aabhiyann)
+- **CORS** configuration for cross-origin requests
+- **Input validation** on all API endpoints
+- **SQL injection prevention** through parameterized queries
+- **XSS protection** with proper data sanitization
+- **Environment variable** management for sensitive data
+- **JWT tokens** with secure signing
+- **Password hashing** with bcrypt
 
 ---
 
-**Built with ❤️ using modern web technologies and best practices.**
+## 🗺️ Future Enhancements
+
+- [ ] Multi-cloud support for AWS, Azure, and GCP
+- [ ] Real-time data integration with cloud provider APIs
+- [ ] Advanced ML models (ARIMA, Prophet) for more accurate predictions
+- [ ] Team collaboration features for shared cost management
+- [ ] Custom reporting with scheduled delivery
+- [ ] Budget alerts and automated notifications
+- [ ] Slack/Teams integration for alerts
+
+---
+
+## 📬 Contact
+
+**Abhiyan Sainju**
+
+[![Email](https://img.shields.io/badge/Email-sainjuabhiyan321%40gmail.com-EA4335?logo=gmail&logoColor=white)](mailto:sainjuabhiyan321@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-abhiyansainju-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abhiyansainju)
+[![GitHub](https://img.shields.io/badge/GitHub-aabhiyann-181717?logo=github&logoColor=white)](https://github.com/aabhiyann)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  <strong>⭐ Star this repo if you found it useful!</strong>
+</p>
